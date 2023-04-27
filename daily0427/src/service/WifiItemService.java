@@ -8,7 +8,7 @@ public class WifiItemService {
 		
 		double dist = Math.sqrt(Math.pow(wifiItem2.getLatitude() - wifiItem1.getLatitude(), 2)
 				+ Math.pow(wifiItem2.getLongitude() - wifiItem1.getLongitude(), 2));
-		System.out.printf(" ÇöÀç ÁöÁ¡°ú °Å¸® : %f\n", dist);
+		System.out.printf(" í˜„ì¬ ì§€ì ê³¼ ê±°ë¦¬ : %f\n", dist);
 		System.out.println("*************************");
 
 		return dist;
