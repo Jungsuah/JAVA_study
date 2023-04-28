@@ -25,11 +25,11 @@ public class Lec01 {
 			for (int i = 0; i < k27_field_name.length; i++) {//잘라온 문자를 담은 배열을 for문으로 반복하면서
 				System.out.printf(" %s : %s\n" , k27_field_name[i],k27_field[i]);//내용 출력하기
 			}
-			System.out.println("*********************");
-			if (k27_LineCnt == 100) {
+			System.out.println("*********************");//줄나누기
+			if (k27_LineCnt == 100) {//100회가 반복되면 탈출
 				break;
 			}
-			k27_LineCnt++;
+			k27_LineCnt++;//100회가 돌기 전까지는 계속 횟수를 늘려가면서 while문 반복
 		}
 		k27_br.close();// close() 메소드로 BufferedWriter의 사용 중지를 알리고 GC가 메모리를 해제
 	}

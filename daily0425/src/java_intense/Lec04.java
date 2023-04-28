@@ -22,53 +22,54 @@ public class Lec04 {
 		double k27_lat = 37.3860521;
 		double k27_lng = 127.1214038;
 		int k27_LineCnt = 0;
-		double maxdist = 0;
-		double mindist = 0;
-		String[] maxDist = null;
-		String[] minDist = null;
+		double k27_maxdist = 0;
+		double k27_mindist = 0;
+		String[] k27_maxDist = null;
+		String[] k27_minDist = null;
 		while ((k27_readtxt = k27_br.readLine()) != null) {// 읽어온 한줄이 내용이 없지 않으면
-			String[] k27_field = k27_readtxt.split("\t");
-			double dist = Math.sqrt(Math.pow(Double.parseDouble(k27_field[2]) - k27_lat, 2)
-					+ Math.pow(Double.parseDouble(k27_field[3]) - k27_lng, 2));
+			String[] k27_field = k27_readtxt.split("\t");// 공백 기준으로 나눠서 하나씩 배열에 담기
+			double k27_dist = Math.sqrt(Math.pow(Double.parseDouble(k27_field[2]) - k27_lat, 2)
+					+ Math.pow(Double.parseDouble(k27_field[3]) - k27_lng, 2));// 거리 계산을 하기위해 a - b의 제곱 + c - d의 제곱의
+			// 제곱근을 구해서 거리를 구한다
 
-			if (k27_LineCnt == 0) {
-				maxdist = dist;
-				mindist = dist;
-			} else {
-				if (maxdist < dist) {
-					maxdist = dist;
-					maxDist = k27_field;
+			if (k27_LineCnt == 0) {// 첫번째 들어오는 값은
+				k27_maxdist = k27_dist;// 무조건 비교하기 위한 최대값에 넣어주기
+				k27_mindist = k27_dist;// 최솟값에도 넣어주기
+			} else {// 두번째 돌때 부터는 else 문을 타게 된다
+				if (k27_maxdist < k27_dist) {// 현재 들어있는 값보다 새로 계산한 거리가 더 클경우
+					k27_maxdist = k27_dist;// 최대값 변수에 넣어준다.
+					k27_maxDist = k27_field;// 마지막에 출력을 위해 최대값 배열을 저장해준다.
 				}
-				if (mindist > dist) {
-					mindist = dist;
-					minDist = k27_field;
+				if (k27_mindist > k27_dist) {// 현재 들어있는 값보다 새로 계산한 거리가 더 작은 경우
+					k27_mindist = k27_dist;// 최솟값 변수에 넣어준다.
+					k27_minDist = k27_field;// 마지막에 출력을 위해 최솟값 배열을 저장해준다.
 				}
 			}
-			k27_LineCnt++;
+			k27_LineCnt++;// 횟수 증가
 		}
 
 		// 가장 가까운 장소 정보 출력
-		if (minDist != null) {
-			System.out.printf("**[최단 거리]***************\n");
-			System.out.printf(" %s : %s\n", k27_field_name[1], minDist[1]);
-			System.out.printf(" %s : %s\n", k27_field_name[10], minDist[10]);
-			System.out.printf(" %s : %s\n", k27_field_name[13], minDist[13]);
-			System.out.printf(" %s : %s\n", k27_field_name[14], minDist[14]);
-			System.out.printf(" 현재지점과 거리 : %f\n", mindist);
+		if (k27_minDist != null) {// 공백이 아닌 경우일때
+			System.out.printf("\n**[최단 거리]***************\n");
+			System.out.printf(" %s : %s\n", k27_field_name[1], k27_minDist[1]);// 최소값에 해당하는 설치장소명
+			System.out.printf(" %s : %s\n", k27_field_name[10], k27_minDist[10]);// 최소값에 해당하는 소재지지번주소
+			System.out.printf(" %s : %s\n", k27_field_name[13], k27_minDist[13]);// 최소값에 해당하는 위도
+			System.out.printf(" %s : %s\n", k27_field_name[14], k27_minDist[14]);// 최소값에 해당하는 경도
+			System.out.printf(" 현재지점과 거리 : %f\n", k27_mindist);// 최소값에 해당하는 현재지점과 거리
 		} else {
-			System.out.printf("\n장소 정보가 없습니다.\n");
+			System.out.printf("\n장소 정보가 없습니다.\n");//없을 경우 출력해줄 내용
 		}
 
 		// 가장 먼 장소 정보 출력
-		if (maxDist != null) {
+		if (k27_maxDist != null) {
 			System.out.printf("\n**[최대 거리]***************\n");
-			System.out.printf(" %s : %s\n", k27_field_name[1], maxDist[1]);
-			System.out.printf(" %s : %s\n", k27_field_name[10], maxDist[10]);
-			System.out.printf(" %s : %s\n", k27_field_name[13], maxDist[13]);
-			System.out.printf(" %s : %s\n", k27_field_name[14], maxDist[14]);
-			System.out.printf(" 현재지점과 거리 : %f\n", maxdist);
+			System.out.printf(" %s : %s\n", k27_field_name[1], k27_maxDist[1]);// 최소값에 해당하는 설치장소명
+			System.out.printf(" %s : %s\n", k27_field_name[10], k27_maxDist[10]);// 최소값에 해당하는 소재지지번주소
+			System.out.printf(" %s : %s\n", k27_field_name[13], k27_maxDist[13]);// 최소값에 해당하는 위도
+			System.out.printf(" %s : %s\n", k27_field_name[14], k27_maxDist[14]);// 최소값에 해당하는 경도
+			System.out.printf(" 현재지점과 거리 : %f\n", k27_maxdist);// 최소값에 해당하는 현재지점과 거리
 		} else {
-			System.out.printf("\n장소 정보가 없습니다.\n");
+			System.out.printf("\n장소 정보가 없습니다.\n");// 없을 경우 출력해줄 내용
 		}
 
 		k27_br.close();// close() 메소드로 BufferedWriter의 사용 중지를 알리고 GC가 메모리를 해제
