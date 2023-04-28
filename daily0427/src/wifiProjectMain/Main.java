@@ -1,6 +1,5 @@
 package wifiProjectMain;
 
-import java.io.IOException;
 import java.util.List;
 
 import dao.WifiItemDao;
@@ -8,13 +7,14 @@ import domain.WifiItem;
 import service.WifiItemService;
 
 public class Main {
-	@SuppressWarnings("unused")
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		System.out.println("wifi project");
 
 		WifiItemService wifiItemService = new WifiItemService();
 		WifiItemDao wifiItemDao = new WifiItemDao();
-		List<WifiItem> wifiItems = wifiItemDao.selectAll();
+		List<WifiItem> wifiItems = null;
+
+		wifiItems = wifiItemDao.selectAll();
 
 		WifiItem me = new WifiItem();
 		double k27_lat = 37.3860521;
@@ -25,16 +25,17 @@ public class Main {
 		double maxdist = 0;
 		double mindist = 0;
 
-		WifiItem Max = new WifiItem();
-		WifiItem Min = new WifiItem();
+		WifiItem Max = null;
+		WifiItem Min = null;
 
 		for (WifiItem target : wifiItems) {
 			System.out.printf("**[%d번째 항목]***********\n", target.getId());// 출력하기
 			System.out.printf(" %s : %s\n", "소재지번주소", target.getLotNumberAddress());
 			System.out.printf(" %s : %s\n", "위도", target.getLatitude());
 			System.out.printf(" %s : %s\n", "경도", target.getLongitude());
-
 			double dist = wifiItemService.getDistance(me, target);
+			System.out.printf(" 현재 지점과 거리 : %f\n", dist);
+			System.out.println("*************************");
 
 			if (target.getId() == 1) {
 				maxdist = dist;
