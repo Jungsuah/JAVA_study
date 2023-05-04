@@ -12,7 +12,7 @@ import domain.WifiItem;
 
 public class WifiItemDao {
 
-	public WifiItem create(WifiItem wifiItem) {
+	public WifiItem create(WifiItem k27_wifiItem) {
 		return null;
 	}
 
@@ -22,7 +22,7 @@ public class WifiItemDao {
 
 	public List<WifiItem> selectAll() {//WifiItem 객체들의 리스트를 반환하는 메소드 selectAll
 
-		List<WifiItem> wifiItems = new ArrayList<>();//WifiItem 객체들을 담을 ArrayList 객체 생성
+		List<WifiItem> k27_wifiItems = new ArrayList<>();//WifiItem 객체들을 담을 ArrayList 객체 생성
 
 		File k27_f = new File("C:\\Users\\정수아\\무료와이파이정보.txt");// 경로에 파일 객체 생성
 		BufferedReader k27_br = null;// BufferedReader 객체 생성
@@ -53,27 +53,27 @@ public class WifiItemDao {
 
 
 				// WifiItem 객체 생성
-				WifiItem wifiItem = new WifiItem();
+				WifiItem k27_wifiItem = new WifiItem();
 
 				// 각 필드 값 할당
-				wifiItem.setId(Integer.parseInt(k27_field[0])); // id 필드에 첫 번째 열 값 할당
-				wifiItem.setInstallationLocationName(k27_field[1]); // InstallationLocationName 필드에 두 번째 열 값 할당
-				wifiItem.setInstallationLocationDetails(k27_field[2]); // InstallationLocationDetails 필드에 세 번째 열 값 할당
-				wifiItem.setInstallationCityName(k27_field[3]); // InstallationCityName 필드에 네 번째 열 값 할당
-				wifiItem.setInstallationDistrictName(k27_field[4]); // InstallationDistrictName 필드에 다섯 번째 열 값 할당
-				wifiItem.setInstallationFacilityType(k27_field[5]); // installationFacilityType 필드에 여섯 번째 열 값 할당
-				wifiItem.setServiceProviderName(k27_field[6]); // ServiceProviderName 필드에 일곱 번째 열 값 할당
-				wifiItem.setWifiSsid(k27_field[7]); // wifiSsid 필드에 여덟 번째 열 값 할당
-				wifiItem.setDateOfInstallation(k27_field[8]); // dateOfInstallation 필드에 아홉 번째 열 값 할당
-				wifiItem.setRoadNameAddress(k27_field[9]); // RoadNameAddress 필드에 열 번째 열 값 할당
-				wifiItem.setLotNumberAddress(k27_field[10]); // LotNumberAddress 필드에 열한 번째 열 값 할당
-				wifiItem.setManagementAgencyName(k27_field[11]); // ManagementAgencyName 필드에 열두 번째 열 값 할당
-				wifiItem.setManagementAgencyPhoneNumber(k27_field[12]); // ManagementAgencyPhoneNumber 필드에 열세 번째 열 값 할당
-				wifiItem.setLatitude(Double.parseDouble(k27_field[13])); // Latitude 필드에 열네 번째 열 값 할당
-				wifiItem.setLongitude(Double.parseDouble(k27_field[14])); // Longitude 필드에 열다섯 번째 열 값 할당
-				wifiItem.setCreated(k27_field[15]); // createdA 필드에 열여섯 번째 열 값 할당
+				k27_wifiItem.setId(Integer.parseInt(k27_field[0])); // id 필드에 첫 번째 열 값 할당
+				k27_wifiItem.setInstallationLocationName(k27_field[1]); // InstallationLocationName 필드에 두 번째 열 값 할당
+				k27_wifiItem.setInstallationLocationDetails(k27_field[2]); // InstallationLocationDetails 필드에 세 번째 열 값 할당
+				k27_wifiItem.setInstallationCityName(k27_field[3]); // InstallationCityName 필드에 네 번째 열 값 할당
+				k27_wifiItem.setInstallationDistrictName(k27_field[4]); // InstallationDistrictName 필드에 다섯 번째 열 값 할당
+				k27_wifiItem.setInstallationFacilityType(k27_field[5]); // installationFacilityType 필드에 여섯 번째 열 값 할당
+				k27_wifiItem.setServiceProviderName(k27_field[6]); // ServiceProviderName 필드에 일곱 번째 열 값 할당
+				k27_wifiItem.setWifiSsid(k27_field[7]); // wifiSsid 필드에 여덟 번째 열 값 할당
+				k27_wifiItem.setDateOfInstallation(k27_field[8]); // dateOfInstallation 필드에 아홉 번째 열 값 할당
+				k27_wifiItem.setRoadNameAddress(k27_field[9]); // RoadNameAddress 필드에 열 번째 열 값 할당
+				k27_wifiItem.setLotNumberAddress(k27_field[10]); // LotNumberAddress 필드에 열한 번째 열 값 할당
+				k27_wifiItem.setManagementAgencyName(k27_field[11]); // ManagementAgencyName 필드에 열두 번째 열 값 할당
+				k27_wifiItem.setManagementAgencyPhoneNumber(k27_field[12]); // ManagementAgencyPhoneNumber 필드에 열세 번째 열 값 할당
+				k27_wifiItem.setLatitude(Double.parseDouble(k27_field[13])); // Latitude 필드에 열네 번째 열 값 할당
+				k27_wifiItem.setLongitude(Double.parseDouble(k27_field[14])); // Longitude 필드에 열다섯 번째 열 값 할당
+				k27_wifiItem.setCreated(k27_field[15]); // createdA 필드에 열여섯 번째 열 값 할당
 	            
-				wifiItems.add(wifiItem);// ArrayList에 WifiItem 객체 추가
+				k27_wifiItems.add(k27_wifiItem);// ArrayList에 WifiItem 객체 추가
 
 				k27_LineCnt++;// 라인 번호 증가
 			}
@@ -95,14 +95,14 @@ public class WifiItemDao {
 			//오류 출력
 		}
 
-		return wifiItems;// wifiItems의 ArrayList 반환
+		return k27_wifiItems;// wifiItems의 ArrayList 반환
 	}
 
-	public WifiItem update(WifiItem wifiItem) {
+	public WifiItem update(WifiItem k27_wifiItem) {
 		return null;
 	}
 
-	public WifiItem delete(int id) {
+	public WifiItem delete(int k27_id) {
 		return null;
 	}
 }
