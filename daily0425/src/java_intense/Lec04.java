@@ -26,6 +26,7 @@ public class Lec04 {
 		double k27_mindist = 0;//최소 거리 담을 변수 선언
 		String[] k27_maxDist = null;//최대 거리일때 값들을 담을 배열 선언
 		String[] k27_minDist = null;//최소 거리일때 값들을 담을 배열 선언
+		
 		while ((k27_readtxt = k27_br.readLine()) != null) {// 읽어온 한줄이 내용이 없지 않으면
 			String[] k27_field = k27_readtxt.split("\t");// 공백 기준으로 나눠서 하나씩 배열에 담기
 			double k27_dist = Math.sqrt(Math.pow(Double.parseDouble(k27_field[2]) - k27_lat, 2)
