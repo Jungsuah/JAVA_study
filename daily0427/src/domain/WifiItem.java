@@ -16,7 +16,7 @@ public class WifiItem {
 	private String ManagementAgencyPhoneNumber;
 	private double Latitude;
 	private double Longitude;
-	private String createdA;
+	private String created;
 
 	public int getId() {
 		return id;
@@ -139,11 +139,11 @@ public class WifiItem {
 	}
 
 	public String getCreatedA() {
-		return createdA;
+		return created;
 	}
 
-	public void setCreatedA(String createdA) {
-		this.createdA = createdA;
+	public void setCreated(String created) {
+		this.created = created;
 	}
 
 }

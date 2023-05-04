@@ -41,7 +41,7 @@ public class Lec03 {
 				if (k27_LineCnt == 0) {//첫번째 들어오는 값은
 					k27_maxdist = k27_dist;//무조건 비교하기 위한 최대값에 넣어주기
 					k27_mindist = k27_dist;//최솟값에도 넣어주기
-				}else {//두번째 돌때 부터는 else 문을 타게 된다
+				}else {//두번째 돌때 부터는 else 문을 타게 된다A
 					if (k27_maxdist < k27_dist) {//현재 들어있는 값보다 새로 계산한 거리가 더 클경우
 						k27_maxdist = k27_dist;//최대값 변수에 넣어준다.
 						k27_maxDist = k27_field;//마지막에 출력을 위해 최대값 배열을 저장해준다.
