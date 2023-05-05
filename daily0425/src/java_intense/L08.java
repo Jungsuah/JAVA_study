@@ -25,7 +25,7 @@ public class L08 {
 		// 출력 파일에 쓴 레코드 수를 저장할 변수 초기화
 		int k27_wcnt = 0;
 
-		// 입력 파일에서 한 줄씩 읽어들이기
+		// 입력 파일에서 한 줄씩 읽어들이기ㅇ
 		while ((k27_readtxt = k27_br.readLine()) != null) {
 			// StringBuffer 객체 생성
 			StringBuffer k27_s = new StringBuffer();
