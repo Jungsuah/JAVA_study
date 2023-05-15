@@ -29,7 +29,7 @@ public class freewifi_2 {
 
 		String k27_readtxt;// 출력할 문자열을 담을 변수 선언
 
-		if ((k27_readtxt = k27_br.readLine()) == null) {// 읽어온 한줄이 내용이 없지 않으면
+		if ((k27_readtxt = k27_br.readLine()) == null) {// 읽어온 한줄이 내용이 없으면
 			System.out.printf("빈 파일 입니다\n");// 출력하기
 			return;// 호출한곳으로 돌아가기
 		}
