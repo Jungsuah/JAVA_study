@@ -15,51 +15,47 @@ public class Basic_Traning_3 {
 
 		// MySQL 데이터베이스에 연결하기 위한 Connection 객체를 생성합니다.
 		// getConnection 메서드의 인자로는 JDBC URL, mysql의 사용자 이름, mysql사용자의 비밀번호를 입력한다.
-		// 이 코드에서는 jdbc:mysql://[IP 주소]:[mysql의 포트번호]/[mysql내에 접근하고 싶은 데이터베이스 이름]을 사용하여
-		// 연결한다.
-		Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+		// 이 코드에서는 jdbc:mysql://[IP 주소]:[mysql의 포트번호]/[mysql내에 접근하고 싶은 데이터베이스 이름]을 사용하여 연결
+		Connection k27_conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
 
 		// SQL문을 실행하기 위한 Statement 객체를 생성합니다.
-		Statement stmt = conn.createStatement();
+		Statement k27_stmt = k27_conn.createStatement();
 
 		double k27_lat = 37.3860521;// 위도 표시 실수형 변수 선언
 		double k27_lng = 127.1214038;// 경도 표시 실수형 변수 선언
 
 		String k27_QueryTxt;// 쿼리를 담아줄 문자형 변수 선언
 
-		// "freewifi" 테이블에서 SQRT(POWER (latitude-%f,2) + POWER(longtitude-%f,2)) 값이 최소인
-		// 값을 선택하는 쿼리
-		// 이 쿼리는 주어진 위도(latitude)와 경도(longitude) 값과의 거리 계산을 기반으로, 최소 거리를 가지는 행을 선택하는 것을
-		// 의미합니다.
+		// "freewifi" 테이블에서 SQRT(POWER (latitude-%f,2) + POWER(longtitude-%f,2)) 값이 최소인값을 선택하는 쿼리
+		// 이 쿼리는 주어진 위도(latitude)와 경도(longitude) 값과의 거리 계산을 기반으로, 최소 거리를 가지는 행을 선택한다
 		// 가장 가까운 위치에 있는 freewifi 지점을 찾는 쿼리 작성
 		k27_QueryTxt = String.format(
 				"select * from cctv where " + "SQRT (POWER (latitude-%f,2) + POWER(longtitude-%f,2) ) = "
 						+ "(select MIN( SQRT( POWER (latitude-%f,2) + POWER(longtitude-%f,2) )  ) from cctv);",
 				k27_lat, k27_lng, k27_lat, k27_lng);
 
-		// 만들어진 쿼리를 Statement의 executeQuery메소드의 인자로 보내어 원하는 결과값을 가져오고
-		// rset에 원하는 결과값을 할당합니다.
-		ResultSet rset = stmt.executeQuery(k27_QueryTxt);
+		// 만들어진 쿼리를 Statement의 executeQuery메소드의 인자로 보내어 원하는 결과값을 가져오고 rset에 원하는 결과값을 할당합니다.
+		ResultSet k27_rset = k27_stmt.executeQuery(k27_QueryTxt);
 		int iCnt = 0;// 읽어온 횟수 변수 선언
-		while (rset.next()) {// 원하는 결과값을 담은 객체에 내용이 없어질때까지 반복
+		while (k27_rset.next()) {// 원하는 결과값을 담은 객체에 내용이 없어질때까지 반복
 			System.out.printf("*(%d)***************************\n", iCnt++);// 횟수번호 출력
-			System.out.printf("순번                : %s\n", rset.getString(1));// getString을 사용하여 1번째 칼럼값 가져오기
-			System.out.printf("관리기관명          : %s\n", rset.getString(2));// getString을 사용하여 2번째 칼럼값 가져오기
-			System.out.printf("소재지도로명주소        : %s\n", rset.getString(3));// getString을 사용하여 3번째 칼럼값 가져오기
-			System.out.printf("소재지지번주소          : %s\n", rset.getString(4));// getString을 사용하여 4번째 칼럼값 가져오기
-			System.out.printf("설치목적구분        : %s\n", rset.getString(5));// getString을 사용하여 5번째 칼럼값 가져오기
-			System.out.printf("카메라대수        : %s\n", rset.getString(6));// getString을 사용하여 6번째 칼럼값 가져오기
-			System.out.printf("카메라화소수      : %s\n", rset.getString(7));// getString을 사용하여 7번째 칼럼값 가져오기
-			System.out.printf("촬영방면정보        : %s\n", rset.getString(8));// getString을 사용하여 8번째 칼럼값 가져오기
-			System.out.printf("보관일수    : %s\n", rset.getString(9));// getString을 사용하여 10번째 칼럼값 가져오기
-			System.out.printf("설치년월      : %s\n", rset.getString(10));// getString을 사용하여 11번째 칼럼값 가져오기
-			System.out.printf("관리기관전화번호          : %s\n", rset.getString(11));// getString을 사용하여 12번째 칼럼값 가져오기
-			System.out.printf("위도               : %s\n", rset.getString(12));// getString을 사용하여 14번째 칼럼값 가져오기
-			System.out.printf("경도               : %s\n", rset.getString(13));// getString을 사용하여 15번째 칼럼값 가져오기
-			System.out.printf("데이터기준날짜      : %s\n", rset.getString(14));// getString을 사용하여 16번째 칼럼값 가져오기
+			System.out.printf("순번                : %s\n", k27_rset.getString(1));// getString을 사용하여 1번째 칼럼값 가져오기
+			System.out.printf("관리기관명          : %s\n", k27_rset.getString(2));// getString을 사용하여 2번째 칼럼값 가져오기
+			System.out.printf("소재지도로명주소        : %s\n", k27_rset.getString(3));// getString을 사용하여 3번째 칼럼값 가져오기
+			System.out.printf("소재지지번주소          : %s\n", k27_rset.getString(4));// getString을 사용하여 4번째 칼럼값 가져오기
+			System.out.printf("설치목적구분        : %s\n", k27_rset.getString(5));// getString을 사용하여 5번째 칼럼값 가져오기
+			System.out.printf("카메라대수        : %s\n", k27_rset.getString(6));// getString을 사용하여 6번째 칼럼값 가져오기
+			System.out.printf("카메라화소수      : %s\n", k27_rset.getString(7));// getString을 사용하여 7번째 칼럼값 가져오기
+			System.out.printf("촬영방면정보        : %s\n", k27_rset.getString(8));// getString을 사용하여 8번째 칼럼값 가져오기
+			System.out.printf("보관일수    : %s\n", k27_rset.getString(9));// getString을 사용하여 10번째 칼럼값 가져오기
+			System.out.printf("설치년월      : %s\n", k27_rset.getString(10));// getString을 사용하여 11번째 칼럼값 가져오기
+			System.out.printf("관리기관전화번호          : %s\n", k27_rset.getString(11));// getString을 사용하여 12번째 칼럼값 가져오기
+			System.out.printf("위도               : %s\n", k27_rset.getString(12));// getString을 사용하여 14번째 칼럼값 가져오기
+			System.out.printf("경도               : %s\n", k27_rset.getString(13));// getString을 사용하여 15번째 칼럼값 가져오기
+			System.out.printf("데이터기준날짜      : %s\n", k27_rset.getString(14));// getString을 사용하여 16번째 칼럼값 가져오기
 		}
-		rset.close();// ResultSet 객체를 닫습니다.
-		stmt.close();// Statement 객체를 닫습니다.
-		conn.close();// Connection 객체를 닫습니다.
+		k27_rset.close();// ResultSet 객체를 닫습니다.
+		k27_stmt.close();// Statement 객체를 닫습니다.
+		k27_conn.close();// Connection 객체를 닫습니다.
 	}
 }

@@ -18,10 +18,10 @@ public class freewifi_2 {
 		// MySQL 데이터베이스에 연결하기 위한 Connection 객체를 생성합니다.
 		// getConnection 메서드의 인자로는 JDBC URL, mysql의 사용자 이름, mysql사용자의 비밀번호를 입력한다.
 		// 이 코드에서는 jdbc:mysql://[IP 주소]:[mysql의 포트번호]/[mysql내에 접근하고 싶은 데이터베이스 이름]을 사용하여 연결한다.
-		Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+		Connection k27_conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
 
 		// SQL문을 실행하기 위한 Statement 객체를 생성합니다.
-		Statement stmt = conn.createStatement();
+		Statement k27_stmt = k27_conn.createStatement();
 
 		// main 메소드에서 IOException을 throws하면, 해당 예외는 JVM으로 전달되어 출력되고 프로그램이 종료
 		File k27_f = new File("C:\\Users\\정수아\\Desktop\\beforedata\\전국무료와이파이표준데이터b.txt");// 해당 경로에 파일 찾아오기
@@ -29,7 +29,7 @@ public class freewifi_2 {
 
 		String k27_readtxt;// 출력할 문자열을 담을 변수 선언
 
-		if ((k27_readtxt = k27_br.readLine()) == null) {// 읽어온 한줄이 내용이 없으면
+		if ((k27_readtxt = k27_br.readLine()) == null) {// 읽어온 한줄이 내용이 없지 않으면
 			System.out.printf("빈 파일 입니다\n");// 출력하기
 			return;// 호출한곳으로 돌아가기
 		}
@@ -67,7 +67,7 @@ public class freewifi_2 {
 //					k27_field[5],k27_field[6],k27_field[7],k27_field[8],k27_field[9],
 //					k27_field[10],k27_field[11],k27_field[12],k27_field[13],k27_field[14]);
 			
-			stmt.execute(k27_QueryTxt);//Statement객체에 execute 메소드를 통해 만들어진 쿼리문을 전달한다.
+			k27_stmt.execute(k27_QueryTxt);//Statement객체에 execute 메소드를 통해 만들어진 쿼리문을 전달한다.
 			//들어가고 있는 항목이 몇번째 항목인지 출력해준다.
 			System.out.printf("%d번째 항목 Insert OK [%s]\n" , k27_LineCnt, k27_QueryTxt);
 			
@@ -77,7 +77,7 @@ public class freewifi_2 {
 		}
 		k27_br.close();// close() 메소드로 BufferedWriter의 사용 중지를 알리고 GC가 메모리를 해제
 
-		stmt.close();// Statement 객체를 닫습니다.
-		conn.close();// Connection 객체를 닫습니다.
+		k27_stmt.close();// Statement 객체를 닫습니다.
+		k27_conn.close();// Connection 객체를 닫습니다.
 	}
 }

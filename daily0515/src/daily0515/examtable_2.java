@@ -17,16 +17,16 @@ public class examtable_2 {
 		// MySQL 데이터베이스에 연결하기 위한 Connection 객체를 생성합니다.
 		// getConnection 메서드의 인자로는 JDBC URL, mysql의 사용자 이름, mysql사용자의 비밀번호를 입력한다.
 		// 이 코드에서는 jdbc:mysql://[IP 주소]:[mysql의 포트번호]/[mysql내에 접근하고 싶은 데이터베이스 이름]을 사용하여 연결한다.
-		Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+		Connection k27_conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
 
 		// Statement 객체를 생성합니다.
-		Statement stmt = conn.createStatement();
+		Statement k27_stmt = k27_conn.createStatement();
 
 		// SQL 쿼리문을 실행하기 위해 executeQuery 메서드를 호출합니다.
 		// 이 코드에서는 "delete from examtable" 쿼리를 실행하여 examtable을 삭제합니다.
-		ResultSet rset = stmt.executeQuery("delete from examtable;");
+		ResultSet k27_rset = k27_stmt.executeQuery("delete from examtable;");
 		
-		stmt.close();// Statement 객체를 닫습니다.
-		conn.close();// Connection 객체를 닫습니다.
+		k27_stmt.close();// Statement 객체를 닫습니다.
+		k27_conn.close();// Connection 객체를 닫습니다.
 	}
 }

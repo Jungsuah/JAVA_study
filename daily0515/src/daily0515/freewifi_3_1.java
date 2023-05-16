@@ -17,10 +17,10 @@ public class freewifi_3_1 {
 		// getConnection 메서드의 인자로는 JDBC URL, mysql의 사용자 이름, mysql사용자의 비밀번호를 입력한다.
 		// 이 코드에서는 jdbc:mysql://[IP 주소]:[mysql의 포트번호]/[mysql내에 접근하고 싶은 데이터베이스 이름]을 사용하여
 		// 연결한다.
-		Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+		Connection k27_conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
 
 		// SQL문을 실행하기 위한 Statement 객체를 생성합니다.
-		Statement stmt = conn.createStatement();
+		Statement k27_stmt = k27_conn.createStatement();
 
 		double k27_lat = 37.3860521;// 위도 표시 실수형 변수 선언
 		double k27_lng = 127.1214038;// 경도 표시 실수형 변수 선언
@@ -39,7 +39,7 @@ public class freewifi_3_1 {
 
 		// 만들어진 쿼리를 Statement의 executeQuery메소드의 인자로 보내어 원하는 결과값을 가져오고
 		// rset에 원하는 결과값을 할당합니다.
-		ResultSet rset = stmt.executeQuery(k27_QueryTxt);
+		ResultSet rset = k27_stmt.executeQuery(k27_QueryTxt);
 		int iCnt = 0;// 읽어온 횟수 변수 선언
 		while (rset.next()) {// 원하는 결과값을 담은 객체에 내용이 없어질때까지 반복
 			System.out.printf("*(%d)***************************\n", iCnt++);// 횟수번호 출력
@@ -62,7 +62,7 @@ public class freewifi_3_1 {
 		}
 
 		rset.close();// ResultSet 객체를 닫습니다.
-		stmt.close();// Statement 객체를 닫습니다.
-		conn.close();// Connection 객체를 닫습니다.
+		k27_stmt.close();// Statement 객체를 닫습니다.
+		k27_conn.close();// Connection 객체를 닫습니다.
 	}
 }
