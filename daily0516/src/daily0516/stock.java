@@ -15,7 +15,7 @@ public class stock {
         BufferedReader k27_br = new BufferedReader(new FileReader(k27_f));
         
         //지정 경로에 해당 파일을 가져오기 -> 없으면 새로 생성
-        File k27_f1 = new File("C:\\test\\day_data\\A005930.csv");
+        File k27_f1 = new File("C:\\test\\day_data\\A005930t.csv");
         //BufferedWriter 객체를 생성하고 파일을 파라미터로 넘겨 파일안에 내용 작성하게 한다.
         BufferedWriter k27_bw1 = new BufferedWriter(new FileWriter(k27_f1));
         

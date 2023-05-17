@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Advantage_2 {// csv 파일 읽어서 stock 테이블에 데이터 집어넣기
 	public static void main(String[] args) throws Exception {
@@ -33,14 +35,12 @@ public class Advantage_2 {// csv 파일 읽어서 stock 테이블에 데이터 집어넣기
 		//읽어온 파일을 한줄씩 저장하기 위한 문자열 변수를 선언한다.
 		String k27_readtxt;
 
-		if ((k27_readtxt = k27_br.readLine()) == null) {// 첫줄이 null이면 빈 파일이기 때문에
-			System.out.printf("빈 파일 입니다\n");// 빈파일임을 출력한다.
-			return;// 호출한곳으로 돌아가기
-		}
-
 		int k27_LineCnt = 0;// 읽어들인 라인수를 저장하기 위한 변수를 선언한다.
 		k27_conn.setAutoCommit(false);//insert 속도 향상을 위해 AutoCommit을 false로 설정한다.
-		long startTime = System.currentTimeMillis();//시작 시간을 ms 단위로 저장한다. 
+		long startTime_27 = System.currentTimeMillis();//시작 시간을 ms 단위로 저장한다. 
+		LocalDateTime currentTime = LocalDateTime.now(); // LocalDateTime클래스를 이용하여 현재시간을 받아온다
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"); // 시간을 원하는 형식으로 포맷팅해준다
+		String startTime = currentTime.format(formatter); // 포맷팅된 현재시간을 startTime 문자열로 받아둔다
 
 		String error = "";//에러메시지를 출력하기 위한 문자열 변수 선언
 		while ((k27_readtxt = k27_br.readLine()) != null) {// 읽어온 라인이 null이 아니면 계속 읽어들인다.
@@ -63,7 +63,7 @@ public class Advantage_2 {// csv 파일 읽어서 stock 테이블에 데이터 집어넣기
 			k27_LineCnt++;//데이터를 한줄 처리했으므로 k27_LineCnt를 증가시킨다.
 
 			try {
-				if (k27_LineCnt % 10000 == 0) {//메모리 관리를 위해 10000줄씩 읽을때 마다
+				if (k27_LineCnt % 5000 == 0) {//메모리 관리를 위해 10000줄씩 읽을때 마다
 					pstmt.executeBatch();//executeBatch()를 호출하여 캐시에 담긴 SQL 문장을 실행한다.
 					k27_conn.commit();//commit()을 호출해서 데이터를 영구히 저장한다.
 				}
@@ -83,11 +83,15 @@ public class Advantage_2 {// csv 파일 읽어서 stock 테이블에 데이터 집어넣기
 
 		k27_conn.commit();//모든 insert가 완료되었으므로 commit을 한다.
 		k27_conn.setAutoCommit(true);//AutoCommit을 다시 true로 설정한다.
-		long endTime = System.currentTimeMillis();//끝나는 시간을 ms 단위로 저장한다.
+		long endTime_27 = System.currentTimeMillis();//끝나는 시간을 ms 단위로 저장한다.
+		currentTime = LocalDateTime.now(); // LocalDateTime클래스를 이용하여 현재시간을 다시 받아온다
+		String endTime = currentTime.format(formatter); // 포맷팅된 현재시간을 endTime 문자열로 받아둔다
 		
 		System.out.println("Insert End");//Insert가 끝났음을 알리는 메시지를 출력한다.
 		System.out.printf("total : %d\n", k27_LineCnt);//읽어온 라인을 출력한다.
-		System.out.printf("time : %dms\n", endTime - startTime);//endTime에서 startTime을 뺀 수행시간을 출력한다.
+		System.out.printf("time : %dms\n", endTime_27 - startTime_27);//endTime에서 startTime을 뺀 수행시간을 출력한다.
+		System.out.printf("startTime : %s\n", startTime);//시작시간을 출력한다.
+		System.out.printf("endTime : %s\n", endTime);//끝나는 시간을 출력한다.
 		System.out.println(error);//에러메시지에 담긴 에러를 출력한다.
 
 		k27_br.close();// BufferedReader를 닫는다.

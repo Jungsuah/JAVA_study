@@ -13,8 +13,7 @@ public class Advantage_3 {// 삼성전자만 쿼리를 가져오기
 		// getConnection() 메소드를 통해서 데이터베이스와 자바를 연결한다.
 		Connection k27_conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
 
-		// stock 테이블에 주가 데이터를 입력하는 쿼리를 작성한다.
-		// PreparedStatement를 사용하므로 values에는 ?를 표시한다.
+		// stock 테이블에 유가증권 단축 종목코드가 삼성전자인 행을 가져오는 쿼리를 작성한다.
 		String k27_QueryTxt = String.format("select * from stock where stnd_iscd = 'A005930';");
 		
 		// SQL문을 실행하기 위한 Statement 객체를 생성합니다.
@@ -36,7 +35,6 @@ public class Advantage_3 {// 삼성전자만 쿼리를 가져오기
 			System.out.printf("누적 거래량                   : %s\n", rset.getString(6));// getString을 사용하여 6번째 칼럼값 가져오기
 			System.out.printf("누적 거래 대금                 : %s\n", rset.getString(7));// getString을 사용하여 7번째 칼럼값 가져오기
 		}
-
 		rset.close();// ResultSet 객체를 닫습니다.
 		k27_stmt.close();// Statement 객체를 닫습니다.
 		k27_conn.close();// Connection 객체를 닫습니다.
