@@ -1,0 +1,24 @@
+<!DOCTYPE html> <!-- 문서 유형을 정의 -->
+<html lang="en"> <!-- 언어와 함께 HTML 태그의 시작을 나타냄 -->
+
+<head> <!-- 문서의 헤더 정보를 나타냄 -->
+    <meta charset="UTF-8"> <!-- 문서의 문자 인코딩 방식을 설정 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- 렌더링 엔진을 지정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 모바일 장치의 화면 크기에 따라 화면 비율을 조정하기 위한 메타 태그 -->
+    <title>index.html</title> <!-- 문서의 제목을 설정 -->
+</head>
+
+<body> <!-- 문서의 본문을 나타냄 -->
+    <div style="display: flex;"> <!-- display 속성을 이용해 flexbox 레이아웃을 구성하는 div 태그 -->
+        <iframe src="menu.html" name="menu" frameborder="1" 
+        style="display: block; width: 40%; height: 100vh;"></iframe>
+        <!-- src 속성을 이용해 외부 문서를 불러오는 iframe 태그, name 속성으로 프레임 이름 설정, 
+            frameborder 속성으로 프레임의 테두리를 지정, 
+            style 속성으로 프레임의 크기와 테두리 스타일을 지정 -->
+        <iframe name="result" src="intro.jsp" frameborder="1"
+            style="display: block; width: 60%; height: 100vh;"></iframe>
+        <!-- src, name, frameborder, style 속성을 가진 또 다른 iframe 태그 -->
+    </div>
+</body>
+</html>

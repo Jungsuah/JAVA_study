@@ -1,0 +1,113 @@
+<!DOCTYPE html> <!-- 문서 유형을 정의 -->
+<html lang="en"> <!-- 언어와 함께 HTML 태그의 시작을 나타냄 -->
+
+<head> <!-- 문서의 헤더 정보를 나타냄 -->
+    <meta charset="UTF-8"> <!-- 문서의 문자 인코딩 방식을 설정 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- 렌더링 엔진을 지정 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 모바일 장치의 화면 크기에 따라 화면 비율을 조정하기 위한 메타 태그 -->
+    <title>inputForm1.html</title> <!-- 문서의 제목을 설정 -->
+
+    <script type="text/javascript">
+        function validateInput(inputElement) {
+                const value = inputElement.value;
+                
+                var check = true;
+
+                const pattern1 = /^([a-zA-Z]|[가-힣])+$/; // 한글, 영어만 입력받는 정규식1 생성
+                const pattern2 = /^.{1,20}$/; // 20자 이내만 입력받는 정규식2 생성
+                const pattern3 = /^(?:100|[1-9]?[0-9])$/; // 0~100사이의 정수값만 입력받는 정규식3 생성
+                const pattern = /^[0-9]{6}$/; // 6자리 정수만 받는 정규식 선언
+
+                if (inputElement.name === "name") {
+                    if (value === null || value === "") {
+                    alert("이름을 입력해야 합니다!");
+                    check = false;
+                    }else if (!pattern1.test(value) || !pattern2.test(value)) {
+                        alert("이름은 한글 또는 영어로 1자 이상 20자 이내로 입력해야 합니다!");
+                        inputElement.value = ""; // 입력 값을 초기화하거나 다른 조치를 취할 수 있습니다.
+                        check = false;
+                    }
+                } 
+                
+            if (inputElement.name === "kor" || inputElement.name === "eng" || inputElement.name === "mat") {
+                if (value === null || value === "") {
+                    if (inputElement.name === "kor") {
+                        alert("국어 점수를 입력해야 합니다!");
+                    } else if (inputElement.name === "eng") {
+                        alert("영어 점수를 입력해야 합니다!");
+                    } else if (inputElement.name === "mat") {
+                        alert("수학 점수를 입력해야 합니다!");
+                    }
+                    check = false;
+                } else if (!pattern3.test(value)) {
+                    if (inputElement.name === "kor") {
+                        alert("국어 성적은 0에서 100까지의 정수로 입력해야 합니다!");
+                    } else if (inputElement.name === "eng") {
+                        alert("영어 성적은 0에서 100까지의 정수로 입력해야 합니다!");
+                    } else if (inputElement.name === "mat") {
+                        alert("수학 성적은 0에서 100까지의 정수로 입력해야 합니다!");
+                    }
+                    inputElement.value = ""; // 입력 값을 초기화하거나 다른 조치를 취할 수 있습니다.
+                    check = false;
+                }
+            }
+            return check;
+        }
+
+
+        function handleSubmit() {
+            const form = document.getElementById("inputForm1");
+            const inputs = form.querySelectorAll("input");
+            var valid = true;
+
+            inputs.forEach(function(input) {
+                if (!validateInput(input)) {
+                    valid = false;
+                }
+            });
+
+            if (valid) {
+                alert("추가 입력 성공!");
+                form.submit();
+            }
+        }
+    </script>
+</head>
+
+<body> 
+    <h1>성적입력추가</h1>
+    <form method = "post" action = "insertDB.jsp" id="inputForm1">
+        <table cellspacing=1 width=400 border=0>
+            <tr>
+                <td width=300></td>
+                <td width=300 style="text-align: end;"><input type="button" value="추가" onclick="handleSubmit()"></td>
+            </tr>
+        </table>
+
+        <table cellspacing=1 width=400 border=1>
+            <tr>
+                <td width=100><p align=center>이름</p></td>
+                <td width=300><p align=center><input type="text" name="name" value="" onchange="validateInput(this)" required></p></td>
+            </tr>
+            <tr>
+                <td width=100><p align=center>학번</p></td>
+                <td width=300><p align=center>자동부여</p></td>
+            </tr>
+            <tr>
+                <td width=100><p align=center>국어</p></td>
+                <td width=300><p align=center><input type="text" name="kor" value="" onchange="validateInput(this)" required></p></td>
+            </tr>
+            <tr>
+                <td width=100><p align=center>영어</p></td>
+                <td width=300><p align=center><input type="text" name="eng" value="" onchange="validateInput(this)" required></p></td>
+            </tr>
+            <tr>
+                <td width=100><p align=center>수학</p></td>
+                <td width=300><p align=center><input type="text" name="mat" value="" onchange="validateInput(this)" required></p></td>
+            </tr>
+        </table>
+    </form>
+
+</body>
+</html> 
