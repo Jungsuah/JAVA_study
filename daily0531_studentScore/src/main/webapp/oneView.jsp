@@ -12,6 +12,13 @@ JSP 페이지에서 JDBC(Database Connectivity)를 사용하여 데이터베이�
 <html><!-- HTML 태그의 시작-->
 <head> <!-- 문서의 헤더 정보를 나타냄 -->
     <meta charset="UTF-8"> <!-- 문서의 문자 인코딩 방식을 설정 -->
+    
+    <script>
+        function goBack() {
+            history.go(-1);
+        }
+    </script>
+    
 </head>
 
 <body> 
@@ -25,6 +32,13 @@ String name = ss.getName();
         // 조회한 이름을 띄워준다
         out.println("<h1>[" + name + "]조회</h1>");
 %>
+	 <table cellspacing=1 width=600 border=0>
+            <tr>
+                <td width=300></td>
+                <td width=500 ><button style ="margin-left:380px;" onclick="goBack()">뒤로가기</button></td>
+            </tr>
+      </table>
+      
   <table cellspacing=1 width=600 border = 1>
      <tr>
             <td width=50><p align="center">이름</p></td>
@@ -52,7 +66,6 @@ String name = ss.getName();
                 break;
             }
 
-        out.println("<h1>조회</h1>");//값을 보여주고 조회를 띄워준다
         
         %>
   </table>
