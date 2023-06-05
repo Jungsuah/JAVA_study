@@ -10,37 +10,41 @@
 
     <script type="text/javascript">
     function validateInput(inputElement) {
-            const value = inputElement.value;
-            var check = true;
+        const value = inputElement.value;
+        var check = true;
 
-            const pattern = /^[0-9]{6}$/; // 6자리 정수만 받는 정규식 선언
+        const pattern = /^[0-9]{6}$/; // 6자리 정수만 받는 정규식 선언
 
-            if (inputElement.name === "searchID") {
-                if (value === null || value === "") {
-                    alert("학번을 입력해야 합니다!");
-                    check = false;
-                } else if (!pattern.test(value)) {
-                    alert("학번은 6자리 정수로 입력해야 합니다!");
-                    inputElement.value = ""; // 입력 값을 초기화하거나 다른 조치를 취할 수 있습니다.
-                    check = false;
-                }
+        if (inputElement.name === "searchID") {
+            // 검색할 학번 입력 필드인 경우
+            if (value === null || value === "") {
+                // 값이 비어있는 경우
+                alert("학번을 입력해야 합니다!");
+                check = false;
+            } else if (!pattern.test(value)) {
+                // 입력 값이 6자리 정수가 아닌 경우
+                alert("학번은 6자리 정수로 입력해야 합니다!");
+                inputElement.value = ""; // 입력 값을 초기화하거나 다른 조치를 취할 수 있습니다.
+                check = false;
             }
-            return check;
         }
+        return check;
+    }
 
         function handleSubmit() {
-            const form = document.getElementById("inputForm2");
-            const inputs = form.querySelectorAll("input");
-            var valid = true;
+            const form = document.getElementById("inputForm2"); // 폼 요소를 가져옵니다.
+            const inputs = form.querySelectorAll("input"); // 폼 내의 모든 입력 요소를 가져옵니다.
+            var valid = true; // 유효성 검사 결과를 저장할 변수입니다.
 
+            // 각 입력 요소에 대해 유효성 검사를 수행합니다.
             inputs.forEach(function (input) {
-                if (!validateInput(input)) {
-                    valid = false;
+                if (!validateInput(input)) { // 입력 요소가 유효하지 않은 경우
+                    valid = false; // 유효성 검사 결과를 false로 설정합니다.
                 }
             });
 
-            if (valid) {
-                form.submit();
+            if (valid == true) { // 모든 입력 요소가 유효한 경우
+                form.submit(); // 폼을 제출합니다.
             }
         }
     </script>
@@ -59,23 +63,23 @@
 
         <table cellspacing=1 width=400 border=1>
             <tr>
-                <td width=100><p align=center>이름</p></td>
+                <td width=100><p align=center>이름</p></td><!-- 이름 출력 -> 읽기 전용 -->
                 <td width=300 style="text-align: center;"><p align=center></p><input type="text" name="name" value="" readonly></p></td>
             </tr>
             <tr>
-                <td width=100><p align=center>학번</p></td>
+                <td width=100><p align=center>학번</p></td><!-- 학번 출력 -> 읽기 전용 -->
                 <td width=300 style="text-align: center;"><p align=center></p></td>
             </tr>
             <tr>
-                <td width=100><p align=center>국어</p></td>
+                <td width=100><p align=center>국어</p></td><!-- 국어 출력 -> 읽기 전용 -->
                 <td width=300 style="text-align: center;"><p align=center></p><input type="text" name="kor" value="" readonly></p></td>
             </tr>
             <tr>
-                <td width=100><p align=center>영어</p></td>
+                <td width=100><p align=center>영어</p></td><!-- 영어 출력 -> 읽기 전용 -->
                 <td width=300 style="text-align: center;"><p align=center></p><input type="text" name="eng" value="" readonly></p></td>
             </tr>
             <tr>
-                <td width=100><p align=center>수학</p></td>
+                <td width=100><p align=center>수학</p></td><!-- 수학 출력 -> 읽기 전용 -->
                 <td width=300 style="text-align: center;"><p align=center></p><input type="text" name="mat" value="" readonly></p></td>
             </tr>
         </table>

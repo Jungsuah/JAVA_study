@@ -19,15 +19,15 @@ JSP 페이지에서 JDBC(Database Connectivity)를 사용하여 데이터베이�
     <title>intro.html</title> <!-- 문서의 제목을 설정 -->
 </head>
 <body>
-<h1>JSP Database 실습 1</h1><!--첫 화면에서 result라는 name의 iframe에 보여질 처음 문자 설정-->
+<h1>JSP Database 실습 1</h1> <!-- 첫 화면에서 result라는 name의 iframe에 보여질 처음 문자 설정 -->
 
 <%	
     StudentScoreDao studentScoreDao = new StudentScoreDaoImpl();
-    int cnt = studentScoreDao.peopleCount();
-    cnt++;
-    out.println("<br><br>현재 홈페이지 방문조회수는 ["+cnt+"] 입니다</br>");
+    int cnt = studentScoreDao.peopleCount(); // 홈페이지 방문조회수 조회
+    cnt++; // 방문조회수 증가
+    out.println("<br><br>현재 홈페이지 방문조회수는 ["+cnt+"] 입니다</br>"); // 방문조회수 출력
    
-    int updatecnt = studentScoreDao.updatePeopleCount(cnt);
+    int updatecnt = studentScoreDao.updatePeopleCount(cnt); // 방문조회수 업데이트
 %>
 
 </body>

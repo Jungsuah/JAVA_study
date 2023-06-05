@@ -52,21 +52,6 @@ a:hover {
   font-weight: bold;
 }
 
-.actions {
-  margin-top: 20px;
-}
-
-.actions a {
-  margin-right: 10px;
-  padding: 8px 12px;
-  background-color: #4CAF50;
-  color: white;
-  border-radius: 5px;
-}
-
-.actions a:hover {
-  background-color: #45a049;
-}
 </style>
 <script>
 function goBack() {
@@ -81,16 +66,17 @@ function goBack() {
 <%
 request.setCharacterEncoding("UTF-8");
 response.setCharacterEncoding("UTF-8");
+//요청과 응답의 인코딩 설정
 
-TuypoDao tupyoDao = new TuypoDaoImpl(); 
+TuypoDao tupyoDao = new TuypoDaoImpl(); //tupyoDao를 임포트한다
 
 int id = 0;
-String sid = request.getParameter("id");
+String sid = request.getParameter("id");//id값을 넘겨받고 문자열에 저장
  if (sid != null && !sid.isEmpty()) {
-	 id = Integer.parseInt(sid);
+	 id = Integer.parseInt(sid);//값이 null이 아니고 있다면 int로 형변환하여 저장
  }
  
-int result = tupyoDao.deleteById(id);
+int result = tupyoDao.deleteById(id);//id값으로 삭제하는 메소드 실행
 %>
 
 <table cellspacing="0" border="0">
@@ -101,21 +87,20 @@ int result = tupyoDao.deleteById(id);
 	</tr>
 </table>
 
-<%if(result == 1){ %>
+<%if(result == 1){ %><!-- id로 투표가 삭제가 되었다면 -->
 
 <table cellspacing="0" border="0">
 	<tr>
-		<td><h2><a href="A_01.jsp">후보등록 결과: <%= id%>번 후보가 삭제되었습니다.</a></h2></td>
-		<td><button onclick="location.href='A_01.jsp'">후보 재등록</button></td>
+		<td><h2><a href="A_01.jsp">후보등록 결과: <%= id%>번 후보가 삭제되었습니다.</a></h2></td><!-- 몇번째 id값의 후보가 삭제되었는지 출력-->
+		<td><button onclick="location.href='A_01.jsp'">후보 재등록</button></td><!-- 재등록 버튼 생성-->
 	</tr>
 </table>
 
-
-<%} else {%>
+<%} else {%><!-- id로 투표가 삭제가 되지않았다면 -->
 <table cellspacing="0" border="0">
 	<tr>
-		<td><h2><a href="A_01.jsp">후보등록 결과: 후보가 실패되었습니다.</a></h2></td>
-		<td><button onclick="location.href='A_01.jsp'">후보 재등록</button></td>
+		<td><h2><a href="A_01.jsp">후보등록 결과: 후보가 실패되었습니다.</a></h2></td><!-- 후보등록 결과 출력-->
+		<td><button onclick="location.href='A_01.jsp'">후보 재등록</button></td><!-- 재등록 버튼 생성-->
 	</tr>
 </table>
 <%} %>

@@ -10,14 +10,14 @@
 <meta charset="UTF-8">
 <title>후보등록 A_01.jsp</title>
 <style>
-body {
+body { /* 전체 문서의 기본적인 스타일을 설정합니다. 폰트, 배경색, 여백 등을 지정*/
   font-family: Arial, sans-serif;
   background-color: #f2f2f2;
   margin: 0;
   padding: 0;
 }
 
-.container {
+.container {/* 컨테이너 요소의 스타일을 설정합니다. 너비, 여백, 배경색, 테두리 등을 지정*/
   width: 800px;
   margin: 20px auto;
   background-color: #fff;
@@ -26,67 +26,51 @@ body {
   border-radius: 5px;
 }
 
-table {
+table {/*테이블 요소의 스타일을 설정합니다. 너비, 테두리 축소, 테두리, 내부 여백 등을 지정합니다*/
   width: 100%;
   border-collapse: collapse;
 }
 
-table, th, td {
+table, th, td {/* 데이터 셀 요소 스타일을 설정 */
   border: 1px solid #ddd;
   padding: 10px;
 }
 
-th {
+th {/* 테이블의 헤더 셀 요소의 스타일을 설정*/
   background-color: #f2f2f2;
 }
 
-h1 {
+h1 {/*제목 요소의 스타일을 설정합니다. 여백, 폰트 크기 등을 지정*/
   margin: 0;
   padding: 0;
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-form {
+form {/*-폼 요소의 스타일을 설정합니다. 하단 여백을 지정*/
   margin-bottom: 10px;
 }
 
-input[type="text"], input[type="submit"] {
+input[type="text"], input[type="submit"] {/*텍스트 입력 필드와 제출 버튼의 스타일을 설정합니다. 내부 여백, 폰트 크기 등을 지정*/
   padding: 8px;
   font-size: 14px;
 }
 
-input[type="submit"] {
+input[type="submit"] {/*텍스트 입력 필드와 제출 버튼의 스타일을 설정합니다. 내부 여백, 폰트 크기 등을 지정*/
   background-color: #4CAF50;
   color: white;
   border: none;
   cursor: pointer;
 }
 
-a {
+a {/*링크 요소의 스타일을 설정합니다. 텍스트에 밑줄이 없도록 지정*/
   text-decoration: none;
 }
 
-a:hover {
+a:hover {/*호버 상태일 때 링크 요소의 스타일을 설정*/
   font-weight: bold;
 }
 
-.actions {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.actions a {
-  margin-right: 10px;
-  padding: 8px 12px;
-  background-color: #4CAF50;
-  color: white;
-  border-radius: 5px;
-}
-
-.actions a:hover {
-  background-color: #45a049;
-}
 </style>
 </head>
 
@@ -118,14 +102,17 @@ function confirmAndInsert() { //함수 confirmAndInsert 생성
 <div class="container">
 
 <%
+// 요청과 응답의 인코딩 설정
 request.setCharacterEncoding("UTF-8");
 response.setCharacterEncoding("UTF-8");
 
-TuypoDao tupyoDao = new TuypoDaoImpl(); 
-List<Hubo_Table> huboList= tupyoDao.selectAll();
+// TuypoDao 객체 생성 및 후보 목록 조회
+TuypoDao tupyoDao = new TuypoDaoImpl();
+List<Hubo_Table> huboList = tupyoDao.selectAll();
+
+// 빈 후보 번호 생성
 int startID = tupyoDao.blankHuboNumber();
 %>
-
 
 <table cellspacing="0" border="0">
 	<tr>
@@ -141,33 +128,32 @@ int startID = tupyoDao.blankHuboNumber();
 		<td><p align="center">후보명 입력</p></td>
 	</tr>
 	
-<%
-for (Hubo_Table hubo : huboList) {
-System.out.println(hubo.getId() + hubo.getName());
-%>
-
-  <tr>
+<%// 후보 리스트를 받아와서 각 후보별로 반복하여 출력
+for (Hubo_Table hubo : huboList) {%>
     <td>
-      <form method="post" action="A_02.jsp" >
-        기호:<input type="text" name="id" value="<%= hubo.getId() %>" readonly >
+      <form method="post" action="A_02.jsp">
+        <!-- 후보 아이디 정보 출력 -->
+        기호:<input type="text" name="id" value="<%= hubo.getId() %>" readonly>
+        <!-- 후보 이름 정보 출력 -->
         이름:<input type="text" name="name" value="<%= hubo.getName() %>" readonly>
         <input type="submit" value="삭제">
       </form>
     </td>
   </tr>
-<%
-  }
-%>
+<%}%>
 	<tr>
 		<td>
-		<form method="post" id = "formInsert">
+		<form method="post" id="formInsert">
+			<!-- 새로운 후보 추가 폼 -->
+			<!-- 추가되야 하는 아이디 값을 구해와서 출력 읽기 전용 -->
 			기호:<input type="text" name="id" value="<%= startID %>" readonly>
+			<!-- 추가되야 하는 이름을 넣어주기 -->
 			이름:<input type="text" name="name" value="">
+			<!-- confirmAndInsert 함수로 값을 submit 하기전에 검사하기 -->
 			<input type="button" value="추가" onclick="confirmAndInsert()">
 		</form>	
 		</td>	
 	</tr>
-
 </table>
 
 </div>

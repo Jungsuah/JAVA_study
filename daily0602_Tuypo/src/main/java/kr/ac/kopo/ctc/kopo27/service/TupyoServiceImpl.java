@@ -7,38 +7,38 @@ import java.sql.Statement;
 
 public class TupyoServiceImpl implements TupyoService {
 
-	private Connection conn = null;
-	private Statement stmt = null;
-	private ResultSet rset = null;
+    private Connection conn = null;
+    private Statement stmt = null;
+    private ResultSet rset = null;
 
-	@Override
-	public int totalCount() {
-		int count = 0;
-		try {
-			// "com.mysql.cj.jdbc.Driver" 클래스를 동적으로 로드하기 위해 Java의 Class.forName 메서드를 호출하여
-			// MySQL 데이터베이스와의 연결
-			Class.forName("com.mysql.cj.jdbc.Driver");
+    @Override
+    public int totalCount() {
+        int count = 0;
+        try {
+            // "com.mysql.cj.jdbc.Driver" 클래스를 동적으로 로드하기 위해 Java의 Class.forName 메서드를 호출하여
+            // MySQL 데이터베이스와의 연결
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL 데이터베이스에 연결하기 위한 Connection 객체를 생성합니다.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+            // MySQL 데이터베이스에 연결하기 위한 Connection 객체를 생성합니다.
+            conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
 
-			// Statement 객체를 생성합니다.
-			stmt = conn.createStatement();
+            // Statement 객체를 생성합니다.
+            stmt = conn.createStatement();
 
-			rset = stmt.executeQuery("select count(*) from Tupyo_table;");
+            rset = stmt.executeQuery("select count(*) from Tupyo_table;"); // Tupyo_table의 레코드 개수를 조회하는 쿼리 실행
 
-			while (rset.next()) { // rset객체의 각 행을 반복한다
-				count = rset.getInt(1);
-			}
+            while (rset.next()) { // rset객체의 각 행을 반복한다
+                count = rset.getInt(1); // 조회된 레코드 개수를 count 변수에 저장
+            }
 
-			System.out.println("총 득표수 : " + count);
+            System.out.println("총 득표수 : " + count);
 
-			stmt.close();// 사용한 Statement 객체 닫기
-			conn.close();// 사용한 Connection 객체 닫기
+            stmt.close(); // 사용한 Statement 객체 닫기
+            conn.close(); // 사용한 Connection 객체 닫기
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return count;
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 }

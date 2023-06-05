@@ -60,7 +60,7 @@ JSP 페이지에서 JDBC(Database Connectivity)를 사용하여 데이터베이�
     }
     
     try{
-    ss = studentScoreDao.selectBystudentid(searchStudentID);
+    ss = studentScoreDao.selectByStudentId(searchStudentID);
     fromPT = studentScoreDao.updateDataCount(searchStudentID);//몇번째 항목인지 조회
     int num = ss.getId();
 	ss.setName(name);
@@ -106,15 +106,16 @@ JSP 페이지에서 JDBC(Database Connectivity)를 사용하여 데이터베이�
 
 <form method="post" id="form_1">
     <table cellspacing=1 width=600 border=1>
-        <tr>
-            <td width=50><p align="center">이름</p></td>
-            <td width=50><p align="center">학번</p></td>
-            <td width=50><p align="center">국어</p></td>
-            <td width=50><p align="center">영어</p></td>
-            <td width=50><p align="center">수학</p></td>
-            <td width=50><p align="center">총점</p></td>
-            <td width=50><p align="center">평균</p></td>
-            <td width=50><p align="center">등수</p></td>
+        <tr>   <!-- 이 부분은 학생 성적 정보를 출력하기 위한 테이블 헤더입니다. -->
+        <!-- 테이블의 내용은 아래 코드로 동적으로 추가될 것입니다. -->
+            <td width=50><p align="center">이름</p></td> <!-- 각 열에는 이름 표시됩니다. -->
+            <td width=50><p align="center">학번</p></td> <!-- 각 열에는 학번 표시됩니다. -->
+            <td width=50><p align="center">국어</p></td> <!-- 각 열에는 국어 표시됩니다. -->
+            <td width=50><p align="center">영어</p></td> <!-- 각 열에는 영어 표시됩니다. -->
+            <td width=50><p align="center">수학</p></td> <!-- 각 열에는 수학 표시됩니다. -->
+            <td width=50><p align="center">총점</p></td> <!-- 각 열에는 총점 표시됩니다. -->
+            <td width=50><p align="center">평균</p></td> <!-- 각 열에는 평균 표시됩니다. -->
+            <td width=50><p align="center">등수</p></td> <!-- 각 열에는 등수 표시됩니다. -->
         </tr>
         
         <%
@@ -125,13 +126,13 @@ JSP 페이지에서 JDBC(Database Connectivity)를 사용하여 데이터베이�
                 out.println("<tr>");    
             } 
 			out.println("<td><p align=center><p align=center><a href=\"oneView.jsp?id=" + studentScore.getId() + "\" target=\"result\">" + studentScore.getName() + "</p></td>");
-			out.println("<td><p align=center>" + studentScore.getStudentid() + "</p></td>");
-			out.println("<td><p align=right>" + studentScore.getKor() + "</p></td>");
-			out.println("<td><p align=right>" + studentScore.getEng() + "</p></td>");
-			out.println("<td><p align=right>" + studentScore.getMat() + "</p></td>");
-			out.println("<td><p align=center>" + studentScore.getSum() + "</p></td>");
-			out.println("<td><p align=center>" + studentScore.getAve() + "</p></td>");
-			out.println("<td><p align=center>" + studentScore.getRanking() + "</p></td>");
+			out.println("<td><p align=center>" + studentScore.getStudentid() + "</p></td>");//studentScore에서 학번 출력
+			out.println("<td><p align=right>" + studentScore.getKor() + "</p></td>");//studentScore에서 국어 출력
+			out.println("<td><p align=right>" + studentScore.getEng() + "</p></td>");//studentScore에서 영어 출력
+			out.println("<td><p align=right>" + studentScore.getMat() + "</p></td>");//studentScore에서 수학 출력
+			out.println("<td><p align=center>" + studentScore.getSum() + "</p></td>");//studentScore에서 합계 출력
+			out.println("<td><p align=center>" + studentScore.getAve() + "</p></td>");//studentScore에서 평균 출력
+			out.println("<td><p align=center>" + studentScore.getRanking() + "</p></td>");//studentScore에서 등수 출력
 			out.println("</tr>");
 		}
         
@@ -141,17 +142,17 @@ JSP 페이지에서 JDBC(Database Connectivity)를 사용하여 데이터베이�
     </table>
 </form>
 
-       <!--버튼을 출력하기 위한 div 생성-->
-       <div style ="text-align:left; font-weight: bold; font-size : 20pt;  margin-left:150px;">
-                     <%if(pp != -1){ %> <!--현재 페이지가 10보다 크다면 <<와 <버튼 출력-->
+        <!--버튼을 출력하기 위한 div 생성-->
+        <div style ="text-align:left; font-weight: bold; font-size : 20pt;  margin-left:150px;">
+                    <%if(pp != -1){ %> <!--pp값이 -1이면 보이지 않게 처리-->
                         <a href="Allview.jsp?pageNumber=<%= pp %>&cntPT=<%= cntPT %>&searchStudentID=<%=searchStudentID %>"><<</a><span></span> <!--무조건 1페이지로 이동하는 버튼-->
-                        <!--before은 버튼임으로 버튼과 cntPT를 사용하여 fromPT값을 구하기-->
+                        <!--p값을 통해 이전 10블록전으로 이동하는 버튼 출력 -->
                         <a href="Allview.jsp?pageNumber=<%= p %>&cntPT=<%= cntPT %>&searchStudentID=<%=searchStudentID %>"><</a>
                     <% } %>
                     
                         <%for (int index = s; index < e + 1; index++) {%>
-                            <!--만약 현재 페이지가 출력하고 싶은 버튼의 수와 같다면 스타일을 red로 지정-->
-                            <% if (index == c) {%>
+                            <!--만약 시작번호 부터 끝 번호까지 버튼을 출력하기-->
+                            <% if (index == c) {%> <!--만약 번호가 현재 페이지와 같다면 빨간색으로 출력하기-->
                             <a href="Allview.jsp?pageNumber=<%= index %>&cntPT=<%= cntPT %>&searchStudentID=<%=searchStudentID %>" style="color: red"><%= index %></a><span></span>
                             <%} else {%><!-- 현재 페이지와 같은 버튼이 아니라면 스타일 없이 버튼 출력-->
                             <a href="Allview.jsp?pageNumber=<%= index %>&cntPT=<%= cntPT %>&searchStudentID=<%=searchStudentID %>"><%= index %></a><span></span>

@@ -35,7 +35,7 @@ public class TuypoDaoImpl implements TuypoDao {
 
 			ResultSet rset = stmt.executeQuery("select * from hubo_table;");
 			// sql쿼리를 실행하고 결과를 ResultSet에 반환한다
-			startID = 1;// 최초 학번을 fromId 변수에 대입
+			startID = 1;// 최초 학번을 startID 변수에 대입
 			while (rset.next()) { // rset객체의 각 행을 반복한다
 				if (startID == rset.getInt(1)) { // 첫번째 자료부터 차례대로 학번을 뽑아 존재하면
 					startID++; // 다음학번으로 넘어간다
@@ -45,7 +45,7 @@ public class TuypoDaoImpl implements TuypoDao {
 				}
 			}
 
-			// INSERT 쿼리를 사용하여 새로운 학번을 추가
+			// INSERT 쿼리를 사용하여 새로운 데이터를 추가
 			String sql = "INSERT INTO hubo_table(id, name) VALUES(" + id + ", '" + name + "');";
 
 			stmt.execute(sql);
@@ -61,7 +61,7 @@ public class TuypoDaoImpl implements TuypoDao {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public int insertTuypo(int id, int age) {// 후보 추가하기
 		int result = 1;
@@ -69,16 +69,16 @@ public class TuypoDaoImpl implements TuypoDao {
 			// "com.mysql.cj.jdbc.Driver" 클래스를 동적으로 로드하기 위해 Java의 Class.forName 메서드를 호출하여
 			// MySQL 데이터베이스와의 연결
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			
+
 			// MySQL 데이터베이스에 연결하기 위한 Connection 객체를 생성합니다.
 			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
-			
+
 			// Statement 객체를 생성합니다.
 			stmt = conn.createStatement();
-			
+
 			int startID = 0;
-			
-			// INSERT 쿼리를 사용하여 새로운 학번을 추가
+
+			// INSERT 쿼리를 사용하여 새로운 데이터를 추가
 			String sql = "INSERT INTO Tupyo_table(id,age ) VALUES(" + id + ", " + age + ");";
 
 			stmt.execute(sql);
@@ -87,14 +87,14 @@ public class TuypoDaoImpl implements TuypoDao {
 
 			stmt.close();// 사용한 Statement 객체 닫기
 			conn.close();// 사용한 Connection 객체 닫기
-			
+
 		} catch (Exception e) {
 			result = -1;
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
+
 	@Override
 	public int blankHuboNumber() {// 후보 추가하기
 		int startID = 0;
@@ -102,16 +102,16 @@ public class TuypoDaoImpl implements TuypoDao {
 			// "com.mysql.cj.jdbc.Driver" 클래스를 동적으로 로드하기 위해 Java의 Class.forName 메서드를 호출하여
 			// MySQL 데이터베이스와의 연결
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			
+
 			// MySQL 데이터베이스에 연결하기 위한 Connection 객체를 생성합니다.
 			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
-			
+
 			// Statement 객체를 생성합니다.
 			stmt = conn.createStatement();
-			
+
 			ResultSet rset = stmt.executeQuery("select * from hubo_table;");
 			// sql쿼리를 실행하고 결과를 ResultSet에 반환한다
-			startID = 1;// 최초 학번을 fromId 변수에 대입
+			startID = 1;// 최초 학번을 startID 변수에 대입
 			while (rset.next()) { // rset객체의 각 행을 반복한다
 				if (startID == rset.getInt(1)) { // 첫번째 자료부터 차례대로 학번을 뽑아 존재하면
 					startID++; // 다음학번으로 넘어간다
@@ -119,12 +119,12 @@ public class TuypoDaoImpl implements TuypoDao {
 					break; // 루프를 종료한다
 				}
 			}
-			
+
 			System.out.println("번호 가져오기 성공");
-			
+
 			stmt.close();// 사용한 Statement 객체 닫기
 			conn.close();// 사용한 Connection 객체 닫기
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -146,15 +146,15 @@ public class TuypoDaoImpl implements TuypoDao {
 			Statement stmt = conn.createStatement();
 
 			// 쿼리 결과값을 담을 ResultSet 객체를 생성합니다.
+			// 후보의 아이디, 후보의 이름, 후보의 득표수, 후보의 득표율을 가져오는 쿼리
 			String query = "SELECT h.id, h.name, COUNT(*) AS voteCount, "
-				    + "(COUNT(*) * 100 / total.total_votes) AS votePercentage "
-				    + "FROM hubo_table h "
-				    + "JOIN Tupyo_table t ON h.id = t.id "
-				    + "CROSS JOIN (SELECT COUNT(*) AS total_votes FROM Tupyo_table) AS total "
-				    + "GROUP BY h.id, h.name, total.total_votes;";
+					+ "(COUNT(*) * 100 / total.total_votes) AS votePercentage " + "FROM hubo_table h "
+					+ "JOIN Tupyo_table t ON h.id = t.id "
+					+ "CROSS JOIN (SELECT COUNT(*) AS total_votes FROM Tupyo_table) AS total "
+					+ "GROUP BY h.id, h.name, total.total_votes;";
 
 			ResultSet rset = stmt.executeQuery(query);
-			while(rset.next()) {
+			while (rset.next()) {
 				VotingResult result = new VotingResult();
 				result.setId(rset.getInt(1));
 				result.setName(rset.getString(2));
@@ -162,7 +162,7 @@ public class TuypoDaoImpl implements TuypoDao {
 				result.setVotePercentage(rset.getInt(4));
 				voteResultList.add(result);
 			}
-			
+
 			rset.close();// 사용한 ResultSet 객체 닫기
 			stmt.close();// 사용한 Statement 객체 닫기
 			conn.close();// 사용한 Connection 객체 닫기
@@ -176,7 +176,6 @@ public class TuypoDaoImpl implements TuypoDao {
 
 	@Override
 	public List<VotingResult> getVotingResultsAge(int id) {// 후보의 연령대별 득표수와 득표율 가져오기
-		System.out.println("연령별 가져오기!!!!!!!!");
 		List<VotingResult> voteResultList = new ArrayList<VotingResult>();
 		try {
 			// "com.mysql.cj.jdbc.Driver" 클래스를 동적으로 로드하기 위해 Java의 Class.forName 메서드를 호출하여
@@ -190,9 +189,10 @@ public class TuypoDaoImpl implements TuypoDao {
 			Statement stmt = conn.createStatement();
 
 			// 쿼리 결과값을 담을 ResultSet 객체를 생성합니다.
+			// 후보의 이름, 후보를 투표한 사람들의 연령대, 후보의 득표수, 후보의 득표율을 가져오는 쿼리
 			String query = "select B.name, A.연령대, A.득표수, A.득표율 " + "from (select id, age*10 as 연령대, count(age) as 득표수, "
-					+ "count(age)/(select count(*) from Tupyo_table where id = "+  id + ") * 100 as 득표율 "
-					+ "from Tupyo_table where id = "+ id +" group by age order by age) as A "
+					+ "count(age)/(select count(*) from Tupyo_table where id = " + id + ") * 100 as 득표율 "
+					+ "from Tupyo_table where id = " + id + " group by age order by age) as A "
 					+ "inner join hubo_table B on A.id = B.id";
 
 			ResultSet rset = stmt.executeQuery(query);
@@ -220,7 +220,7 @@ public class TuypoDaoImpl implements TuypoDao {
 	public List<Hubo_Table> selectAll() {// StudentScore 객체들의 리스트를 반환하는 메소드 selectAll
 		System.out.println("===> hubo_Table과 연결 시작!");
 
-		List<Hubo_Table> list = new ArrayList<Hubo_Table>();
+		List<Hubo_Table> list = new ArrayList<Hubo_Table>();// 리스트 객체 선언
 		try {
 			// "com.mysql.cj.jdbc.Driver" 클래스를 동적으로 로드하기 위해 Java의 Class.forName 메서드를 호출하여
 			// MySQL 데이터베이스와의 연결
@@ -233,14 +233,14 @@ public class TuypoDaoImpl implements TuypoDao {
 			stmt = conn.createStatement();
 
 			// 쿼리 결과값을 담을 ResultSet 객체를 생성합니다.
-			// examtable에서 전체 행을 조회하는 쿼리
+			// hubo_table에서 전체 행을 조회하는 쿼리
 			rset = stmt.executeQuery("select * from hubo_table;");
 
-			while (rset.next()) {
+			while (rset.next()) {// 값이 없을때까지 반복
 				Hubo_Table hubo = new Hubo_Table();
-				hubo.setId(rset.getInt("id"));
-				hubo.setName(rset.getString("NAME"));
-				list.add(hubo);
+				hubo.setId(rset.getInt("id"));// id를 가져와서 값을 세팅
+				hubo.setName(rset.getString("NAME"));// NAME을 가져와서 값을 세팅
+				list.add(hubo);// 리스트 객체에 담기
 			}
 
 			rset.close();// 사용한 ResultSet 객체 닫기
@@ -250,9 +250,6 @@ public class TuypoDaoImpl implements TuypoDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		for (Hubo_Table hubo_Table : list) {
-//			System.out.println(hubo_Table.getId() + hubo_Table.getName());
-//		}
 		return list;
 	}
 
@@ -264,9 +261,9 @@ public class TuypoDaoImpl implements TuypoDao {
 			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
 
 			stmt = conn.createStatement();
-			String sql1 = "DELETE FROM Tupyo_table WHERE id = " + id;
+			String sql1 = "DELETE FROM Tupyo_table WHERE id = " + id; // Tupyo_table에서 해당 id를 가진 레코드 삭제
 			stmt.executeUpdate(sql1);
-			String sql2 = "DELETE FROM hubo_table WHERE id = " + id;
+			String sql2 = "DELETE FROM hubo_table WHERE id = " + id; // hubo_table에서 해당 id를 가진 레코드 삭제
 			stmt.executeUpdate(sql2);
 			System.out.println("delete id로 성공");
 			result = 1;
@@ -290,5 +287,4 @@ public class TuypoDaoImpl implements TuypoDao {
 		}
 		return result;
 	}
-
 }

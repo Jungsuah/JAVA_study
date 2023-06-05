@@ -8,14 +8,14 @@
 <meta charset="UTF-8">
 <title>후보등록 A_03.jsp</title>
 <style>
-body {
+body { /* 전체 문서의 기본적인 스타일을 설정합니다. 폰트, 배경색, 여백 등을 지정*/
   font-family: Arial, sans-serif;
   background-color: #f2f2f2;
   margin: 0;
   padding: 0;
 }
 
-.container {
+.container {/* 컨테이너 요소의 스타일을 설정합니다. 너비, 여백, 배경색, 테두리 등을 지정*/
   width: 800px;
   margin: 20px auto;
   background-color: #fff;
@@ -24,67 +24,51 @@ body {
   border-radius: 5px;
 }
 
-table {
+table {/*테이블 요소의 스타일을 설정합니다. 너비, 테두리 축소, 테두리, 내부 여백 등을 지정합니다*/
   width: 100%;
   border-collapse: collapse;
 }
 
-table, th, td {
+table, th, td {/* 데이터 셀 요소 스타일을 설정 */
   border: 1px solid #ddd;
   padding: 10px;
 }
 
-th {
+th {/* 테이블의 헤더 셀 요소의 스타일을 설정*/
   background-color: #f2f2f2;
 }
 
-h1 {
+h1 {/*제목 요소의 스타일을 설정합니다. 여백, 폰트 크기 등을 지정*/
   margin: 0;
   padding: 0;
   font-size: 24px;
   margin-bottom: 20px;
 }
 
-form {
+form {/*-폼 요소의 스타일을 설정합니다. 하단 여백을 지정*/
   margin-bottom: 10px;
 }
 
-input[type="text"], input[type="submit"] {
+input[type="text"], input[type="submit"] {/*텍스트 입력 필드와 제출 버튼의 스타일을 설정합니다. 내부 여백, 폰트 크기 등을 지정*/
   padding: 8px;
   font-size: 14px;
 }
 
-input[type="submit"] {
+input[type="submit"] {/*텍스트 입력 필드와 제출 버튼의 스타일을 설정합니다. 내부 여백, 폰트 크기 등을 지정*/
   background-color: #4CAF50;
   color: white;
   border: none;
   cursor: pointer;
 }
 
-a {
+a {/*링크 요소의 스타일을 설정합니다. 텍스트에 밑줄이 없도록 지정*/
   text-decoration: none;
 }
 
-a:hover {
+a:hover {/*호버 상태일 때 링크 요소의 스타일을 설정*/
   font-weight: bold;
 }
 
-.actions {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.actions a {
-  margin-right: 10px;
-  padding: 8px 12px;
-  background-color: #4CAF50;
-  color: white;
-  border-radius: 5px;
-}
-
-.actions a:hover {
-  background-color: #45a049;
-}
 </style>
 </head>
 <div class="container">

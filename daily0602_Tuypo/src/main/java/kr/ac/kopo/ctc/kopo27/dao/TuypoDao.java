@@ -20,5 +20,4 @@ public interface TuypoDao {
 	int blankHuboNumber();//빈 후보 번호 가져오기
 
 	int insertTuypo(int id, int age);//투표하기
-
 }
