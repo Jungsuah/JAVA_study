@@ -133,7 +133,7 @@ if (votingResult != null) {//값이 있으면 출력
 
 <table cellspacing=1 width=600 border=0>
             <tr>
-                <td width=500><h1>[<%=name%>] 후보 득표 성향 </h1></td><!-- 받아온 후보자의 이름 출력 -->
+                <td width=500><h1>[<%= id%>번 <%=name%>] 후보 득표 성향 </h1></td><!-- 받아온 후보자의 이름 출력 -->
                 <!-- 뒤로가기 버튼 출력 -->
                 <td width=300 ><button style = 'margin-left:100px;' onclick="goBack()">뒤로가기</button></td>
             </tr>

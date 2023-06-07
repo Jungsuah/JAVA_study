@@ -15,26 +15,26 @@ public class TupyoServiceImpl implements TupyoService {
     public int totalCount() {
         int count = 0;
         try {
-            // "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-            // MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+            // "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+            // MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+            // MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
             conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
 
-            // Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+            // Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
             stmt = conn.createStatement();
 
-            rset = stmt.executeQuery("select count(*) from Tupyo_table;"); // Tupyo_tableÀÇ ·¹ÄÚµå °³¼ö¸¦ Á¶È¸ÇÏ´Â Äõ¸® ½ÇÇà
+            rset = stmt.executeQuery("select count(*) from Tupyo_table;"); // Tupyo_tableì˜ ë ˆì½”ë“œ ê°œìˆ˜ë¥¼ ì¡°íšŒí•˜ëŠ” ì¿¼ë¦¬ ì‹¤í–‰
 
-            while (rset.next()) { // rset°´Ã¼ÀÇ °¢ ÇàÀ» ¹İº¹ÇÑ´Ù
-                count = rset.getInt(1); // Á¶È¸µÈ ·¹ÄÚµå °³¼ö¸¦ count º¯¼ö¿¡ ÀúÀå
+            while (rset.next()) { // rsetê°ì²´ì˜ ê° í–‰ì„ ë°˜ë³µí•œë‹¤
+                count = rset.getInt(1); // ì¡°íšŒëœ ë ˆì½”ë“œ ê°œìˆ˜ë¥¼ count ë³€ìˆ˜ì— ì €ì¥
             }
 
-            System.out.println("ÃÑ µæÇ¥¼ö : " + count);
+            System.out.println("ì´ ë“í‘œìˆ˜ : " + count);
 
-            stmt.close(); // »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-            conn.close(); // »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+            stmt.close(); // ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+            conn.close(); // ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,13 +1,13 @@
 package kr.ac.kopo.ctc.kopo27.dto;
 
 public class Pagination{
-	private int c;//ÇöÀç ÆäÀÌÁö
-	private int s;//½ÃÀÛ ¹öÆ°
-	private int e;//³¡ ¹öÆ°
+	private int c;//í˜„ì¬ í˜ì´ì§€
+	private int s;//ì‹œì‘ ë²„íŠ¼
+	private int e;//ë ë²„íŠ¼
 	private int p;// 
 	private int pp;
-	private int n;//´ÙÀ½ºí·Ï ½ÃÀÛ¹öÆ°
-	private int nn;//¸Ç ¸¶Áö¸· ÆäÀÌÁö ¹öÆ°
+	private int n;//ë‹¤ìŒë¸”ë¡ ì‹œì‘ë²„íŠ¼
+	private int nn;//ë§¨ ë§ˆì§€ë§‰ í˜ì´ì§€ ë²„íŠ¼
 	
 	public int getC() {
 		return c;

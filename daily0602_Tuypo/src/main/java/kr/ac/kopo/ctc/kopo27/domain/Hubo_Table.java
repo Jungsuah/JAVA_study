@@ -1,21 +1,20 @@
 package kr.ac.kopo.ctc.kopo27.domain;
 
 public class Hubo_Table {
-	private int id;//ÈÄº¸ ¾ÆÀÌµğ
-	private String name;//ÈÄº¸ ÀÌ¸§
+	private int id;//í›„ë³´ ì•„ì´ë””
+	private String name;//í›„ë³´ ì´ë¦„
 	
-	public int getId() {//ÈÄº¸ ¾ÆÀÌµğ °¡Á®´Ù¾²´Â ÇÔ¼ö
+	public int getId() {//í›„ë³´ ì•„ì´ë”” ê°€ì ¸ë‹¤ì“°ëŠ” í•¨ìˆ˜
 		return id;
 	}
-	public void setId(int id) {//ÈÄº¸ ¾ÆÀÌµğ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	public void setId(int id) {//í›„ë³´ ì•„ì´ë”” ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 		this.id = id;
 	}
-	public String getName() {//ÈÄº¸ ÀÌ¸§ °¡Á®´Ù¾²´Â ÇÔ¼ö
+	public String getName() {//í›„ë³´ ì´ë¦„ ê°€ì ¸ë‹¤ì“°ëŠ” í•¨ìˆ˜
 		return name;
 	}
-	public void setName(String name) {//ÈÄº¸ ÀÌ¸§ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	public void setName(String name) {//í›„ë³´ ì´ë¦„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 		this.name = name;
 	}
 }
-
 

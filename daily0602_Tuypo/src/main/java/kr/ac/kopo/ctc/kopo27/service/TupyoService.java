@@ -2,5 +2,5 @@ package kr.ac.kopo.ctc.kopo27.service;
 
 public interface TupyoService {
 	
-	int totalCount(); // ÀüÃ¼ Çà¼ö¸¦ ±¸ÇÏ´Â ÇÔ¼ö
+	int totalCount(); // ì´ë“í‘œìˆ˜ ê°€ì ¸ì˜¤ê¸°
 }

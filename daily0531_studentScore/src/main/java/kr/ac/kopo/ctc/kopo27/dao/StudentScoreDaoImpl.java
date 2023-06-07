@@ -12,351 +12,351 @@ import kr.ac.kopo.ctc.kopo27.domain.StudentScore;
 
 public class StudentScoreDaoImpl implements StudentScoreDao {
 
-	private Connection conn = null;  // µ¥ÀÌÅÍº£ÀÌ½º ¿¬°áÀ» À§ÇÑ Connection °´Ã¼
-	private Statement stmt = null;  // SQL¹® ½ÇÇàÀ» À§ÇÑ Statement °´Ã¼
-	private ResultSet rset = null;  // SQL Äõ¸® °á°ú¸¦ ÀúÀåÇÏ±â À§ÇÑ ResultSet °´Ã¼
+	private Connection conn = null;  // ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²°ì„ ìœ„í•œ Connection ê°ì²´
+	private Statement stmt = null;  // SQLë¬¸ ì‹¤í–‰ì„ ìœ„í•œ Statement ê°ì²´
+	private ResultSet rset = null;  // SQL ì¿¼ë¦¬ ê²°ê³¼ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ ResultSet ê°ì²´
 	
 	@Override
-	// ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍÀÇ ÃÑ °³¼ö¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+	// í•™ìƒ ì ìˆ˜ ë°ì´í„°ì˜ ì´ ê°œìˆ˜ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
 	public int count() {
 		int count = 0;
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			stmt = conn.createStatement();
 
-			// Äõ¸® °á°ú°ªÀ» ´ãÀ» ResultSet °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			// examtable¿¡¼­ ÀüÃ¼ Çà °¹¼ö¸¦ Á¶È¸ÇÏ´Â Äõ¸®
+			// ì¿¼ë¦¬ ê²°ê³¼ê°’ì„ ë‹´ì„ ResultSet ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			// examtableì—ì„œ ì „ì²´ í–‰ ê°¯ìˆ˜ë¥¼ ì¡°íšŒí•˜ëŠ” ì¿¼ë¦¬
 			rset = stmt.executeQuery("SELECT count(*) FROM examtable;");
 
-			//rset¿¡ ¹Ş¾Æ¿Â °ªÀÌ ¾øÀ»¶§±îÁö ¹İº¹ÇÏ¸é¼­ °ª ²¨³»±â
+			//rsetì— ë°›ì•„ì˜¨ ê°’ì´ ì—†ì„ë•Œê¹Œì§€ ë°˜ë³µí•˜ë©´ì„œ ê°’ êº¼ë‚´ê¸°
 			while (rset.next()) {
-				count = rset.getInt(1);//¹İÈ¯µÇ´Â Ã¹¹øÂ° ¼ıÀÚ¸¦ count¿¡ ´ëÀÔ
+				count = rset.getInt(1);//ë°˜í™˜ë˜ëŠ” ì²«ë²ˆì§¸ ìˆ«ìë¥¼ countì— ëŒ€ì…
 			}
 
-			rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
-		} catch (Exception e) {//¿À·ù°¡ ¹ß»ıÇÏ¸é 
-			e.printStackTrace();//¿À·ù¸¦ Ãâ·Â
+		} catch (Exception e) {//ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´ 
+			e.printStackTrace();//ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 		}
-		return count;//count°ªÀ» ¹İÈ¯
+		return count;//countê°’ì„ ë°˜í™˜
 	}
 
 	@Override
-	// ÁÖ¾îÁø ÇĞ»ı id¿¡ ÇØ´çÇÏ´Â ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍÀÇ µ¥ÀÌÅÍ °³¼ö¸¦ Á¶È¸ÇÏ¿© ´ÙÀ½À¸·Î µé¾î°¡¾ßµÇ´Â studentId¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+	// ì£¼ì–´ì§„ í•™ìƒ idì— í•´ë‹¹í•˜ëŠ” í•™ìƒ ì ìˆ˜ ë°ì´í„°ì˜ ë°ì´í„° ê°œìˆ˜ë¥¼ ì¡°íšŒí•˜ì—¬ ë‹¤ìŒìœ¼ë¡œ ë“¤ì–´ê°€ì•¼ë˜ëŠ” studentIdë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
 	public int updateDataCount(int studentId) {
 		int count = 0;
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			stmt = conn.createStatement();
 
-			// Äõ¸® °á°ú°ªÀ» ´ãÀ» ResultSet °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			// examtable¿¡¼­ ÀüÃ¼ ÇàÀ» ÀüºÎ °¡Á®¿À´Â Äõ¸®
+			// ì¿¼ë¦¬ ê²°ê³¼ê°’ì„ ë‹´ì„ ResultSet ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			// examtableì—ì„œ ì „ì²´ í–‰ì„ ì „ë¶€ ê°€ì ¸ì˜¤ëŠ” ì¿¼ë¦¬
 			rset = stmt.executeQuery("SELECT * FROM examtable;");
 
-			while (rset.next()) {// rset¿¡ ¹Ş¾Æ¿Â °ªÀÌ ¾øÀ»¶§±îÁö ¹İº¹ÇÏ¸é¼­ °ª ²¨³»±â
-				count++;// ÆÄ¶ó¹ÌÅÍ·Î studentId¸¦ ¹Ş¾Æ¼­ STUDENTIDÄ®·³¿¡¼­ °°Àº °ªÀÌ ÀÖ±â Àü±îÁö +1¾¿ ÇÏ¸é¼­ Áõ°¡
+			while (rset.next()) {// rsetì— ë°›ì•„ì˜¨ ê°’ì´ ì—†ì„ë•Œê¹Œì§€ ë°˜ë³µí•˜ë©´ì„œ ê°’ êº¼ë‚´ê¸°
+				count++;// íŒŒë¼ë¯¸í„°ë¡œ studentIdë¥¼ ë°›ì•„ì„œ STUDENTIDì¹¼ëŸ¼ì—ì„œ ê°™ì€ ê°’ì´ ìˆê¸° ì „ê¹Œì§€ +1ì”© í•˜ë©´ì„œ ì¦ê°€
 				if (studentId == rset.getInt("STUDENTID")) {
-					break;// °°Àº °ªÀÌ ÀÖ´Ù¸é ¹İº¹¹® Å»Ãâ
+					break;// ê°™ì€ ê°’ì´ ìˆë‹¤ë©´ ë°˜ë³µë¬¸ íƒˆì¶œ
 				}
 			}
 			
-			rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
-		} catch (Exception e) {// ¿À·ù°¡ ¹ß»ıÇÏ¸é
-			e.printStackTrace();// ¿À·ù¸¦ Ãâ·Â
+		} catch (Exception e) {// ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´
+			e.printStackTrace();// ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 		}
-		return count;// count°ªÀ» ¹İÈ¯
+		return count;// countê°’ì„ ë°˜í™˜
 	}
 
 	@Override
-	public StudentScore create(StudentScore studentScore) {// studentScore°´Ã¼¸¦ ÆÄ¶ó¹ÌÅÍ·Î ¹Ş¾Æ¼­ µ¥ÀÌÅÍº£ÀÌ½º¿¡ Ãß°¡ÇÏ´Â ÇÔ¼ö
+	public StudentScore create(StudentScore studentScore) {// studentScoreê°ì²´ë¥¼ íŒŒë¼ë¯¸í„°ë¡œ ë°›ì•„ì„œ ë°ì´í„°ë² ì´ìŠ¤ì— ì¶”ê°€í•˜ëŠ” í•¨ìˆ˜
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			stmt = conn.createStatement();
 
-			String name = studentScore.getName();// ÆÄ¶ó¹ÌÅÍ studentScore °´Ã¼¸¦ ¹Ş¾Æ¼­ ¹®ÀÚ¿­ º¯¼ö name¿¡ ÇÒ´ç
-			int kor = studentScore.getKor();// ÆÄ¶ó¹ÌÅÍ studentScore °´Ã¼¸¦ ¹Ş¾Æ¼­ ¼ıÀÚÇü º¯¼ö kor¿¡ ÇÒ´ç
-			int eng = studentScore.getEng();// ÆÄ¶ó¹ÌÅÍ studentScore °´Ã¼¸¦ ¹Ş¾Æ¼­ ¼ıÀÚÇü º¯¼ö eng¿¡ ÇÒ´ç
-			int mat = studentScore.getMat();// ÆÄ¶ó¹ÌÅÍ studentScore °´Ã¼¸¦ ¹Ş¾Æ¼­ ¼ıÀÚÇü º¯¼ö mat¿¡ ÇÒ´ç
-			int startID = 0;//µ¥ÀÌÅÍ ³ÖÀ»¶§ ¾ø´Â ¹øÈ£ÀÇ studentid°ªÀ¸·Î ³Ö±âÀ§ÇÑ startid ¼ıÀÚÇü º¯¼ö ¼±¾ğ
+			String name = studentScore.getName();// íŒŒë¼ë¯¸í„° studentScore ê°ì²´ë¥¼ ë°›ì•„ì„œ ë¬¸ìì—´ ë³€ìˆ˜ nameì— í• ë‹¹
+			int kor = studentScore.getKor();// íŒŒë¼ë¯¸í„° studentScore ê°ì²´ë¥¼ ë°›ì•„ì„œ ìˆ«ìí˜• ë³€ìˆ˜ korì— í• ë‹¹
+			int eng = studentScore.getEng();// íŒŒë¼ë¯¸í„° studentScore ê°ì²´ë¥¼ ë°›ì•„ì„œ ìˆ«ìí˜• ë³€ìˆ˜ engì— í• ë‹¹
+			int mat = studentScore.getMat();// íŒŒë¼ë¯¸í„° studentScore ê°ì²´ë¥¼ ë°›ì•„ì„œ ìˆ«ìí˜• ë³€ìˆ˜ matì— í• ë‹¹
+			int startID = 0;//ë°ì´í„° ë„£ì„ë•Œ ì—†ëŠ” ë²ˆí˜¸ì˜ studentidê°’ìœ¼ë¡œ ë„£ê¸°ìœ„í•œ startid ìˆ«ìí˜• ë³€ìˆ˜ ì„ ì–¸
 
-			// sqlÄõ¸®¸¦ ½ÇÇàÇÏ°í °á°ú¸¦ ResultSet¿¡ ¹İÈ¯ÇÑ´Ù
+			// sqlì¿¼ë¦¬ë¥¼ ì‹¤í–‰í•˜ê³  ê²°ê³¼ë¥¼ ResultSetì— ë°˜í™˜í•œë‹¤
 			ResultSet rset = stmt.executeQuery("select * from examtable;");
-			startID = 209901;// ÃÖÃÊ ÇĞ¹øÀ» startID º¯¼ö¿¡ ´ëÀÔ
-			while (rset.next()) { // rset °´Ã¼ÀÇ °¢ ÇàÀ» ¹İº¹ÇÑ´Ù
-				if (startID == rset.getInt(3)) { // Ã¹¹øÂ° ÀÚ·áºÎÅÍ Â÷·Ê´ë·Î ÇĞ¹øÀ» »Ì¾Æ Á¸ÀçÇÏ¸é
-					startID++; // ´ÙÀ½ÇĞ¹øÀ¸·Î ³Ñ¾î°£´Ù
-				} else { // ÇØ´çÇĞ¹øÀÌ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é
-					break; // ·çÇÁ¸¦ Á¾·áÇÑ´Ù
+			startID = 209901;// ìµœì´ˆ í•™ë²ˆì„ startID ë³€ìˆ˜ì— ëŒ€ì…
+			while (rset.next()) { // rset ê°ì²´ì˜ ê° í–‰ì„ ë°˜ë³µí•œë‹¤
+				if (startID == rset.getInt(3)) { // ì²«ë²ˆì§¸ ìë£Œë¶€í„° ì°¨ë¡€ëŒ€ë¡œ í•™ë²ˆì„ ë½‘ì•„ ì¡´ì¬í•˜ë©´
+					startID++; // ë‹¤ìŒí•™ë²ˆìœ¼ë¡œ ë„˜ì–´ê°„ë‹¤
+				} else { // í•´ë‹¹í•™ë²ˆì´ ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´
+					break; // ë£¨í”„ë¥¼ ì¢…ë£Œí•œë‹¤
 				}
 			}
 
-			// INSERT Äõ¸®¸¦ »ç¿ëÇÏ¿© ºñ¾îÀÖ´Â ÇĞ¹øÀÚ¸®¿¡ °´Ã¼ Ãß°¡ 
+			// INSERT ì¿¼ë¦¬ë¥¼ ì‚¬ìš©í•˜ì—¬ ë¹„ì–´ìˆëŠ” í•™ë²ˆìë¦¬ì— ê°ì²´ ì¶”ê°€ 
 			String sql = "INSERT INTO examtable (name, studentid, kor, eng, mat) VALUES ('" + name + "'," + startID
 					+ ", " + kor + ", " + eng + ", " + mat + ")";
 
-			stmt.execute(sql);//sql¹®À» ½ÇÇàÇÑ´Ù.
+			stmt.execute(sql);//sqlë¬¸ì„ ì‹¤í–‰í•œë‹¤.
 
-			System.out.println("insert ¼º°ø");//¼º°ø½Ã insert ¼º°ø Ãâ·Â
+			System.out.println("insert ì„±ê³µ");//ì„±ê³µì‹œ insert ì„±ê³µ ì¶œë ¥
 
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
-		} catch (Exception e) {// ¿À·ù°¡ ¹ß»ıÇÏ¸é
-			e.printStackTrace();// ¿À·ù¸¦ Ãâ·Â
+		} catch (Exception e) {// ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´
+			e.printStackTrace();// ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 		}
 
-		return studentScore;//»ğÀÔÇÑ studentScore °´Ã¼¸¦ ¹İÈ¯ÇÑ´Ù.
+		return studentScore;//ì‚½ì…í•œ studentScore ê°ì²´ë¥¼ ë°˜í™˜í•œë‹¤.
 	}
 
 	@Override
-	// ÁÖ¾îÁø id¿¡ ÇØ´çÇÏ´Â ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍ¸¦ Á¶È¸ÇÕ´Ï´Ù.
+	// ì£¼ì–´ì§„ idì— í•´ë‹¹í•˜ëŠ” í•™ìƒ ì ìˆ˜ ë°ì´í„°ë¥¼ ì¡°íšŒí•©ë‹ˆë‹¤.
 	public StudentScore selectOne(int id) {
-		StudentScore studentScore = null;//studentScore °´Ã¼ ¼±¾ğ ¹× ÃÊ±âÈ­ 
+		StudentScore studentScore = null;//studentScore ê°ì²´ ì„ ì–¸ ë° ì´ˆê¸°í™” 
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			Statement stmt = conn.createStatement();
 
-			// Äõ¸® °á°ú°ªÀ» ´ãÀ» ResultSet °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			//id°ªÀ¸·Î ¿øÇÏ´Â °ªÀ» Äõ¸®·Î °Ë»öÇØ¼­ °¡Á®¿À´Âµ¥ id°¡ ÆÄ¶ó¹ÌÅÍ·Î ¹ŞÀº id¿Í °°Àº °ªÀ» Á¶È¸
+			// ì¿¼ë¦¬ ê²°ê³¼ê°’ì„ ë‹´ì„ ResultSet ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			//idê°’ìœ¼ë¡œ ì›í•˜ëŠ” ê°’ì„ ì¿¼ë¦¬ë¡œ ê²€ìƒ‰í•´ì„œ ê°€ì ¸ì˜¤ëŠ”ë° idê°€ íŒŒë¼ë¯¸í„°ë¡œ ë°›ì€ idì™€ ê°™ì€ ê°’ì„ ì¡°íšŒ
 			rset = stmt.executeQuery("SELECT *, (kor + eng + mat) AS sum, (kor + eng + mat) / 3 AS ave, "
 					+ "(SELECT COUNT(*) + 1 FROM examtable WHERE (kor + eng + mat) > (t.kor + t.eng + t.mat)) AS ranking "
 					+ "FROM examtable AS t WHERE id = " + id + ";");
 
-			while (rset.next()) {// rset¿¡ ¹Ş¾Æ¿Â °ªÀÌ ¾øÀ»¶§±îÁö ¹İº¹ÇÏ¸é¼­ °ª ²¨³»±â
-				studentScore = new StudentScore();//¹İº¹¹®ÀÌ µ¹¶§¸¶´Ù °´Ã¼¸¦ ÃÊ±âÈ­ ½ÃÄÑÁÖ±â À§ÇØ¼­ »õ·Î¿î °´Ã¼ ¼±¾ğ
-				studentScore.setId(rset.getInt("ID"));//rset¿¡¼­ Ä®·´ÀÌ IDÀ» °¡Á®¿Í¼­ studentScoreÀÇ id¿¡ ´ëÀÔ
-				studentScore.setName(rset.getString("NAME"));//rset¿¡¼­ Ä®·´ÀÌ NAMEÀ» °¡Á®¿Í¼­ studentScoreÀÇ NAME¿¡ ´ëÀÔ
-				studentScore.setStudentid(rset.getInt("STUDENTID"));//rset¿¡¼­ Ä®·´ÀÌ STUDENTIDÀ» °¡Á®¿Í¼­ studentScoreÀÇ STUDENTID¿¡ ´ëÀÔ
-				studentScore.setKor(rset.getInt("kor"));//rset¿¡¼­ Ä®·´ÀÌ korÀ» °¡Á®¿Í¼­ studentScoreÀÇ kor¿¡ ´ëÀÔ
-				studentScore.setEng(rset.getInt("eng"));//rset¿¡¼­ Ä®·´ÀÌ engÀ» °¡Á®¿Í¼­ studentScoreÀÇ eng¿¡ ´ëÀÔ
-				studentScore.setMat(rset.getInt("mat"));//rset¿¡¼­ Ä®·´ÀÌ matÀ» °¡Á®¿Í¼­ studentScoreÀÇ mat¿¡ ´ëÀÔ
-				studentScore.setSum(rset.getInt("sum"));//rset¿¡¼­ Ä®·´ÀÌ sumÀ» °¡Á®¿Í¼­ studentScoreÀÇ sum¿¡ ´ëÀÔ
-				studentScore.setAve(rset.getInt("ave"));//rset¿¡¼­ Ä®·´ÀÌ aveÀ» °¡Á®¿Í¼­ studentScoreÀÇ ave¿¡ ´ëÀÔ
-				studentScore.setRanking(rset.getInt("ranking"));//rset¿¡¼­ Ä®·´ÀÌ rankingÀ» °¡Á®¿Í¼­ studentScoreÀÇ ranking¿¡ ´ëÀÔ
+			while (rset.next()) {// rsetì— ë°›ì•„ì˜¨ ê°’ì´ ì—†ì„ë•Œê¹Œì§€ ë°˜ë³µí•˜ë©´ì„œ ê°’ êº¼ë‚´ê¸°
+				studentScore = new StudentScore();//ë°˜ë³µë¬¸ì´ ëŒë•Œë§ˆë‹¤ ê°ì²´ë¥¼ ì´ˆê¸°í™” ì‹œì¼œì£¼ê¸° ìœ„í•´ì„œ ìƒˆë¡œìš´ ê°ì²´ ì„ ì–¸
+				studentScore.setId(rset.getInt("ID"));//rsetì—ì„œ ì¹¼ëŸ½ì´ IDì„ ê°€ì ¸ì™€ì„œ studentScoreì˜ idì— ëŒ€ì…
+				studentScore.setName(rset.getString("NAME"));//rsetì—ì„œ ì¹¼ëŸ½ì´ NAMEì„ ê°€ì ¸ì™€ì„œ studentScoreì˜ NAMEì— ëŒ€ì…
+				studentScore.setStudentid(rset.getInt("STUDENTID"));//rsetì—ì„œ ì¹¼ëŸ½ì´ STUDENTIDì„ ê°€ì ¸ì™€ì„œ studentScoreì˜ STUDENTIDì— ëŒ€ì…
+				studentScore.setKor(rset.getInt("kor"));//rsetì—ì„œ ì¹¼ëŸ½ì´ korì„ ê°€ì ¸ì™€ì„œ studentScoreì˜ korì— ëŒ€ì…
+				studentScore.setEng(rset.getInt("eng"));//rsetì—ì„œ ì¹¼ëŸ½ì´ engì„ ê°€ì ¸ì™€ì„œ studentScoreì˜ engì— ëŒ€ì…
+				studentScore.setMat(rset.getInt("mat"));//rsetì—ì„œ ì¹¼ëŸ½ì´ matì„ ê°€ì ¸ì™€ì„œ studentScoreì˜ matì— ëŒ€ì…
+				studentScore.setSum(rset.getInt("sum"));//rsetì—ì„œ ì¹¼ëŸ½ì´ sumì„ ê°€ì ¸ì™€ì„œ studentScoreì˜ sumì— ëŒ€ì…
+				studentScore.setAve(rset.getInt("ave"));//rsetì—ì„œ ì¹¼ëŸ½ì´ aveì„ ê°€ì ¸ì™€ì„œ studentScoreì˜ aveì— ëŒ€ì…
+				studentScore.setRanking(rset.getInt("ranking"));//rsetì—ì„œ ì¹¼ëŸ½ì´ rankingì„ ê°€ì ¸ì™€ì„œ studentScoreì˜ rankingì— ëŒ€ì…
 			}
 
-			rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
-		}catch (Exception e) {// ¿À·ù°¡ ¹ß»ıÇÏ¸é
-			e.printStackTrace();// ¿À·ù¸¦ Ãâ·Â
+		}catch (Exception e) {// ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´
+			e.printStackTrace();// ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 		}
-		return studentScore;//id°ªÀ¸·Î Á¶È¸ÇÑ ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍ ¹İÈ¯
+		return studentScore;//idê°’ìœ¼ë¡œ ì¡°íšŒí•œ í•™ìƒ ì ìˆ˜ ë°ì´í„° ë°˜í™˜
 	}
 
 	@Override
-	// ÁÖ¾îÁø ÇĞ»ı studentId¿¡ ÇØ´çÇÏ´Â ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍ¸¦ Á¶È¸ÇÕ´Ï´Ù.
+	// ì£¼ì–´ì§„ í•™ìƒ studentIdì— í•´ë‹¹í•˜ëŠ” í•™ìƒ ì ìˆ˜ ë°ì´í„°ë¥¼ ì¡°íšŒí•©ë‹ˆë‹¤.
 	public StudentScore selectByStudentId(int studentid) {
 		StudentScore studentScore = null;
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			Statement stmt = conn.createStatement();
 
-			// Äõ¸® °á°ú°ªÀ» ´ãÀ» ResultSet °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			//ÆÄ¶ó¹ÌÅÍ·Î ¹ŞÀº studentid°ª°ú °°Àº studentidÀÇ ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍ¸¦ °¡Á®¿À´Â Äõ¸®¸¦ ½ÇÇàÇÑ´Ù.
+			// ì¿¼ë¦¬ ê²°ê³¼ê°’ì„ ë‹´ì„ ResultSet ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			//íŒŒë¼ë¯¸í„°ë¡œ ë°›ì€ studentidê°’ê³¼ ê°™ì€ studentidì˜ í•™ìƒ ì ìˆ˜ ë°ì´í„°ë¥¼ ê°€ì ¸ì˜¤ëŠ” ì¿¼ë¦¬ë¥¼ ì‹¤í–‰í•œë‹¤.
 			rset = stmt.executeQuery("SELECT *, (kor + eng + mat) AS sum, (kor + eng + mat) / 3 AS ave, "
 					+ "(SELECT COUNT(*) + 1 FROM examtable WHERE (kor + eng + mat) > (t.kor + t.eng + t.mat)) AS ranking "
 					+ "FROM examtable AS t WHERE studentid = " + studentid + ";");
 			
-			// ResultSet¿¡¼­ µ¥ÀÌÅÍ¸¦ ÀĞ¾î¿Í StudentScore °´Ã¼¿¡ ÀúÀåÇÕ´Ï´Ù.
+			// ResultSetì—ì„œ ë°ì´í„°ë¥¼ ì½ì–´ì™€ StudentScore ê°ì²´ì— ì €ì¥í•©ë‹ˆë‹¤.
 			while (rset.next()) {
-			    // »õ·Î¿î StudentScore °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			    // ìƒˆë¡œìš´ StudentScore ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			    studentScore = new StudentScore();
 
-			    // ResultSet¿¡¼­ °¢ ÄÃ·³ÀÇ °ªÀ» °¡Á®¿Í¼­ StudentScore °´Ã¼¿¡ ¼³Á¤ÇÕ´Ï´Ù.
-			    studentScore.setId(rset.getInt("ID"));  // ID ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setName(rset.getString("NAME"));  // NAME ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setStudentid(rset.getInt("STUDENTID"));  // STUDENTID ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setKor(rset.getInt("kor"));  // kor ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setEng(rset.getInt("eng"));  // eng ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setMat(rset.getInt("mat"));  // mat ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setSum(rset.getInt("sum"));  // sum ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setAve(rset.getInt("ave"));  // ave ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setRanking(rset.getInt("ranking"));  // ranking ÄÃ·³ °ª ¼³Á¤
+			    // ResultSetì—ì„œ ê° ì»¬ëŸ¼ì˜ ê°’ì„ ê°€ì ¸ì™€ì„œ StudentScore ê°ì²´ì— ì„¤ì •í•©ë‹ˆë‹¤.
+			    studentScore.setId(rset.getInt("ID"));  // ID ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setName(rset.getString("NAME"));  // NAME ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setStudentid(rset.getInt("STUDENTID"));  // STUDENTID ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setKor(rset.getInt("kor"));  // kor ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setEng(rset.getInt("eng"));  // eng ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setMat(rset.getInt("mat"));  // mat ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setSum(rset.getInt("sum"));  // sum ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setAve(rset.getInt("ave"));  // ave ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setRanking(rset.getInt("ranking"));  // ranking ì»¬ëŸ¼ ê°’ ì„¤ì •
 			}
 
-			rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
-		}catch (Exception e) {// ¿À·ù°¡ ¹ß»ıÇÏ¸é
-			e.printStackTrace();// ¿À·ù¸¦ Ãâ·Â
+		}catch (Exception e) {// ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´
+			e.printStackTrace();// ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 		}
-		return studentScore;// ÁÖ¾îÁø ÇĞ»ı studentId¿¡ ÇØ´çÇÏ´Â ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍ¸¦ ¹İÈ¯
+		return studentScore;// ì£¼ì–´ì§„ í•™ìƒ studentIdì— í•´ë‹¹í•˜ëŠ” í•™ìƒ ì ìˆ˜ ë°ì´í„°ë¥¼ ë°˜í™˜
 	}
 
 	@Override
-	public List<StudentScore> selectAll(int page, int countPerPage) {// StudentScore °´Ã¼µéÀÇ ¸®½ºÆ®¸¦ ¹İÈ¯ÇÏ´Â ¸Ş¼Òµå selectAll
-		System.out.println("===> examtable°ú ¿¬°á ½ÃÀÛ!");//È®ÀÎ¿ë Ãâ·Â±¸¹®
+	public List<StudentScore> selectAll(int page, int countPerPage) {// StudentScore ê°ì²´ë“¤ì˜ ë¦¬ìŠ¤íŠ¸ë¥¼ ë°˜í™˜í•˜ëŠ” ë©”ì†Œë“œ selectAll
+		System.out.println("===> examtableê³¼ ì—°ê²° ì‹œì‘!");//í™•ì¸ìš© ì¶œë ¥êµ¬ë¬¸
 
-		int rstart = (page - 1) * countPerPage;// Ãâ·ÂÇÏ°í ½ÍÀº ÆäÀÌÁöÀÇ Ã¹¹øÂ° µ¥ÀÌÅÍ ÀÎµ¦½º ±¸ÇÏ±â
+		int rstart = (page - 1) * countPerPage;// ì¶œë ¥í•˜ê³  ì‹¶ì€ í˜ì´ì§€ì˜ ì²«ë²ˆì§¸ ë°ì´í„° ì¸ë±ìŠ¤ êµ¬í•˜ê¸°
 
-		//StudentScore °´Ã¼µéÀÇ ¸®½ºÆ®¸¦ ´ã±âÀ§ÇÑ ¸®½ºÆ® ¼±¾ğ ¹× ÃÊ±âÈ­
+		//StudentScore ê°ì²´ë“¤ì˜ ë¦¬ìŠ¤íŠ¸ë¥¼ ë‹´ê¸°ìœ„í•œ ë¦¬ìŠ¤íŠ¸ ì„ ì–¸ ë° ì´ˆê¸°í™”
 		List<StudentScore> StudentScoreList = new ArrayList<StudentScore>();
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			stmt = conn.createStatement();
 
-			// Äõ¸® °á°ú°ªÀ» ´ãÀ» ResultSet °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			// examtable¿¡¼­ ÆäÀÌÁöÀÇ Ã¹¹øÂ° ½ÃÀÛ ÀÎµ¦½ººÎÅÍ ÇÑÆäÀÌÁö¿¡ Ãâ·ÂÇÒ °¹¼ö ¸¸Å­ Äõ¸®·Î ¹üÀ§¸¦ ¼³Á¤ÇØ¼­ °¡Á®¿À±â
+			// ì¿¼ë¦¬ ê²°ê³¼ê°’ì„ ë‹´ì„ ResultSet ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			// examtableì—ì„œ í˜ì´ì§€ì˜ ì²«ë²ˆì§¸ ì‹œì‘ ì¸ë±ìŠ¤ë¶€í„° í•œí˜ì´ì§€ì— ì¶œë ¥í•  ê°¯ìˆ˜ ë§Œí¼ ì¿¼ë¦¬ë¡œ ë²”ìœ„ë¥¼ ì„¤ì •í•´ì„œ ê°€ì ¸ì˜¤ê¸°
 			rset = stmt.executeQuery("SELECT *, (kor + eng + mat) AS sum, (kor + eng + mat) / 3 AS ave, "
 					+ "(SELECT COUNT(*) + 1 FROM examtable WHERE (kor + eng + mat) > (t.kor + t.eng + t.mat)) AS ranking "
 					+ "FROM examtable AS t ORDER BY studentid ASC LIMIT " + rstart + "," + countPerPage + ";");
 
 			while (rset.next()) {
-			    // »õ·Î¿î StudentScore °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			    // ìƒˆë¡œìš´ StudentScore ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			    StudentScore studentScore = new StudentScore();
 
-			    // ResultSet¿¡¼­ °¢ ÄÃ·³ÀÇ °ªÀ» °¡Á®¿Í¼­ StudentScore °´Ã¼¿¡ ¼³Á¤ÇÕ´Ï´Ù.
-			    studentScore.setId(rset.getInt("id"));  // id ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setName(rset.getString("NAME"));  // NAME ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setStudentid(rset.getInt("STUDENTID"));  // STUDENTID ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setKor(rset.getInt("KOR"));  // KOR ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setEng(rset.getInt("ENG"));  // ENG ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setMat(rset.getInt("MAT"));  // MAT ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setSum(rset.getInt("sum"));  // sum ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setAve(rset.getInt("ave"));  // ave ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setRanking(rset.getInt("ranking"));  // ranking ÄÃ·³ °ª ¼³Á¤
+			    // ResultSetì—ì„œ ê° ì»¬ëŸ¼ì˜ ê°’ì„ ê°€ì ¸ì™€ì„œ StudentScore ê°ì²´ì— ì„¤ì •í•©ë‹ˆë‹¤.
+			    studentScore.setId(rset.getInt("id"));  // id ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setName(rset.getString("NAME"));  // NAME ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setStudentid(rset.getInt("STUDENTID"));  // STUDENTID ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setKor(rset.getInt("KOR"));  // KOR ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setEng(rset.getInt("ENG"));  // ENG ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setMat(rset.getInt("MAT"));  // MAT ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setSum(rset.getInt("sum"));  // sum ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setAve(rset.getInt("ave"));  // ave ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setRanking(rset.getInt("ranking"));  // ranking ì»¬ëŸ¼ ê°’ ì„¤ì •
 
-			    // StudentScore °´Ã¼¸¦ StudentScoreList¿¡ Ãß°¡ÇÕ´Ï´Ù.
+			    // StudentScore ê°ì²´ë¥¼ StudentScoreListì— ì¶”ê°€í•©ë‹ˆë‹¤.
 			    StudentScoreList.add(studentScore);
 			}
 
-			rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
-		}catch (Exception e) {// ¿À·ù°¡ ¹ß»ıÇÏ¸é
-			e.printStackTrace();// ¿À·ù¸¦ Ãâ·Â
+		}catch (Exception e) {// ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´
+			e.printStackTrace();// ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 		}
-		return StudentScoreList;//StudentScore °´Ã¼µéÀÇ ¸®½ºÆ®¸¦ ¹İÈ¯
+		return StudentScoreList;//StudentScore ê°ì²´ë“¤ì˜ ë¦¬ìŠ¤íŠ¸ë¥¼ ë°˜í™˜
 	}
 
 	@Override
-	// ÁÖ¾îÁø id¿¡ ÇØ´çÇÏ´Â ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍ¸¦ ÆÄ¶ó¹ÌÅÍ·Î ¹Ş¾Æ Á¤º¸¸¦ ¾÷µ¥ÀÌÆ®ÇÏ´Â ÇÔ¼ö
+	// ì£¼ì–´ì§„ idì— í•´ë‹¹í•˜ëŠ” í•™ìƒ ì ìˆ˜ ë°ì´í„°ë¥¼ íŒŒë¼ë¯¸í„°ë¡œ ë°›ì•„ ì •ë³´ë¥¼ ì—…ë°ì´íŠ¸í•˜ëŠ” í•¨ìˆ˜
 	public StudentScore update(int id, StudentScore studentScore) {
-		StudentScore ss = null;//¾÷µ¥ÀÌÆ®µÈ °´Ã¼¸¦ ¹İÈ¯ÇÏ±âÀ§ÇØ StudentScore °´Ã¼ ¼±¾ğ
+		StudentScore ss = null;//ì—…ë°ì´íŠ¸ëœ ê°ì²´ë¥¼ ë°˜í™˜í•˜ê¸°ìœ„í•´ StudentScore ê°ì²´ ì„ ì–¸
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			stmt = conn.createStatement();
 
-			// SQL Äõ¸®¹®À» ½ÇÇàÇÏ±â À§ÇØ executeUpdate ¸Ş¼­µå¸¦ È£ÃâÇÕ´Ï´Ù.
+			// SQL ì¿¼ë¦¬ë¬¸ì„ ì‹¤í–‰í•˜ê¸° ìœ„í•´ executeUpdate ë©”ì„œë“œë¥¼ í˜¸ì¶œí•©ë‹ˆë‹¤.
 			String updateQuery = "UPDATE examtable SET " + "name = '" + studentScore.getName() + "', " + "studentid = "
 					+ studentScore.getStudentid() + ", kor = " + studentScore.getKor() + ", eng = "
 					+ studentScore.getEng() + ", mat = " + studentScore.getMat() + " WHERE id = " + id;
 
 			stmt.executeUpdate(updateQuery);
 
-			System.out.println("update ¼º°ø");
+			System.out.println("update ì„±ê³µ");
 
-			// ¾÷µ¥ÀÌÆ®µÈ °á°ú¸¦ È®ÀÎÇÏ±â À§ÇØ select Äõ¸®¸¦ ½ÇÇàÇÕ´Ï´Ù.
+			// ì—…ë°ì´íŠ¸ëœ ê²°ê³¼ë¥¼ í™•ì¸í•˜ê¸° ìœ„í•´ select ì¿¼ë¦¬ë¥¼ ì‹¤í–‰í•©ë‹ˆë‹¤.
 			rset = stmt.executeQuery("SELECT * FROM examtable WHERE id = " + id);
 
 			while (rset.next()) {
-			    // »õ·Î¿î StudentScore °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			    // ìƒˆë¡œìš´ StudentScore ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			    ss = new StudentScore();
 
-			    // ResultSet¿¡¼­ °¢ ÄÃ·³ÀÇ °ªÀ» °¡Á®¿Í¼­ StudentScore °´Ã¼¿¡ ¼³Á¤ÇÕ´Ï´Ù.
-			    ss.setId(rset.getInt("id"));  // id ÄÃ·³ °ª ¼³Á¤
-			    ss.setName(rset.getString("name"));  // name ÄÃ·³ °ª ¼³Á¤
-			    ss.setStudentid(rset.getInt("studentid"));  // studentid ÄÃ·³ °ª ¼³Á¤
-			    ss.setKor(rset.getInt("kor"));  // kor ÄÃ·³ °ª ¼³Á¤
-			    ss.setEng(rset.getInt("eng"));  // eng ÄÃ·³ °ª ¼³Á¤
-			    ss.setMat(rset.getInt("mat"));  // mat ÄÃ·³ °ª ¼³Á¤
+			    // ResultSetì—ì„œ ê° ì»¬ëŸ¼ì˜ ê°’ì„ ê°€ì ¸ì™€ì„œ StudentScore ê°ì²´ì— ì„¤ì •í•©ë‹ˆë‹¤.
+			    ss.setId(rset.getInt("id"));  // id ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    ss.setName(rset.getString("name"));  // name ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    ss.setStudentid(rset.getInt("studentid"));  // studentid ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    ss.setKor(rset.getInt("kor"));  // kor ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    ss.setEng(rset.getInt("eng"));  // eng ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    ss.setMat(rset.getInt("mat"));  // mat ì»¬ëŸ¼ ê°’ ì„¤ì •
 			}
 
-			rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
-		}catch (Exception e) {// ¿À·ù°¡ ¹ß»ıÇÏ¸é
-			e.printStackTrace();// ¿À·ù¸¦ Ãâ·Â
+		}catch (Exception e) {// ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´
+			e.printStackTrace();// ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 		}
-		return ss;//¾÷µ¥ÀÌÆ®µÈ °´Ã¼¸¦ ¹İÈ¯
+		return ss;//ì—…ë°ì´íŠ¸ëœ ê°ì²´ë¥¼ ë°˜í™˜
 	}
 
 	@Override
-	// ÁÖ¾îÁø id¿¡ ÇØ´çÇÏ´Â ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍ¸¦ »èÁ¦ÇÏ´Â ÇÔ¼ö
+	// ì£¼ì–´ì§„ idì— í•´ë‹¹í•˜ëŠ” í•™ìƒ ì ìˆ˜ ë°ì´í„°ë¥¼ ì‚­ì œí•˜ëŠ” í•¨ìˆ˜
 	public void deleteById(int id) {
 	    try {
-	        // JDBC µå¶óÀÌ¹ö Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÕ´Ï´Ù.
+	        // JDBC ë“œë¼ì´ë²„ í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•©ë‹ˆë‹¤.
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 
-	        // MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-	        conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+	        // MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+	        conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-	        // Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+	        // Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 	        stmt = conn.createStatement();
 
-	        // DELETE ¹®À» ½ÇÇàÇÏ¿© ÁÖ¾îÁø id¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ¸¦ »èÁ¦ÇÕ´Ï´Ù.
+	        // DELETE ë¬¸ì„ ì‹¤í–‰í•˜ì—¬ ì£¼ì–´ì§„ idì— í•´ë‹¹í•˜ëŠ” ë°ì´í„°ë¥¼ ì‚­ì œí•©ë‹ˆë‹¤.
 	        String sql = "DELETE FROM examtable WHERE id = " + id;
 	        stmt.executeUpdate(sql);
 
-	        System.out.println("delete id·Î ¼º°ø");
+	        System.out.println("delete idë¡œ ì„±ê³µ");
 
-	    } catch (Exception e) {//¿À·ù°¡ ¹ß»ıÇÏ¸é 
-	        e.printStackTrace();//¿À·ù¸¦ Ãâ·Â
+	    } catch (Exception e) {//ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´ 
+	        e.printStackTrace();//ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 	    } finally {
 	        try {
-	            stmt.close();  // »ç¿ëÇÑ Statement °´Ã¼¸¦ ´İ½À´Ï´Ù.
+	            stmt.close();  // ì‚¬ìš©í•œ Statement ê°ì²´ë¥¼ ë‹«ìŠµë‹ˆë‹¤.
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
 	        try {
-	            conn.close();  // »ç¿ëÇÑ Connection °´Ã¼¸¦ ´İ½À´Ï´Ù.
+	            conn.close();  // ì‚¬ìš©í•œ Connection ê°ì²´ë¥¼ ë‹«ìŠµë‹ˆë‹¤.
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
@@ -364,245 +364,245 @@ public class StudentScoreDaoImpl implements StudentScoreDao {
 	}
 
 	@Override
-	// ÁÖ¾îÁø ÇĞ»ı studentId¿¡ ÇØ´çÇÏ´Â ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍ¸¦ »èÁ¦ÇÕ´Ï´Ù.
-	public void deleteByStudentId(int studentId) {// studentId·Î »èÁ¦
+	// ì£¼ì–´ì§„ í•™ìƒ studentIdì— í•´ë‹¹í•˜ëŠ” í•™ìƒ ì ìˆ˜ ë°ì´í„°ë¥¼ ì‚­ì œí•©ë‹ˆë‹¤.
+	public void deleteByStudentId(int studentId) {// studentIdë¡œ ì‚­ì œ
 	    try {
-	        // JDBC µå¶óÀÌ¹ö Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÕ´Ï´Ù.
+	        // JDBC ë“œë¼ì´ë²„ í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•©ë‹ˆë‹¤.
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 
-	        // MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-	        conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+	        // MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+	        conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-	        // Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+	        // Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 	        stmt = conn.createStatement();
 
-	        // DELETE ¹®À» ½ÇÇàÇÏ¿© ÁÖ¾îÁø studentId¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ¸¦ »èÁ¦ÇÕ´Ï´Ù.
+	        // DELETE ë¬¸ì„ ì‹¤í–‰í•˜ì—¬ ì£¼ì–´ì§„ studentIdì— í•´ë‹¹í•˜ëŠ” ë°ì´í„°ë¥¼ ì‚­ì œí•©ë‹ˆë‹¤.
 	        String sql = "DELETE FROM examtable WHERE studentid = " + studentId;
 	        stmt.executeUpdate(sql);
 
-	        System.out.println("delete studentId·Î ¼º°ø");
+	        System.out.println("delete studentIdë¡œ ì„±ê³µ");
 
-	    } catch (Exception e) {//¿À·ù°¡ ¹ß»ıÇÏ¸é 
-	        e.printStackTrace();//¿À·ù¸¦ Ãâ·Â
+	    } catch (Exception e) {//ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´ 
+	        e.printStackTrace();//ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 	    } finally {
 	        try {
-	            stmt.close();  // »ç¿ëÇÑ Statement °´Ã¼¸¦ ´İ½À´Ï´Ù.
+	            stmt.close();  // ì‚¬ìš©í•œ Statement ê°ì²´ë¥¼ ë‹«ìŠµë‹ˆë‹¤.
 	        } catch (SQLException e) {
-	            e.printStackTrace();//¿À·ù¸¦ Ãâ·Â
+	            e.printStackTrace();//ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 	        }
 	        try {
-	            conn.close();  // »ç¿ëÇÑ Connection °´Ã¼¸¦ ´İ½À´Ï´Ù.
+	            conn.close();  // ì‚¬ìš©í•œ Connection ê°ì²´ë¥¼ ë‹«ìŠµë‹ˆë‹¤.
 	        } catch (SQLException e) {
-	            e.printStackTrace();//¿À·ù¸¦ Ãâ·Â
+	            e.printStackTrace();//ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 	        }
 	    }
 	}
 
 
 	@Override
-	// examtable Å×ÀÌºíÀ» »ı¼ºÇÏ´Â ÇÔ¼öÀÔ´Ï´Ù.
+	// examtable í…Œì´ë¸”ì„ ìƒì„±í•˜ëŠ” í•¨ìˆ˜ì…ë‹ˆë‹¤.
 	public String createTable() {
-	    String errorMessage = ""; // ¿À·ù¸¦ º¸¿©ÁÖ±â À§ÇÑ ¹®ÀÚ¿­ º¯¼ö ¼±¾ğ
+	    String errorMessage = ""; // ì˜¤ë¥˜ë¥¼ ë³´ì—¬ì£¼ê¸° ìœ„í•œ ë¬¸ìì—´ ë³€ìˆ˜ ì„ ì–¸
 
 	    try {
-	        // "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-	        // MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+	        // "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+	        // MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 
-	        // MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-	        // getConnection ¸Ş¼­µåÀÇ ÀÎÀÚ·Î´Â JDBC URL, mysqlÀÇ »ç¿ëÀÚ ÀÌ¸§, mysql»ç¿ëÀÚÀÇ ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÑ´Ù.
-	        Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+	        // MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+	        // getConnection ë©”ì„œë“œì˜ ì¸ìë¡œëŠ” JDBC URL, mysqlì˜ ì‚¬ìš©ì ì´ë¦„, mysqlì‚¬ìš©ìì˜ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•œë‹¤.
+	        Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-	        // Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+	        // Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 	        Statement stmt = conn.createStatement();
 
-	        // examtableÀÌ¶ó´Â Å×ÀÌºíÀ» »ı¼ºÇÏ´Â SQL¹®À» ½ÇÇàÇÕ´Ï´Ù.
+	        // examtableì´ë¼ëŠ” í…Œì´ë¸”ì„ ìƒì„±í•˜ëŠ” SQLë¬¸ì„ ì‹¤í–‰í•©ë‹ˆë‹¤.
 	        stmt.execute("create table examtable ( id INT AUTO_INCREMENT PRIMARY KEY," + "name varchar(20),"
 	                + "studentid int not null unique," + "kor int," + "eng int," + "mat int)"
 	                + "DEFAULT CHARSET=utf8;");
 
-	        // Å×ÀÌºí »ı¼ºÇÏ¸é ¹®±¸ Ãâ·ÂÇÏ±â
-	        System.out.println("Å×ÀÌºí ¸¸µé±â OK");
+	        // í…Œì´ë¸” ìƒì„±í•˜ë©´ ë¬¸êµ¬ ì¶œë ¥í•˜ê¸°
+	        System.out.println("í…Œì´ë¸” ë§Œë“¤ê¸° OK");
 
-	        stmt.close(); // Statement °´Ã¼¸¦ ´İ½À´Ï´Ù.
-	        conn.close(); // Connection °´Ã¼¸¦ ´İ½À´Ï´Ù.
-	    } catch (SQLException e) { // sql±¸¹®¿¡ ¿À·ù°¡ ÀÖÀ» ½Ã
-	        errorMessage = e.getMessage(); // ¿À·ù¸Ş½ÃÁö¸¦ Ãâ·ÂÇÒ ¹®ÀÚ¿­¿¡ ´ã±â
-	    } catch (ClassNotFoundException e) { // Å¬·¡½º¸¦ Ã£Áö ¸øÇÏ´Â ¿À·ù°¡ ÀÖÀ» ½Ã
-	        errorMessage = "µå¶óÀÌ¹ö ·Îµå ½ÇÆĞ: " + e.getMessage(); // ¿À·ù¸Ş½ÃÁö¸¦ Ãâ·ÂÇÒ ¹®ÀÚ¿­¿¡ ´ã±â
+	        stmt.close(); // Statement ê°ì²´ë¥¼ ë‹«ìŠµë‹ˆë‹¤.
+	        conn.close(); // Connection ê°ì²´ë¥¼ ë‹«ìŠµë‹ˆë‹¤.
+	    } catch (SQLException e) { // sqlêµ¬ë¬¸ì— ì˜¤ë¥˜ê°€ ìˆì„ ì‹œ
+	        errorMessage = e.getMessage(); // ì˜¤ë¥˜ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•  ë¬¸ìì—´ì— ë‹´ê¸°
+	    } catch (ClassNotFoundException e) { // í´ë˜ìŠ¤ë¥¼ ì°¾ì§€ ëª»í•˜ëŠ” ì˜¤ë¥˜ê°€ ìˆì„ ì‹œ
+	        errorMessage = "ë“œë¼ì´ë²„ ë¡œë“œ ì‹¤íŒ¨: " + e.getMessage(); // ì˜¤ë¥˜ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•  ë¬¸ìì—´ì— ë‹´ê¸°
 	    }
 
-	    if (!errorMessage.isEmpty()) { // ¸¸ÀÏ ¿À·ù¸Ş½ÃÁö°¡ ÀÖ´Ù¸é
-	        System.out.println("¿¡·¯ ¹ß»ı: " + errorMessage); // Ãâ·ÂÇÏ±â
+	    if (!errorMessage.isEmpty()) { // ë§Œì¼ ì˜¤ë¥˜ë©”ì‹œì§€ê°€ ìˆë‹¤ë©´
+	        System.out.println("ì—ëŸ¬ ë°œìƒ: " + errorMessage); // ì¶œë ¥í•˜ê¸°
 	    }
-	    return errorMessage;//¿À·ù¸Ş½ÃÁö¸¦ ¹İÈ¯
+	    return errorMessage;//ì˜¤ë¥˜ë©”ì‹œì§€ë¥¼ ë°˜í™˜
 	}
 
 
 	@Override
-	// examtable Å×ÀÌºíÀ» »èÁ¦ÇÏ´Â ÇÔ¼öÀÔ´Ï´Ù.
+	// examtable í…Œì´ë¸”ì„ ì‚­ì œí•˜ëŠ” í•¨ìˆ˜ì…ë‹ˆë‹¤.
 	public String dropTable() {
-	    String errorMessage = ""; // ¿À·ù¸¦ º¸¿©ÁÖ±â À§ÇÑ ¹®ÀÚ¿­ º¯¼ö ¼±¾ğ
+	    String errorMessage = ""; // ì˜¤ë¥˜ë¥¼ ë³´ì—¬ì£¼ê¸° ìœ„í•œ ë¬¸ìì—´ ë³€ìˆ˜ ì„ ì–¸
 
 	    try {
-	        // "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-	        // MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+	        // "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+	        // MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 
-	        // MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-	        // getConnection ¸Ş¼­µåÀÇ ÀÎÀÚ·Î´Â JDBC URL, mysqlÀÇ »ç¿ëÀÚ ÀÌ¸§, mysql»ç¿ëÀÚÀÇ ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÑ´Ù.
-	        Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+	        // MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+	        // getConnection ë©”ì„œë“œì˜ ì¸ìë¡œëŠ” JDBC URL, mysqlì˜ ì‚¬ìš©ì ì´ë¦„, mysqlì‚¬ìš©ìì˜ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•œë‹¤.
+	        Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-	        // Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+	        // Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.A
 	        Statement stmt = conn.createStatement();
 
-	        // SQL Äõ¸®¹®À» ½ÇÇàÇÏ±â À§ÇØ execute ¸Ş¼­µå¸¦ È£ÃâÇÕ´Ï´Ù.
-	        // ÀÌ ÄÚµå¿¡¼­´Â "drop from examtable" Äõ¸®¸¦ ½ÇÇàÇÏ¿© examtableÀ» »èÁ¦ÇÕ´Ï´Ù.
+	        // SQL ì¿¼ë¦¬ë¬¸ì„ ì‹¤í–‰í•˜ê¸° ìœ„í•´ execute ë©”ì„œë“œë¥¼ í˜¸ì¶œí•©ë‹ˆë‹¤.
+	        // ì´ ì½”ë“œì—ì„œëŠ” "drop from examtable" ì¿¼ë¦¬ë¥¼ ì‹¤í–‰í•˜ì—¬ examtableì„ ì‚­ì œí•©ë‹ˆë‹¤.
 	        stmt.execute("drop table examtable;");
 
-	        System.out.println("Å×ÀÌºí Áö¿ì±â OK");
+	        System.out.println("í…Œì´ë¸” ì§€ìš°ê¸° OK");
 
-	        stmt.close(); // Statement °´Ã¼¸¦ ´İ½À´Ï´Ù.
-	        conn.close(); // Connection °´Ã¼¸¦ ´İ½À´Ï´Ù.
+	        stmt.close(); // Statement ê°ì²´ë¥¼ ë‹«ìŠµë‹ˆë‹¤.
+	        conn.close(); // Connection ê°ì²´ë¥¼ ë‹«ìŠµë‹ˆë‹¤.
 
-	    } catch (SQLException e) { // sql±¸¹®¿¡ ¿À·ù°¡ ÀÖÀ» ½Ã
-	        errorMessage = e.getMessage(); // ¿À·ù¸Ş½ÃÁö¸¦ Ãâ·ÂÇÒ ¹®ÀÚ¿­¿¡ ´ã±â
-	    } catch (ClassNotFoundException e) { // Å¬·¡½º¸¦ Ã£Áö ¸øÇÏ´Â ¿À·ù°¡ ÀÖÀ» ½Ã
-	        errorMessage = "µå¶óÀÌ¹ö ·Îµå ½ÇÆĞ: " + e.getMessage(); // ¿À·ù¸Ş½ÃÁö¸¦ Ãâ·ÂÇÒ ¹®ÀÚ¿­¿¡ ´ã±â
+	    } catch (SQLException e) { // sqlêµ¬ë¬¸ì— ì˜¤ë¥˜ê°€ ìˆì„ ì‹œ
+	        errorMessage = e.getMessage(); // ì˜¤ë¥˜ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•  ë¬¸ìì—´ì— ë‹´ê¸°
+	    } catch (ClassNotFoundException e) { // í´ë˜ìŠ¤ë¥¼ ì°¾ì§€ ëª»í•˜ëŠ” ì˜¤ë¥˜ê°€ ìˆì„ ì‹œ
+	        errorMessage = "ë“œë¼ì´ë²„ ë¡œë“œ ì‹¤íŒ¨: " + e.getMessage(); // ì˜¤ë¥˜ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•  ë¬¸ìì—´ì— ë‹´ê¸°
 	    }
 
-	    if (!errorMessage.isEmpty()) { // ¸¸ÀÏ ¿À·ù¸Ş½ÃÁö°¡ ÀÖ´Ù¸é
-	        System.out.println("¿¡·¯ ¹ß»ı: " + errorMessage); // Ãâ·ÂÇÏ±â
+	    if (!errorMessage.isEmpty()) { // ë§Œì¼ ì˜¤ë¥˜ë©”ì‹œì§€ê°€ ìˆë‹¤ë©´
+	        System.out.println("ì—ëŸ¬ ë°œìƒ: " + errorMessage); // ì¶œë ¥í•˜ê¸°
 	    }
-	    return errorMessage;//¿À·ù¸Ş½ÃÁö¸¦ ¹İÈ¯
+	    return errorMessage;//ì˜¤ë¥˜ë©”ì‹œì§€ë¥¼ ë°˜í™˜
 	}
 
 
 	@Override
-	// examtable Å×ÀÌºí¿¡ ¸ğµç µ¥ÀÌÅÍ¸¦ »ğÀÔÇÏ´Â ÇÔ¼öÀÔ´Ï´Ù.
+	// examtable í…Œì´ë¸”ì— ëª¨ë“  ë°ì´í„°ë¥¼ ì‚½ì…í•˜ëŠ” í•¨ìˆ˜ì…ë‹ˆë‹¤.
 	public String insertAll() {
-	    String errorMessage = ""; // ¿À·ù¸¦ º¸¿©ÁÖ±â À§ÇÑ ¹®ÀÚ¿­ º¯¼ö ¼±¾ğ
+	    String errorMessage = ""; // ì˜¤ë¥˜ë¥¼ ë³´ì—¬ì£¼ê¸° ìœ„í•œ ë¬¸ìì—´ ë³€ìˆ˜ ì„ ì–¸
 	    try {
-	        // "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-	        // MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+	        // "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+	        // MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 
-	        // MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-	        // getConnection ¸Ş¼­µåÀÇ ÀÎÀÚ·Î´Â JDBC URL, mysqlÀÇ »ç¿ëÀÚ ÀÌ¸§, mysql»ç¿ëÀÚÀÇ ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÑ´Ù.
-	        Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+	        // MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+	        // getConnection ë©”ì„œë“œì˜ ì¸ìë¡œëŠ” JDBC URL, mysqlì˜ ì‚¬ìš©ì ì´ë¦„, mysqlì‚¬ìš©ìì˜ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•œë‹¤.
+	        Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-	        // Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+	        // Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 	        Statement stmt = conn.createStatement();
 
-	        for (int i = 0; i < 150; i++) { // i°¡ 0ºÎÅÍ 149±îÁö 150¹ø ¹İº¹ÇÏ´Â ¹İº¹¹®
-	            int cnt = i + 1;//ÀÌ¸§µÚ¿¡ ¼ıÀÚ¸¦ ºÙÀÌ±â À§ÇØ cnt º¯¼ö ¼±¾ğ
-	            String name = "È«±æ" + cnt;//¸¸µé¾îÁø cnt¸¦ È«±æµÚ¿¡ ÇÏ³ª¾¿ ºÙÀÌ¸é¼­ ÀÌ¸§À» »ı¼º
-	            int studentid = 209900 + cnt;//ÇĞ¹øÀ» ¸¸µé±â À§ÇØ ÃÊ±â°ª 209900¿¡ cnt¸¦ ´õÇØ¼­ studentid¸¦ »ı¼º
-	            //¸¸µé¾îÁø °ªÀ¸·Î insertÇÏ´Â Äõ¸® ÇÑ¹ø ½ÇÇà
+	        for (int i = 0; i < 150; i++) { // iê°€ 0ë¶€í„° 149ê¹Œì§€ 150ë²ˆ ë°˜ë³µí•˜ëŠ” ë°˜ë³µë¬¸
+	            int cnt = i + 1;//ì´ë¦„ë’¤ì— ìˆ«ìë¥¼ ë¶™ì´ê¸° ìœ„í•´ cnt ë³€ìˆ˜ ì„ ì–¸
+	            String name = "í™ê¸¸" + cnt;//ë§Œë“¤ì–´ì§„ cntë¥¼ í™ê¸¸ë’¤ì— í•˜ë‚˜ì”© ë¶™ì´ë©´ì„œ ì´ë¦„ì„ ìƒì„±
+	            int studentid = 209900 + cnt;//í•™ë²ˆì„ ë§Œë“¤ê¸° ìœ„í•´ ì´ˆê¸°ê°’ 209900ì— cntë¥¼ ë”í•´ì„œ studentidë¥¼ ìƒì„±
+	            //ë§Œë“¤ì–´ì§„ ê°’ìœ¼ë¡œ insertí•˜ëŠ” ì¿¼ë¦¬ í•œë²ˆ ì‹¤í–‰
 	            stmt.execute("INSERT INTO examtable (name, studentid, kor, eng, mat) VALUE ('" + name + "', "
 	                    + studentid + "," + "rand()*100, rand()*100, rand()*100);");
 	        }
-	        // µ¥ÀÌÅÍ »ğÀÔ ÈÄ ¹®±¸ Ãâ·ÂÇÏ±â
-	        System.out.println("µ¥ÀÌÅÍ ÀÔ·Â OK");
+	        // ë°ì´í„° ì‚½ì… í›„ ë¬¸êµ¬ ì¶œë ¥í•˜ê¸°
+	        System.out.println("ë°ì´í„° ì…ë ¥ OK");
 
-	        stmt.close(); // Statement °´Ã¼¸¦ ´İ½À´Ï´Ù.
-	        conn.close(); // Connection °´Ã¼¸¦ ´İ½À´Ï´Ù.
-	    } catch (SQLException e) { // sql±¸¹®¿¡ ¿À·ù°¡ ÀÖÀ» ½Ã
-	        errorMessage = e.getMessage(); // ¿À·ù¸Ş½ÃÁö¸¦ Ãâ·ÂÇÒ ¹®ÀÚ¿­¿¡ ´ã±â
-	    } catch (ClassNotFoundException e) { // Å¬·¡½º¸¦ Ã£Áö ¸øÇÏ´Â ¿À·ù°¡ ÀÖÀ» ½Ã
-	        errorMessage = "µå¶óÀÌ¹ö ·Îµå ½ÇÆĞ: " + e.getMessage(); // ¿À·ù¸Ş½ÃÁö¸¦ Ãâ·ÂÇÒ ¹®ÀÚ¿­¿¡ ´ã±â
+	        stmt.close(); // Statement ê°ì²´ë¥¼ ë‹«ìŠµë‹ˆë‹¤.
+	        conn.close(); // Connection ê°ì²´ë¥¼ ë‹«ìŠµë‹ˆë‹¤.
+	    } catch (SQLException e) { // sqlêµ¬ë¬¸ì— ì˜¤ë¥˜ê°€ ìˆì„ ì‹œ
+	        errorMessage = e.getMessage(); // ì˜¤ë¥˜ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•  ë¬¸ìì—´ì— ë‹´ê¸°
+	    } catch (ClassNotFoundException e) { // í´ë˜ìŠ¤ë¥¼ ì°¾ì§€ ëª»í•˜ëŠ” ì˜¤ë¥˜ê°€ ìˆì„ ì‹œ
+	        errorMessage = "ë“œë¼ì´ë²„ ë¡œë“œ ì‹¤íŒ¨: " + e.getMessage(); // ì˜¤ë¥˜ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•  ë¬¸ìì—´ì— ë‹´ê¸°
 	    }
 
-	    if (!errorMessage.isEmpty()) { // ¸¸ÀÏ ¿À·ù¸Ş½ÃÁö°¡ ÀÖ´Ù¸é
-	        System.out.println("¿¡·¯ ¹ß»ı: " + errorMessage); // Ãâ·ÂÇÏ±â
+	    if (!errorMessage.isEmpty()) { // ë§Œì¼ ì˜¤ë¥˜ë©”ì‹œì§€ê°€ ìˆë‹¤ë©´
+	        System.out.println("ì—ëŸ¬ ë°œìƒ: " + errorMessage); // ì¶œë ¥í•˜ê¸°
 	    }
-	    return errorMessage;//¿À·ù¸Ş½ÃÁö¸¦ ¹İÈ¯
+	    return errorMessage;//ì˜¤ë¥˜ë©”ì‹œì§€ë¥¼ ë°˜í™˜
 	}
 
 
 	@Override
-	public int peopleCount() {//¹æ¹®ÀÚ ¼ö¸¦ ¼¼´Â ÇÔ¼ö 
+	public int peopleCount() {//ë°©ë¬¸ì ìˆ˜ë¥¼ ì„¸ëŠ” í•¨ìˆ˜ 
 		int peopleCount = 0;
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			stmt = conn.createStatement();
 
-			// Äõ¸® °á°ú°ªÀ» ´ãÀ» ResultSet °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			// countpeople¿¡¼­ ÀüÃ¼ ÇàÀ» Á¶È¸ÇÏ´Â Äõ¸®
+			// ì¿¼ë¦¬ ê²°ê³¼ê°’ì„ ë‹´ì„ ResultSet ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			// countpeopleì—ì„œ ì „ì²´ í–‰ì„ ì¡°íšŒí•˜ëŠ” ì¿¼ë¦¬
 			rset = stmt.executeQuery("SELECT * FROM countpeople;");
 
 			while (rset.next()) {
 				peopleCount = rset.getInt(1);
 			}
 
-			System.out.println("Àü : " + peopleCount);
+			System.out.println("ì „ : " + peopleCount);
 
-			rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
-		} catch (Exception e) {//¿À·ù°¡ ¹ß»ıÇÏ¸é
-			e.printStackTrace();//¿À·ù¸¦ Ãâ·Â
+		} catch (Exception e) {//ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´
+			e.printStackTrace();//ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 		}
-		return peopleCount;//¹æ¹®ÀÚ ¼ö¸¦ ¹İÈ¯
+		return peopleCount;//ë°©ë¬¸ì ìˆ˜ë¥¼ ë°˜í™˜
 	}
 
 	@Override
 	public int updatePeopleCount(int peopleCount) {
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			stmt = conn.createStatement();
 
-			//¹æ¹®ÀÚ ¼ö¸¦ ¾÷µ¥ÀÌÆ® ÇÏ´Â Äõ¸®¸¦ ½ÇÇà
+			//ë°©ë¬¸ì ìˆ˜ë¥¼ ì—…ë°ì´íŠ¸ í•˜ëŠ” ì¿¼ë¦¬ë¥¼ ì‹¤í–‰
 			String query = "UPDATE countpeople SET countnum = " + peopleCount;
-			int rowsAffected = stmt.executeUpdate(query);//Äõ¸®¸¦ ½ÇÇàÇÏ°í °á°ú¸¦ ¼ıÀÚÇü º¯¼ö¿¡ ´ã±â
+			int rowsAffected = stmt.executeUpdate(query);//ì¿¼ë¦¬ë¥¼ ì‹¤í–‰í•˜ê³  ê²°ê³¼ë¥¼ ìˆ«ìí˜• ë³€ìˆ˜ì— ë‹´ê¸°
 
-			System.out.println("¹æ¹®ÀÚ¼ö ¾÷µ¥ÀÌÆ® ¼º°ø");//¹æ¹®ÀÚ¼ö ¾÷µ¥ÀÌÆ® ¼º°ø½Ã Ãâ·Â
+			System.out.println("ë°©ë¬¸ììˆ˜ ì—…ë°ì´íŠ¸ ì„±ê³µ");//ë°©ë¬¸ììˆ˜ ì—…ë°ì´íŠ¸ ì„±ê³µì‹œ ì¶œë ¥
 
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
-		} catch (Exception e) {//¿À·ù°¡ ¹ß»ıÇÏ¸é
-			e.printStackTrace();//¿À·ù¸¦ Ãâ·Â
+		} catch (Exception e) {//ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´
+			e.printStackTrace();//ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 		}
 
-		return peopleCount;//¾÷µ¥ÀÌÆ®µÈ ¹æ¹®ÀÚ ¼ö¸¦ ¾÷µ¥ÀÌÆ®
+		return peopleCount;//ì—…ë°ì´íŠ¸ëœ ë°©ë¬¸ì ìˆ˜ë¥¼ ì—…ë°ì´íŠ¸
 	}
 
 	@Override
-	// ÁÖ¾îÁø Å×ÀÌºí¸íÀÌ Á¸ÀçÇÏ´ÂÁö È®ÀÎÇÏ´Â ÇÔ¼öÀÔ´Ï´Ù.
+	// ì£¼ì–´ì§„ í…Œì´ë¸”ëª…ì´ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜ì…ë‹ˆë‹¤.
 	public boolean isTableExists(String tableName) {
 	    boolean tableExists = false;
 	    try {
-	        // JDBC µå¶óÀÌ¹ö Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÕ´Ï´Ù.
+	        // JDBC ë“œë¼ì´ë²„ í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•©ë‹ˆë‹¤.
 	        Class.forName("com.mysql.cj.jdbc.Driver");
 
-	        // MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-	        conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+	        // MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+	        conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-	        // Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+	        // Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 	        stmt = conn.createStatement();
 	        String table = "kopo27";
 
-	        // ÁÖ¾îÁø Å×ÀÌºí¸íÀÌ Á¤º¸ ½ºÅ°¸¶ ³»¿¡ Á¸ÀçÇÏ´ÂÁö È®ÀÎÇÏ´Â Äõ¸®¸¦ ½ÇÇàÇÕ´Ï´Ù.
+	        // ì£¼ì–´ì§„ í…Œì´ë¸”ëª…ì´ ì •ë³´ ìŠ¤í‚¤ë§ˆ ë‚´ì— ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸í•˜ëŠ” ì¿¼ë¦¬ë¥¼ ì‹¤í–‰í•©ë‹ˆë‹¤.
 	        String query = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '" + table
 	                + "' AND table_name = '" + tableName + "'";
 	         rset = stmt.executeQuery(query);
 
-	        //rset °´Ã¼ÀÎ rset¿¡¼­ °á°ú¸¦ °¡Á®¿Í¼­ rset.getInt(1)Àº °á°ú ÁıÇÕÀÇ Ã¹ ¹øÂ° ¿­ÀÇ °ªÀ» °¡Á®¿À±â
-	         //°ªÀÌ 0º¸´Ù Å« °æ¿ì, Å×ÀÌºíÀÌ Á¸ÀçÇÏ´Â °æ¿ì tableExists º¯¼ö¸¦ true·Î ¼³Á¤ÇÕ´Ï´Ù.
+	        //rset ê°ì²´ì¸ rsetì—ì„œ ê²°ê³¼ë¥¼ ê°€ì ¸ì™€ì„œ rset.getInt(1)ì€ ê²°ê³¼ ì§‘í•©ì˜ ì²« ë²ˆì§¸ ì—´ì˜ ê°’ì„ ê°€ì ¸ì˜¤ê¸°
+	         //ê°’ì´ 0ë³´ë‹¤ í° ê²½ìš°, í…Œì´ë¸”ì´ ì¡´ì¬í•˜ëŠ” ê²½ìš° tableExists ë³€ìˆ˜ë¥¼ trueë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 	        while (rset.next()) {
 	            int count = rset.getInt(1);
 	            if (count > 0) {
@@ -610,61 +610,61 @@ public class StudentScoreDaoImpl implements StudentScoreDao {
 	            }
 	        }
 
-	        rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+	        rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
-	    } catch (Exception e) {//¿À·ù°¡ ¹ß»ıÇÏ¸é 
-	        e.printStackTrace();//¿À·ùÃâ·Â
+	    } catch (Exception e) {//ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´ 
+	        e.printStackTrace();//ì˜¤ë¥˜ì¶œë ¥
 	    }
-	    return tableExists;//Å×ÀÌºíÀÇ Á¸ÀçÀ¯¹«¸¦ ¹İÈ¯
+	    return tableExists;//í…Œì´ë¸”ì˜ ì¡´ì¬ìœ ë¬´ë¥¼ ë°˜í™˜
 	}
 
 	@Override
-	// ÁÖ¾îÁø ÇĞ»ı name¿¡ ÇØ´çÇÏ´Â ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍ¸¦ ¹İÈ¯
+	// ì£¼ì–´ì§„ í•™ìƒ nameì— í•´ë‹¹í•˜ëŠ” í•™ìƒ ì ìˆ˜ ë°ì´í„°ë¥¼ ë°˜í™˜
 	public StudentScore selectByName(String name) {
 		StudentScore studentScore = null;
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			Statement stmt = conn.createStatement();
 
-			// Äõ¸® °á°ú°ªÀ» ´ãÀ» ResultSet °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			//ÆÄ¶ó¹ÌÅÍ·Î ¹ŞÀº name°ª°ú °°Àº nameÀÇ ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍ¸¦ °¡Á®¿À´Â Äõ¸®¸¦ ½ÇÇàÇÑ´Ù.
+			// ì¿¼ë¦¬ ê²°ê³¼ê°’ì„ ë‹´ì„ ResultSet ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			//íŒŒë¼ë¯¸í„°ë¡œ ë°›ì€ nameê°’ê³¼ ê°™ì€ nameì˜ í•™ìƒ ì ìˆ˜ ë°ì´í„°ë¥¼ ê°€ì ¸ì˜¤ëŠ” ì¿¼ë¦¬ë¥¼ ì‹¤í–‰í•œë‹¤.
 			rset = stmt.executeQuery("SELECT *, (kor + eng + mat) AS sum, (kor + eng + mat) / 3 AS ave, "
 					+ "(SELECT COUNT(*) + 1 FROM examtable WHERE (kor + eng + mat) > (t.kor + t.eng + t.mat)) AS ranking "
 					+ "FROM examtable AS t WHERE name = '" + name + "';");
 			
-			// ResultSet¿¡¼­ µ¥ÀÌÅÍ¸¦ ÀĞ¾î¿Í StudentScore °´Ã¼¿¡ ÀúÀåÇÕ´Ï´Ù.
+			// ResultSetì—ì„œ ë°ì´í„°ë¥¼ ì½ì–´ì™€ StudentScore ê°ì²´ì— ì €ì¥í•©ë‹ˆë‹¤.
 			while (rset.next()) {
-			    // »õ·Î¿î StudentScore °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			    // ìƒˆë¡œìš´ StudentScore ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			    studentScore = new StudentScore();
 
-			    // ResultSet¿¡¼­ °¢ ÄÃ·³ÀÇ °ªÀ» °¡Á®¿Í¼­ StudentScore °´Ã¼¿¡ ¼³Á¤ÇÕ´Ï´Ù.
-			    studentScore.setId(rset.getInt("ID"));  // ID ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setName(rset.getString("NAME"));  // NAME ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setStudentid(rset.getInt("STUDENTID"));  // STUDENTID ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setKor(rset.getInt("kor"));  // kor ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setEng(rset.getInt("eng"));  // eng ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setMat(rset.getInt("mat"));  // mat ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setSum(rset.getInt("sum"));  // sum ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setAve(rset.getInt("ave"));  // ave ÄÃ·³ °ª ¼³Á¤
-			    studentScore.setRanking(rset.getInt("ranking"));  // ranking ÄÃ·³ °ª ¼³Á¤
+			    // ResultSetì—ì„œ ê° ì»¬ëŸ¼ì˜ ê°’ì„ ê°€ì ¸ì™€ì„œ StudentScore ê°ì²´ì— ì„¤ì •í•©ë‹ˆë‹¤.
+			    studentScore.setId(rset.getInt("ID"));  // ID ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setName(rset.getString("NAME"));  // NAME ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setStudentid(rset.getInt("STUDENTID"));  // STUDENTID ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setKor(rset.getInt("kor"));  // kor ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setEng(rset.getInt("eng"));  // eng ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setMat(rset.getInt("mat"));  // mat ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setSum(rset.getInt("sum"));  // sum ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setAve(rset.getInt("ave"));  // ave ì»¬ëŸ¼ ê°’ ì„¤ì •
+			    studentScore.setRanking(rset.getInt("ranking"));  // ranking ì»¬ëŸ¼ ê°’ ì„¤ì •
 			}
 
-			rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
-		}catch (Exception e) {// ¿À·ù°¡ ¹ß»ıÇÏ¸é
-			e.printStackTrace();// ¿À·ù¸¦ Ãâ·Â
+		}catch (Exception e) {// ì˜¤ë¥˜ê°€ ë°œìƒí•˜ë©´
+			e.printStackTrace();// ì˜¤ë¥˜ë¥¼ ì¶œë ¥
 		}
-		return studentScore;// ÁÖ¾îÁø ÇĞ»ı name¿¡ ÇØ´çÇÏ´Â ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍ¸¦ ¹İÈ¯
+		return studentScore;// ì£¼ì–´ì§„ í•™ìƒ nameì— í•´ë‹¹í•˜ëŠ” í•™ìƒ ì ìˆ˜ ë°ì´í„°ë¥¼ ë°˜í™˜
 	}
 }

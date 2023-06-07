@@ -108,8 +108,11 @@ List<Hubo_Table> huboList= tupyoDao.selectAll();//selectAll 메소드를 사용�
 	</tr>
 </table>
 
-<h1>투표하기</h1>
+<% if (huboList.size() == 0) {//만약 값이 있다면 출력
+	 out.println("<h1>후보가 없습니다.</h1>");
+}else{%>
 
+<h1>투표하기</h1>
 <table cellspacing=3 width=600 border=1>
 	<tr>
 	<form method = "post" action = "B_02.jsp">
@@ -142,6 +145,7 @@ List<Hubo_Table> huboList= tupyoDao.selectAll();//selectAll 메소드를 사용�
 	</form>
 	</tr>
 </table>
+<% }%>
 </div>
 </body>
 </html>

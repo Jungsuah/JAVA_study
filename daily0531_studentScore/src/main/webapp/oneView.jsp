@@ -26,7 +26,7 @@ JSP 페이지에서 JDBC(Database Connectivity)를 사용하여 데이터베이�
 StudentScoreDao studentScoreDao = new StudentScoreDaoImpl();
 int id = Integer.parseInt(request.getParameter("id")); // 파라미터로 전달된 id 값을 가져온다
 StudentScore ss = studentScoreDao.selectOne(id); // 해당 id에 해당하는 학생 정보를 조회한다
-String name = ss.getName(); // 조회된 학생의 이름을 가져온다
+String name = ss.getName(); // 조회된 학생의 이름을 가져A온다
 
 // 조회한 이름을 출력한다
 out.println("<h1>[" + name + "]조회</h1>");

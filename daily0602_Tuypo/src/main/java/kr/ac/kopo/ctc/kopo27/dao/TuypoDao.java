@@ -7,17 +7,17 @@ import kr.ac.kopo.ctc.kopo27.domain.VotingResult;
 
 public interface TuypoDao {
 	
-	List<Hubo_Table> selectAll(); //ÀüÃ¼ ÈÄº¸ Å×ÀÌºí Á¶È¸
+	List<Hubo_Table> selectAll(); //ì „ì²´ í›„ë³´ í…Œì´ë¸” ì¡°íšŒ
 
-	int deleteById(int id); //id·Î ÈÄº¸ »èÁ¦
+	int deleteById(int id); //idë¡œ í›„ë³´ ì‚­ì œ
 	
-	int insertHubo(int id, String name); // ÈÄº¸ Ãß°¡ÇÏ±â
+	int insertHubo(int id, String name); // í›„ë³´ ì¶”ê°€í•˜ê¸°
 
-	List<VotingResult> getVotingResultsHubo();//ÈÄº¸º° µæÇ¥¼ö¿Í µæÇ¥À² °¡Á®¿À±â
+	List<VotingResult> getVotingResultsHubo();//í›„ë³´ë³„ ë“í‘œìˆ˜ì™€ ë“í‘œìœ¨ ê°€ì ¸ì˜¤ê¸°
 
-	List<VotingResult> getVotingResultsAge(int id);//ÈÄº¸ÀÇ ¿¬·É´ëº° µæÇ¥¼ö¿Í µæÇ¥À² °¡Á®¿À±â
+	List<VotingResult> getVotingResultsAge(int id);//í›„ë³´ì˜ ì—°ë ¹ëŒ€ë³„ ë“í‘œìˆ˜ì™€ ë“í‘œìœ¨ ê°€ì ¸ì˜¤ê¸°
 
-	int blankHuboNumber();//ºó ÈÄº¸ ¹øÈ£ °¡Á®¿À±â
+	int blankHuboNumber();//ë¹ˆ í›„ë³´ ë²ˆí˜¸ ê°€ì ¸ì˜¤ê¸°
 
-	int insertTuypo(int id, int age);//ÅõÇ¥ÇÏ±â
+	int insertTuypo(int id, int age);//íˆ¬í‘œí•˜ê¸°
 }

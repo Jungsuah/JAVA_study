@@ -9,7 +9,7 @@
 Class.forName("com.mysql.cj.jdbc.Driver");
 
 // MySQL 데이터베이스에 연결하기 위한 Connection 객체를 생성합니다.
-Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:33060/kopo27", "root", "kopo27");
+Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:33060/kopo27", "root", "kopoctc");
 
 // Statement 객체를 생성합니다.
 Statement stmt = conn.createStatement();

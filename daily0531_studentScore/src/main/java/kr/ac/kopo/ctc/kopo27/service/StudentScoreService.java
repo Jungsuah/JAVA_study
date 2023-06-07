@@ -5,10 +5,10 @@ import kr.ac.kopo.ctc.kopo27.dto.Pagination;
 public interface StudentScoreService {
 
     /**
-     * ÆäÀÌÁö Á¤º¸¸¦ »ı¼ºÇÏ¿© ¹İÈ¯
-     * page         ÇöÀç ÆäÀÌÁö
-     * countPerPage ÆäÀÌÁö´ç Ç×¸ñ ¼ö
-     * Pagination 	°´Ã¼
+     * í˜ì´ì§€ ì •ë³´ë¥¼ ìƒì„±í•˜ì—¬ ë°˜í™˜
+     * page         í˜„ì¬ í˜ì´ì§€
+     * countPerPage í˜ì´ì§€ë‹¹ í•­ëª© ìˆ˜
+     * Pagination 	ê°ì²´
      */
     Pagination getPagination(int page, int countPerPage);
 

@@ -1,19 +1,19 @@
 package kr.ac.kopo.ctc.kopo27.domain;
 
 public class Tuypo_Table {
-	private int id;//ÅõÇ¥ÇÑ ÈÄº¸ ¾ÆÀÌµğ
-	private int age;//ÅõÇ¥ÇÑ »ç¶÷ÀÇ ¿¬·É´ë
+	private int id;//íˆ¬í‘œí•œ í›„ë³´ ì•„ì´ë””
+	private int age;//íˆ¬í‘œí•œ ì‚¬ëŒì˜ ì—°ë ¹ëŒ€
 	
-	public int getId() {//ÅõÇ¥ÇÑ ÈÄº¸ ¾ÆÀÌµğ¸¦ °¡Á®´Ù ¾²´Â ÇÔ¼ö
+	public int getId() {//íˆ¬í‘œí•œ í›„ë³´ ì•„ì´ë””ë¥¼ ê°€ì ¸ë‹¤ ì“°ëŠ” í•¨ìˆ˜
 		return id;
 	}
-	public void setId(int id) {//ÅõÇ¥ÇÑ ÈÄº¸ ¾ÆÀÌµğ¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	public void setId(int id) {//íˆ¬í‘œí•œ í›„ë³´ ì•„ì´ë””ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 		this.id = id;
 	}
-	public int getAge() {//ÅõÇ¥ÇÑ »ç¶÷ÀÇ ¿¬·É´ë¸¦ °¡Á®´Ù ¾²´Â ÇÔ¼ö
+	public int getAge() {//íˆ¬í‘œí•œ ì‚¬ëŒì˜ ì—°ë ¹ëŒ€ë¥¼ ê°€ì ¸ë‹¤ ì“°ëŠ” í•¨ìˆ˜
 		return age;
 	}
-	public void setAge(int age) {//ÅõÇ¥ÇÑ »ç¶÷ÀÇ ¿¬·É´ë¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	public void setAge(int age) {//íˆ¬í‘œí•œ ì‚¬ëŒì˜ ì—°ë ¹ëŒ€ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 		this.age = age;
 	}
 }

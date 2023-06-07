@@ -73,6 +73,13 @@ vertical-align: middle;
 <body>
 
 <div class="container">
+<table cellspacing=3 width=600 border=1>
+    <tr>
+        <td width=100><a href="A_01.jsp">후보등록</a></td>
+        <td width=100><a href="B_01.jsp">투표</a></td>
+        <td width=100 bgcolor="yellow" ><a href="C_01.jsp">개표결과</a></td>
+    </tr>
+</table>
 
 <%
 //요청과 응답의 인코딩 설정
@@ -82,18 +89,12 @@ response.setCharacterEncoding("UTF-8");
 TuypoDao tupyoDao = new TuypoDaoImpl(); //tupyoDao를 임포트 해서 메소드 사용하게 하기
 List<VotingResult> votingResult = tupyoDao.getVotingResultsHubo();//후보별 득표수와 득표율 가져오기
 
-if (votingResult != null) {//만약 값이 있다면 출력
+if (votingResult.size() == 0) {//만약 값이 있다면 출력
+	 out.println("<h1>투표 내역이 없습니다.</h1>");
+}else{
 %>
-<table cellspacing=3 width=600 border=1>
-    <tr>
-        <td width=100><a href="A_01.jsp">후보등록</a></td>
-        <td width=100><a href="B_01.jsp">투표</a></td>
-        <td width=100 bgcolor="yellow" ><a href="C_01.jsp">개표결과</a></td>
-    </tr>
-</table>
 
 <h1> 후보별 득표 결과 </h1>
-
 <table cellspacing=3 width=600 border=1>
     <tr>
         <td width=75><p align=center>이름</p></td>
@@ -101,9 +102,9 @@ if (votingResult != null) {//만약 값이 있다면 출력
     </tr>
     <% for (VotingResult result : votingResult) { %><!--votingResult리스트에서 result객체 하나씩 읽어오기 -->
     <tr><!--result객체에서 이름과 id 출력 -->
-        <td width=75><a href="C_02.jsp?name=<%= result.getName() %>&id=<%= result.getId()%>"><%= result.getName()%></p></a></td>
+        <td width=75><a href="C_02.jsp?name=<%= result.getName() %>&id=<%= result.getId()%>"><%= result.getId()%>번 <%= result.getName()%></p></a></td>
         <td width=500>
-         <% int barLength = (int) (result.getVotePercentage() * 5.7);%>
+         <% double barLength = (result.getVotePercentage() * 5.7);%>
 			<p align="left"><!-- result 객체에서 득표수와 득표율 출력 -->
 			<div>
 			    <span><img src="막대기.jpg" style="width: <%= barLength %>px; height: 20px; display: inline-block;"></span>
@@ -115,6 +116,7 @@ if (votingResult != null) {//만약 값이 있다면 출력
     <%}%>
 </table>
 <%}%>
+
 </div>
 
 </body>

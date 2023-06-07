@@ -2,7 +2,6 @@
 <%@page import="java.util.List"%>
 <%@page import="kr.ac.kopo.ctc.kopo27.dao.TuypoDao"%>
 <%@page import="kr.ac.kopo.ctc.kopo27.dao.TuypoDaoImpl"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

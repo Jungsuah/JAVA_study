@@ -11,6 +11,77 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+    /* Table Styles */
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9em;
+        font-family: Arial, sans-serif;
+    }
+
+    .styled-table thead th {
+        background-color: #343a40;
+        color: #fff;
+        padding: 12px;
+        text-align: center;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .styled-table tbody td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .styled-table tbody tr:nth-of-type(even) {
+        background-color: #f8f9fa;
+    }
+
+    .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #343a40;
+    }
+
+    /* Responsive Styles */
+    @media screen and (max-width: 600px) {
+        .styled-table {
+            font-size: 0.8em;
+        }
+
+        .styled-table thead th {
+            padding: 8px;
+        }
+
+        .styled-table tbody td {
+            padding: 8px;
+        }
+    }
+    tr th{
+	font-weight:bold;
+    }
+tr th, tr td{
+	padding:5px;
+}
+th{
+    border: 5px solid #C1DAD7;
+}
+td{
+	border: 5px solid #C1DAD7;
+}
+.c1{
+	background:#4b8c74;
+}
+.c2{
+	background:#74c476;
+}
+.c3{
+	background:#a4e56d;
+}
+.c4{
+	background:#cffc83;
+}
+</style>
+
 </head>
 <body>
 <%
@@ -37,27 +108,27 @@ String reh=""; //습도 %
 String r06=""; //6시간 예상 강수량 
 String s06="";//6시간 예상 적설량
 
-out.println("<table cellspacing = 1 width =500 border = 1>");
+out.println("<table class=styled-table>");
 out.println("<tr>");
-out.println("<td width = 100>seq</td>"); // 순서
-out.println("<td width = 100>datetime</td>"); // 날짜와 시간
-out.println("<td width = 100>temp</td>"); // 현재 온도
-out.println("<td width = 100>tmx</td>"); // 최고 온도
-out.println("<td width = 100>tmn</td>"); // 최저 온도
-out.println("<td width = 100>sky</td>"); // 하늘 상태
-out.println("<td width = 100>pty</td>"); // 강수형태
-out.println("<td width = 100>wfKor</td>"); // 날씨(한국어)
-out.println("<td width = 100>wfEn</td>"); // 날씨(영어)
-out.println("<td width = 100>pop</td>"); // 강수확률
-out.println("<td width = 100>r12</td>"); // 12시간 강수량
-out.println("<td width = 100>s12</td>"); // 12시간 신적설
-out.println("<td width = 100>ws</td>"); // 풍속
-out.println("<td width = 100>wd</td>"); // 풍향
-out.println("<td width = 100>wdKor</td>"); // 풍향(한국어)
-out.println("<td width = 100>wdEn</td>"); // 풍향(영어)
-out.println("<td width = 100>reh</td>"); // 습도
-out.println("<td width = 100>r06</td>"); // 6시간 강수량
-out.println("<td width = 100>s06</td>"); // 6시간 신적설
+out.println("<td width = 100 class=c1>순서</td>"); // 순서
+out.println("<td width = 100 class=c1>날짜와 시간</td>"); // 날짜와 시간
+out.println("<td width = 100 class=c1>현재 온도</td>"); // 현재 온도
+out.println("<td width = 100 class=c1>최고 온도</td>"); // 최고 온도
+out.println("<td width = 100 class=c1>최저 온도</td>"); // 최저 온도
+out.println("<td width = 100 class=c2>하늘 상태</td>"); // 하늘 상태
+out.println("<td width = 100 class=c2>강수형태</td>"); // 강수형태
+out.println("<td width = 100 class=c2>날씨(한국어)</td>"); // 날씨(한국어)
+out.println("<td width = 100 class=c2>날씨(영어)</td>"); // 날씨(영어)
+out.println("<td width = 100 class=c2>강수확률</td>"); // 강수확률
+out.println("<td width = 100 class=c3>12시간 강수량</td>"); // 12시간 강수량
+out.println("<td width = 100 class=c3>12시간 신적설</td>"); // 12시간 신적설
+out.println("<td width = 100 class=c3>풍속</td>"); // 풍속
+out.println("<td width = 100 class=c3 >풍향</td>"); // 풍향
+out.println("<td width = 100 class=c4>풍향(한국어)</td>"); // 풍향(한국어)
+out.println("<td width = 100 class=c4>풍향(영어)</td>"); // 풍향(영어)
+out.println("<td width = 100 class=c4>습도</td>"); // 습도
+out.println("<td width = 100 class=c4>6시간 강수량</td>"); // 6시간 강수량
+out.println("<td width = 100 class=c4>6시간 신적설</td>"); // 6시간 신적설
 out.println("</tr>");
 
 Element root = doc.getDocumentElement();
@@ -152,26 +223,47 @@ for (int i = 0; i < tag_001.getLength(); i++) {
 	        wfEnImage = "기호 - 복사본 (2).jpg"; // 알 수 없는 그림 파일명 또는 기본 그림 파일명
 	    }
 	    
+	    String wdCode = elmt.getElementsByTagName("wd").item(0).getFirstChild().getNodeValue();
+	    String wdImage = "";
+
+	    if (wdCode.equals("1")) {
+	    	wdImage = "N.gif"; // 맑음에 해당하는 그림 파일명
+	    } else if (wdCode.equals("2")) {
+	    	wdImage = "NE.gif"; // 구름조금에 해당하는 그림 파일명
+	    } else if (wdCode.equals("3")) {
+	    	wdImage = "E.gif"; // 구름많음에 해당하는 그림 파일명
+	    } else if (wdCode.equals("4")) {
+	    	wdImage = "SE.gif";
+	    }else if (wdCode.equals("5")) {
+	    	wdImage = "S.gif";
+	    }else if (wdCode.equals("6")) {
+	    	wdImage = "SW.gif";
+	    }else if (wdCode.equals("7")) {
+	    	wdImage = "W.gif";
+	    }else if (wdCode.equals("8")) {
+	    	wdImage = "NW.gif";
+	    }
+	    
 	    out.println("<tr>");
-	    out.println("<td width = 100>" + tag_001.item(i).getAttributes().getNamedItem("seq").getNodeValue()+"</td>"); // seq 값 출력
-	    out.println("<td width = 100>" + datetime +"</td>"); // 날짜 및 시간 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("temp").item(0).getFirstChild().getNodeValue()+"</td>"); // 온도 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("tmx").item(0).getFirstChild().getNodeValue()+"</td>"); // 최고 기온 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("tmn").item(0).getFirstChild().getNodeValue()+"</td>"); // 최저 기온 출력
-	    out.println("<td width = 100><img width = 100 src=\"images/" + weatherImage + "\" alt=\"날씨 그림\"></td>"); // 날씨 이미지 출력
-	    out.println("<td width = 100><img width = 100 src=\"images/" + ptyImage + "\" alt=\"날씨 그림\"></td>"); // 강수 형태 이미지 출력
-	    out.println("<td width = 100><img width = 100 src=\"images/" + wfKorImage + "\" alt=\"날씨 그림\"></td>"); // 날씨 상태(한국어) 이미지 출력
-	    out.println("<td width = 100><img width = 100 src=\"images/" + wfEnImage + "\" alt=\"날씨 그림\"></td>"); // 날씨 상태(영어) 이미지 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("pop").item(0).getFirstChild().getNodeValue()+"</td>"); // 강수 확률 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("r12").item(0).getFirstChild().getNodeValue()+"</td>"); // 12시간 강수량 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("s12").item(0).getFirstChild().getNodeValue()+"</td>"); // 12시간 적설량 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("ws").item(0).getFirstChild().getNodeValue()+"</td>"); // 풍속 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("wd").item(0).getFirstChild().getNodeValue()+"</td>"); // 풍향 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("wdKor").item(0).getFirstChild().getNodeValue()+"</td>"); // 풍향(한국어) 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("wdEn").item(0).getFirstChild().getNodeValue()+"</td>"); // 풍향(영어) 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("reh").item(0).getFirstChild().getNodeValue()+"</td>"); // 습도 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("r06").item(0).getFirstChild().getNodeValue()+"</td>"); // 6시간 강수량 출력
-	    out.println("<td width = 100>" + elmt.getElementsByTagName("s06").item(0).getFirstChild().getNodeValue()+"</td>"); // 6시간 적설량 출력
+	    out.println("<td>" + tag_001.item(i).getAttributes().getNamedItem("seq").getNodeValue()+"</td>"); // seq 값 출력
+	    out.println("<td>" + datetime +"</td>"); // 날짜 및 시간 출력
+	    out.println("<td>" + elmt.getElementsByTagName("temp").item(0).getFirstChild().getNodeValue()+"</td>"); // 온도 출력
+	    out.println("<td>" + elmt.getElementsByTagName("tmx").item(0).getFirstChild().getNodeValue()+"</td>"); // 최고 기온 출력
+	    out.println("<td>" + elmt.getElementsByTagName("tmn").item(0).getFirstChild().getNodeValue()+"</td>"); // 최저 기온 출력
+	    out.println("<td><img width = 100 src=\"images/" + weatherImage + "\" alt=\"날씨 그림\"></td>"); // 날씨 이미지 출력
+	    out.println("<td><img width = 100 src=\"images/" + ptyImage + "\" alt=\"날씨 그림\"></td>"); // 강수 형태 이미지 출력
+	    out.println("<td><img width = 100 src=\"images/" + wfKorImage + "\" alt=\"날씨 그림\"></td>"); // 날씨 상태(한국어) 이미지 출력
+	    out.println("<td><img width = 100 src=\"images/" + wfEnImage + "\" alt=\"날씨 그림\"></td>"); // 날씨 상태(영어) 이미지 출력
+	    out.println("<td>" + elmt.getElementsByTagName("pop").item(0).getFirstChild().getNodeValue()+"</td>"); // 강수 확률 출력
+	    out.println("<td>" + elmt.getElementsByTagName("r12").item(0).getFirstChild().getNodeValue()+"</td>"); // 12시간 강수량 출력
+	    out.println("<td>" + elmt.getElementsByTagName("s12").item(0).getFirstChild().getNodeValue()+"</td>"); // 12시간 적설량 출력
+	    out.println("<td>" + elmt.getElementsByTagName("ws").item(0).getFirstChild().getNodeValue()+"</td>"); // 풍속 출력
+	    out.println("<td><img width = 100 src=\"images/" + wdImage + "\" alt=\"날씨 그림\"></td>"); // 풍향
+	    out.println("<td>" + elmt.getElementsByTagName("wdKor").item(0).getFirstChild().getNodeValue()+"</td>"); // 풍향(한국어) 출력
+	    out.println("<td>" + elmt.getElementsByTagName("wdEn").item(0).getFirstChild().getNodeValue()+"</td>"); // 풍향(영어) 출력
+	    out.println("<td>" + elmt.getElementsByTagName("reh").item(0).getFirstChild().getNodeValue()+"</td>"); // 습도 출력
+	    out.println("<td>" + elmt.getElementsByTagName("r06").item(0).getFirstChild().getNodeValue()+"</td>"); // 6시간 강수량 출력
+	    out.println("<td>" + elmt.getElementsByTagName("s06").item(0).getFirstChild().getNodeValue()+"</td>"); // 6시간 적설량 출력
 	    out.println("</tr>");
 
 	}   

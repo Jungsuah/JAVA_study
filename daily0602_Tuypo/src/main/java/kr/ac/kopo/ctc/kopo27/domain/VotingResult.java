@@ -1,49 +1,49 @@
 package kr.ac.kopo.ctc.kopo27.domain;
 
-public class VotingResult {// ¿øÇÏ´Â Äõ¸® °ªÀ» ÇÑ¹ø¿¡ Ãâ·ÂÇÏ±â À§ÇÑ domain »ı¼º
-	private int id;// ÈÄº¸ ¾ÆÀÌµğ
-	private int ageGroup;// ÅõÇ¥ÇÑ »ç¶÷ ¿¬·É´ë
-	private String name;// ÈÄº¸ ÀÌ¸§
-	private int voteCount;// µæÇ¥¼ö
-	private double votePercentage;// µæÇ¥À²
+public class VotingResult {// ì›í•˜ëŠ” ì¿¼ë¦¬ ê°’ì„ í•œë²ˆì— ì¶œë ¥í•˜ê¸° ìœ„í•œ domain ìƒì„±
+	private int id;// í›„ë³´ ì•„ì´ë””
+	private int ageGroup;// íˆ¬í‘œí•œ ì‚¬ëŒ ì—°ë ¹ëŒ€
+	private String name;// í›„ë³´ ì´ë¦„
+	private int voteCount;// ë“í‘œìˆ˜
+	private double votePercentage;// ë“í‘œìœ¨
 
-	public int getAgeGroup() {// ÅõÇ¥ÇÑ »ç¶÷ ¿¬·É´ë¸¦ °¡Á®´Ù¾²´Â ÇÔ¼ö
+	public int getAgeGroup() {// íˆ¬í‘œí•œ ì‚¬ëŒ ì—°ë ¹ëŒ€ë¥¼ ê°€ì ¸ë‹¤ì“°ëŠ” í•¨ìˆ˜
 		return ageGroup;
 	}
 
-	public void setAgeGroup(int ageGroup) {// ÅõÇ¥ÇÑ »ç¶÷ ¿¬·É´ë¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	public void setAgeGroup(int ageGroup) {// íˆ¬í‘œí•œ ì‚¬ëŒ ì—°ë ¹ëŒ€ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 		this.ageGroup = ageGroup;
 	}
 
-	public int getId() {// ÈÄº¸ ¾ÆÀÌµğ °¡Á®´Ù¾²´Â ÇÔ¼ö
+	public int getId() {// í›„ë³´ ì•„ì´ë”” ê°€ì ¸ë‹¤ì“°ëŠ” í•¨ìˆ˜
 		return id;
 	}
 
-	public void setId(int id) {// ÈÄº¸ ¾ÆÀÌµğ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	public void setId(int id) {// í›„ë³´ ì•„ì´ë”” ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 		this.id = id;
 	}
 
-	public String getName() {// ÈÄº¸ ÀÌ¸§ °¡Á®´Ù¾²´Â ÇÔ¼ö
+	public String getName() {// í›„ë³´ ì´ë¦„ ê°€ì ¸ë‹¤ì“°ëŠ” í•¨ìˆ˜
 		return name;
 	}
 
-	public void setName(String name) {// ÈÄº¸ ÀÌ¸§ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	public void setName(String name) {// í›„ë³´ ì´ë¦„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 		this.name = name;
 	}
 
-	public int getVoteCount() {// µæÇ¥¼ö¸¦ °¡Á®´Ù ¾²´Â ¸Ş¼Òµå
+	public int getVoteCount() {// ë“í‘œìˆ˜ë¥¼ ê°€ì ¸ë‹¤ ì“°ëŠ” ë©”ì†Œë“œ
 		return voteCount;
 	}
 
-	public void setVoteCount(int voteCount) {// µæÇ¥¼ö¸¦ ¼³Á¤ÇÏ´Â ¸Ş¼Òµå
+	public void setVoteCount(int voteCount) {// ë“í‘œìˆ˜ë¥¼ ì„¤ì •í•˜ëŠ” ë©”ì†Œë“œ
 		this.voteCount = voteCount;
 	}
 
-	public double getVotePercentage() {// µæÇ¥À²À» °¡Á®´Ù ¾²´Â ¸Ş¼Òµå
+	public double getVotePercentage() {// ë“í‘œìœ¨ì„ ê°€ì ¸ë‹¤ ì“°ëŠ” ë©”ì†Œë“œ
 		return votePercentage;
 	}
 
-	public void setVotePercentage(double votePercentage) {// µæÇ¥À²À» ¼³Á¤ÇÏ´Â ¸Ş¼Òµå
+	public void setVotePercentage(double votePercentage) {// ë“í‘œìœ¨ì„ ì„¤ì •í•˜ëŠ” ë©”ì†Œë“œ
 		this.votePercentage = votePercentage;
 	}
 }

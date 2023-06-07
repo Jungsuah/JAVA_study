@@ -18,42 +18,42 @@ public class TuypoDaoImpl implements TuypoDao {
 	private ResultSet rset = null;
 
 	@Override
-	public int insertHubo(int id, String name) {// ÈÄº¸ Ãß°¡ÇÏ±â
+	public int insertHubo(int id, String name) {// í›„ë³´ ì¶”ê°€í•˜ê¸°
 		int result = 1;
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			stmt = conn.createStatement();
 
 			int startID = 0;
 
 			ResultSet rset = stmt.executeQuery("select * from hubo_table;");
-			// sqlÄõ¸®¸¦ ½ÇÇàÇÏ°í °á°ú¸¦ ResultSet¿¡ ¹İÈ¯ÇÑ´Ù
-			startID = 1;// ÃÖÃÊ ÇĞ¹øÀ» startID º¯¼ö¿¡ ´ëÀÔ
-			while (rset.next()) { // rset°´Ã¼ÀÇ °¢ ÇàÀ» ¹İº¹ÇÑ´Ù
-				if (startID == rset.getInt(1)) { // Ã¹¹øÂ° ÀÚ·áºÎÅÍ Â÷·Ê´ë·Î ÇĞ¹øÀ» »Ì¾Æ Á¸ÀçÇÏ¸é
-					startID++; // ´ÙÀ½ÇĞ¹øÀ¸·Î ³Ñ¾î°£´Ù
-				} else { // ÇØ´çÇĞ¹øÀÌ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é
+			// sqlì¿¼ë¦¬ë¥¼ ì‹¤í–‰í•˜ê³  ê²°ê³¼ë¥¼ ResultSetì— ë°˜í™˜í•œë‹¤
+			startID = 1;// ìµœì´ˆ í•™ë²ˆì„ startID ë³€ìˆ˜ì— ëŒ€ì…
+			while (rset.next()) { // rsetê°ì²´ì˜ ê° í–‰ì„ ë°˜ë³µí•œë‹¤
+				if (startID == rset.getInt(1)) { // ì²«ë²ˆì§¸ ìë£Œë¶€í„° ì°¨ë¡€ëŒ€ë¡œ í•™ë²ˆì„ ë½‘ì•„ ì¡´ì¬í•˜ë©´
+					startID++; // ë‹¤ìŒí•™ë²ˆìœ¼ë¡œ ë„˜ì–´ê°„ë‹¤
+				} else { // í•´ë‹¹í•™ë²ˆì´ ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´
 					id = startID;
-					break; // ·çÇÁ¸¦ Á¾·áÇÑ´Ù
+					break; // ë£¨í”„ë¥¼ ì¢…ë£Œí•œë‹¤
 				}
 			}
 
-			// INSERT Äõ¸®¸¦ »ç¿ëÇÏ¿© »õ·Î¿î µ¥ÀÌÅÍ¸¦ Ãß°¡
+			// INSERT ì¿¼ë¦¬ë¥¼ ì‚¬ìš©í•˜ì—¬ ìƒˆë¡œìš´ ë°ì´í„°ë¥¼ ì¶”ê°€
 			String sql = "INSERT INTO hubo_table(id, name) VALUES(" + id + ", '" + name + "');";
 
 			stmt.execute(sql);
 
-			System.out.println("insert ¼º°ø");
+			System.out.println("insert ì„±ê³µ");
 
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
 		} catch (Exception e) {
 			result = -1;
@@ -63,30 +63,30 @@ public class TuypoDaoImpl implements TuypoDao {
 	}
 
 	@Override
-	public int insertTuypo(int id, int age) {// ÈÄº¸ Ãß°¡ÇÏ±â
+	public int insertTuypo(int id, int age) {// í›„ë³´ ì¶”ê°€í•˜ê¸°
 		int result = 1;
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			stmt = conn.createStatement();
 
 			int startID = 0;
 
-			// INSERT Äõ¸®¸¦ »ç¿ëÇÏ¿© »õ·Î¿î µ¥ÀÌÅÍ¸¦ Ãß°¡
+			// INSERT ì¿¼ë¦¬ë¥¼ ì‚¬ìš©í•˜ì—¬ ìƒˆë¡œìš´ ë°ì´í„°ë¥¼ ì¶”ê°€
 			String sql = "INSERT INTO Tupyo_table(id,age ) VALUES(" + id + ", " + age + ");";
 
 			stmt.execute(sql);
 
-			System.out.println("ÅõÇ¥ ¼º°ø");
+			System.out.println("íˆ¬í‘œ ì„±ê³µ");
 
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
 		} catch (Exception e) {
 			result = -1;
@@ -96,34 +96,34 @@ public class TuypoDaoImpl implements TuypoDao {
 	}
 
 	@Override
-	public int blankHuboNumber() {// ÈÄº¸ Ãß°¡ÇÏ±â
+	public int blankHuboNumber() {// í›„ë³´ ì¶”ê°€í•˜ê¸°
 		int startID = 0;
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			stmt = conn.createStatement();
 
 			ResultSet rset = stmt.executeQuery("select * from hubo_table;");
-			// sqlÄõ¸®¸¦ ½ÇÇàÇÏ°í °á°ú¸¦ ResultSet¿¡ ¹İÈ¯ÇÑ´Ù
-			startID = 1;// ÃÖÃÊ ÇĞ¹øÀ» startID º¯¼ö¿¡ ´ëÀÔ
-			while (rset.next()) { // rset°´Ã¼ÀÇ °¢ ÇàÀ» ¹İº¹ÇÑ´Ù
-				if (startID == rset.getInt(1)) { // Ã¹¹øÂ° ÀÚ·áºÎÅÍ Â÷·Ê´ë·Î ÇĞ¹øÀ» »Ì¾Æ Á¸ÀçÇÏ¸é
-					startID++; // ´ÙÀ½ÇĞ¹øÀ¸·Î ³Ñ¾î°£´Ù
-				} else { // ÇØ´çÇĞ¹øÀÌ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é
-					break; // ·çÇÁ¸¦ Á¾·áÇÑ´Ù
+			// sqlì¿¼ë¦¬ë¥¼ ì‹¤í–‰í•˜ê³  ê²°ê³¼ë¥¼ ResultSetì— ë°˜í™˜í•œë‹¤
+			startID = 1;// ìµœì´ˆ í•™ë²ˆì„ startID ë³€ìˆ˜ì— ëŒ€ì…
+			while (rset.next()) { // rsetê°ì²´ì˜ ê° í–‰ì„ ë°˜ë³µí•œë‹¤
+				if (startID == rset.getInt(1)) { // ì²«ë²ˆì§¸ ìë£Œë¶€í„° ì°¨ë¡€ëŒ€ë¡œ í•™ë²ˆì„ ë½‘ì•„ ì¡´ì¬í•˜ë©´
+					startID++; // ë‹¤ìŒí•™ë²ˆìœ¼ë¡œ ë„˜ì–´ê°„ë‹¤
+				} else { // í•´ë‹¹í•™ë²ˆì´ ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë©´
+					break; // ë£¨í”„ë¥¼ ì¢…ë£Œí•œë‹¤
 				}
 			}
 
-			System.out.println("¹øÈ£ °¡Á®¿À±â ¼º°ø");
+			System.out.println("ë²ˆí˜¸ ê°€ì ¸ì˜¤ê¸° ì„±ê³µ");
 
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,24 +132,24 @@ public class TuypoDaoImpl implements TuypoDao {
 	}
 
 	@Override
-	public List<VotingResult> getVotingResultsHubo() {// ÈÄº¸ÀÚº° µæÇ¥¼ö¿Í µæÇ¥À² °¡Á®¿À±â
+	public List<VotingResult> getVotingResultsHubo() {// í›„ë³´ìë³„ ë“í‘œìˆ˜ì™€ ë“í‘œìœ¨ ê°€ì ¸ì˜¤ê¸°
 		List<VotingResult> voteResultList = new ArrayList<VotingResult>();
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			Statement stmt = conn.createStatement();
 
-			// Äõ¸® °á°ú°ªÀ» ´ãÀ» ResultSet °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			// ÈÄº¸ÀÇ ¾ÆÀÌµğ, ÈÄº¸ÀÇ ÀÌ¸§, ÈÄº¸ÀÇ µæÇ¥¼ö, ÈÄº¸ÀÇ µæÇ¥À²À» °¡Á®¿À´Â Äõ¸®
-			String query = "SELECT h.id, h.name, COUNT(*) AS voteCount, "
-					+ "(COUNT(*) * 100 / total.total_votes) AS votePercentage " + "FROM hubo_table h "
-					+ "JOIN Tupyo_table t ON h.id = t.id "
+			// ì¿¼ë¦¬ ê²°ê³¼ê°’ì„ ë‹´ì„ ResultSet ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			// í›„ë³´ì˜ ì•„ì´ë””, í›„ë³´ì˜ ì´ë¦„, í›„ë³´ì˜ ë“í‘œìˆ˜, í›„ë³´ì˜ ë“í‘œìœ¨ì„ ê°€ì ¸ì˜¤ëŠ” ì¿¼ë¦¬
+			String query = "SELECT h.id, h.name, COUNT(t.id) AS voteCount, "
+					+ "(COUNT(t.id) * 100 / total.total_votes) AS votePercentage " + "FROM hubo_table h "
+					+ "LEFT JOIN Tupyo_table t ON h.id = t.id "
 					+ "CROSS JOIN (SELECT COUNT(*) AS total_votes FROM Tupyo_table) AS total "
 					+ "GROUP BY h.id, h.name, total.total_votes;";
 
@@ -163,9 +163,9 @@ public class TuypoDaoImpl implements TuypoDao {
 				voteResultList.add(result);
 			}
 
-			rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -175,23 +175,23 @@ public class TuypoDaoImpl implements TuypoDao {
 	}
 
 	@Override
-	public List<VotingResult> getVotingResultsAge(int id) {// ÈÄº¸ÀÇ ¿¬·É´ëº° µæÇ¥¼ö¿Í µæÇ¥À² °¡Á®¿À±â
+	public List<VotingResult> getVotingResultsAge(int id) {// í›„ë³´ì˜ ì—°ë ¹ëŒ€ë³„ ë“í‘œìˆ˜ì™€ ë“í‘œìœ¨ ê°€ì ¸ì˜¤ê¸°
 		List<VotingResult> voteResultList = new ArrayList<VotingResult>();
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			Statement stmt = conn.createStatement();
 
-			// Äõ¸® °á°ú°ªÀ» ´ãÀ» ResultSet °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			// ÈÄº¸ÀÇ ÀÌ¸§, ÈÄº¸¸¦ ÅõÇ¥ÇÑ »ç¶÷µéÀÇ ¿¬·É´ë, ÈÄº¸ÀÇ µæÇ¥¼ö, ÈÄº¸ÀÇ µæÇ¥À²À» °¡Á®¿À´Â Äõ¸®
-			String query = "select B.name, A.¿¬·É´ë, A.µæÇ¥¼ö, A.µæÇ¥À² " + "from (select id, age*10 as ¿¬·É´ë, count(age) as µæÇ¥¼ö, "
-					+ "count(age)/(select count(*) from Tupyo_table where id = " + id + ") * 100 as µæÇ¥À² "
+			// ì¿¼ë¦¬ ê²°ê³¼ê°’ì„ ë‹´ì„ ResultSet ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			// í›„ë³´ì˜ ì´ë¦„, í›„ë³´ë¥¼ íˆ¬í‘œí•œ ì‚¬ëŒë“¤ì˜ ì—°ë ¹ëŒ€, í›„ë³´ì˜ ë“í‘œìˆ˜, í›„ë³´ì˜ ë“í‘œìœ¨ì„ ê°€ì ¸ì˜¤ëŠ” ì¿¼ë¦¬
+			String query = "select B.name, A.ì—°ë ¹ëŒ€, A.ë“í‘œìˆ˜, A.ë“í‘œìœ¨ " + "from (select id, age*10 as ì—°ë ¹ëŒ€, count(age) as ë“í‘œìˆ˜, "
+					+ "count(age)/(select count(*) from Tupyo_table where id = " + id + ") * 100 as ë“í‘œìœ¨ "
 					+ "from Tupyo_table where id = " + id + " group by age order by age) as A "
 					+ "inner join hubo_table B on A.id = B.id";
 
@@ -206,9 +206,9 @@ public class TuypoDaoImpl implements TuypoDao {
 				voteResultList.add(result);
 			}
 
-			rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -217,35 +217,35 @@ public class TuypoDaoImpl implements TuypoDao {
 	}
 
 	@Override
-	public List<Hubo_Table> selectAll() {// StudentScore °´Ã¼µéÀÇ ¸®½ºÆ®¸¦ ¹İÈ¯ÇÏ´Â ¸Ş¼Òµå selectAll
-		System.out.println("===> hubo_Table°ú ¿¬°á ½ÃÀÛ!");
+	public List<Hubo_Table> selectAll() {// StudentScore ê°ì²´ë“¤ì˜ ë¦¬ìŠ¤íŠ¸ë¥¼ ë°˜í™˜í•˜ëŠ” ë©”ì†Œë“œ selectAll
+		System.out.println("===> hubo_Tableê³¼ ì—°ê²° ì‹œì‘!");
 
-		List<Hubo_Table> list = new ArrayList<Hubo_Table>();// ¸®½ºÆ® °´Ã¼ ¼±¾ğ
+		List<Hubo_Table> list = new ArrayList<Hubo_Table>();// ë¦¬ìŠ¤íŠ¸ ê°ì²´ ì„ ì–¸
 		try {
-			// "com.mysql.cj.jdbc.Driver" Å¬·¡½º¸¦ µ¿ÀûÀ¸·Î ·ÎµåÇÏ±â À§ÇØ JavaÀÇ Class.forName ¸Ş¼­µå¸¦ È£ÃâÇÏ¿©
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿ÍÀÇ ¿¬°á
+			// "com.mysql.cj.jdbc.Driver" í´ë˜ìŠ¤ë¥¼ ë™ì ìœ¼ë¡œ ë¡œë“œí•˜ê¸° ìœ„í•´ Javaì˜ Class.forName ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ì—¬
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì™€ì˜ ì—°ê²°
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			// MySQL µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°áÇÏ±â À§ÇÑ Connection °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			// MySQL ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°í•˜ê¸° ìœ„í•œ Connection ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
-			// Statement °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
+			// Statement ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 			stmt = conn.createStatement();
 
-			// Äõ¸® °á°ú°ªÀ» ´ãÀ» ResultSet °´Ã¼¸¦ »ı¼ºÇÕ´Ï´Ù.
-			// hubo_table¿¡¼­ ÀüÃ¼ ÇàÀ» Á¶È¸ÇÏ´Â Äõ¸®
+			// ì¿¼ë¦¬ ê²°ê³¼ê°’ì„ ë‹´ì„ ResultSet ê°ì²´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+			// hubo_tableì—ì„œ ì „ì²´ í–‰ì„ ì¡°íšŒí•˜ëŠ” ì¿¼ë¦¬
 			rset = stmt.executeQuery("select * from hubo_table;");
 
-			while (rset.next()) {// °ªÀÌ ¾øÀ»¶§±îÁö ¹İº¹
+			while (rset.next()) {// ê°’ì´ ì—†ì„ë•Œê¹Œì§€ ë°˜ë³µ
 				Hubo_Table hubo = new Hubo_Table();
-				hubo.setId(rset.getInt("id"));// id¸¦ °¡Á®¿Í¼­ °ªÀ» ¼¼ÆÃ
-				hubo.setName(rset.getString("NAME"));// NAMEÀ» °¡Á®¿Í¼­ °ªÀ» ¼¼ÆÃ
-				list.add(hubo);// ¸®½ºÆ® °´Ã¼¿¡ ´ã±â
+				hubo.setId(rset.getInt("id"));// idë¥¼ ê°€ì ¸ì™€ì„œ ê°’ì„ ì„¸íŒ…
+				hubo.setName(rset.getString("NAME"));// NAMEì„ ê°€ì ¸ì™€ì„œ ê°’ì„ ì„¸íŒ…
+				list.add(hubo);// ë¦¬ìŠ¤íŠ¸ ê°ì²´ì— ë‹´ê¸°
 			}
 
-			rset.close();// »ç¿ëÇÑ ResultSet °´Ã¼ ´İ±â
-			stmt.close();// »ç¿ëÇÑ Statement °´Ã¼ ´İ±â
-			conn.close();// »ç¿ëÇÑ Connection °´Ã¼ ´İ±â
+			rset.close();// ì‚¬ìš©í•œ ResultSet ê°ì²´ ë‹«ê¸°
+			stmt.close();// ì‚¬ìš©í•œ Statement ê°ì²´ ë‹«ê¸°
+			conn.close();// ì‚¬ìš©í•œ Connection ê°ì²´ ë‹«ê¸°
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -254,18 +254,18 @@ public class TuypoDaoImpl implements TuypoDao {
 	}
 
 	@Override
-	public int deleteById(int id) {// id·Î »èÁ¦
+	public int deleteById(int id) {// idë¡œ ì‚­ì œ
 		int result = 0;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopo27");
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 
 			stmt = conn.createStatement();
-			String sql1 = "DELETE FROM Tupyo_table WHERE id = " + id; // Tupyo_table¿¡¼­ ÇØ´ç id¸¦ °¡Áø ·¹ÄÚµå »èÁ¦
+			String sql1 = "DELETE FROM Tupyo_table WHERE id = " + id; // Tupyo_tableì—ì„œ í•´ë‹¹ idë¥¼ ê°€ì§„ ë ˆì½”ë“œ ì‚­ì œ
 			stmt.executeUpdate(sql1);
-			String sql2 = "DELETE FROM hubo_table WHERE id = " + id; // hubo_table¿¡¼­ ÇØ´ç id¸¦ °¡Áø ·¹ÄÚµå »èÁ¦
+			String sql2 = "DELETE FROM hubo_table WHERE id = " + id; // hubo_tableì—ì„œ í•´ë‹¹ idë¥¼ ê°€ì§„ ë ˆì½”ë“œ ì‚­ì œ
 			stmt.executeUpdate(sql2);
-			System.out.println("delete id·Î ¼º°ø");
+			System.out.println("delete idë¡œ ì„±ê³µ");
 			result = 1;
 
 		} catch (Exception e) {

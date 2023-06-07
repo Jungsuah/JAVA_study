@@ -89,7 +89,8 @@ if (!isTableExist) {
         } else {
             out.println("<tr>");//테이블의 데이터 행 시작
         } 
-        out.println("<td><p align=center><p align=center><a href=\"oneView.jsp?id=" + studentScore.getId() + "\" target=\"result\">" + studentScore.getName() + "</p></td>"); // 학생의 이름을 출력하고, 해당 학생의 상세 정보를 보여주는 링크를 생성합니다.
+        out.println("<td><p align=center><p align=center><a href=\"oneView.jsp?id=" + studentScore.getId() + "\" target=\"result\">" + studentScore.getName() + "</p></td>"); 
+        // 학생의 이름을 출력하고, 해당 학생의 상세 정보를 보여주는 링크를 생성합니다.
         out.println("<td><p align=center>" + studentScore.getStudentid() + "</p></td>"); // 학생의 학번을 출력합니다.
         out.println("<td><p align=right>" + studentScore.getKor() + "</p></td>"); // 국어 점수를 출력합니다.
         out.println("<td><p align=right>" + studentScore.getEng() + "</p></td>"); // 영어 점수를 출력합니다.

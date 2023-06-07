@@ -2,85 +2,85 @@ package kr.ac.kopo.ctc.kopo27.domain;
 
 public class StudentScore {
 
-	private int id; // ÇĞ»ı Á¡¼ö µ¥ÀÌÅÍÀÇ °íÀ¯ ½Äº°ÀÚ (Primary Key)
-	private String name; // ÇĞ»ı ÀÌ¸§
-	private int studentid; // ÇĞ¹ø
-	private int kor; // ±¹¾î Á¡¼ö
-	private int eng; // ¿µ¾î Á¡¼ö
-	private int mat; // ¼öÇĞ Á¡¼ö
-	private int sum = kor + eng + mat; // ÃÑÁ¡
-	private int ave = (kor + eng + mat) / 3; // Æò±Õ
-	private int ranking; // ·©Å·
+	private int id; // í•™ìƒ ì ìˆ˜ ë°ì´í„°ì˜ ê³ ìœ  ì‹ë³„ì (Primary Key)
+	private String name; // í•™ìƒ ì´ë¦„
+	private int studentid; // í•™ë²ˆ
+	private int kor; // êµ­ì–´ ì ìˆ˜
+	private int eng; // ì˜ì–´ ì ìˆ˜
+	private int mat; // ìˆ˜í•™ ì ìˆ˜
+	private int sum = kor + eng + mat; // ì´ì 
+	private int ave = (kor + eng + mat) / 3; // í‰ê· 
+	private int ranking; // ë­í‚¹
 
-	public int getId() {//¾ÆÀÌµğ¸¦ °¡Á®°¡¼­ ¾µ¼öÀÖ°Ô ÇÏ´Â getter
+	public int getId() {//ì•„ì´ë””ë¥¼ ê°€ì ¸ê°€ì„œ ì“¸ìˆ˜ìˆê²Œ í•˜ëŠ” getter
 		return id;
 	}
 
-	public void setId(int id) {//¾ÆÀÌµğ¸¦ °¡Á®¿Í id¿¡ ´ëÀÔÇÏ´Â setter
+	public void setId(int id) {//ì•„ì´ë””ë¥¼ ê°€ì ¸ì™€ idì— ëŒ€ì…í•˜ëŠ” setter
 		this.id = id;
 	}
 
-	public String getName() {//ÀÌ¸§ °¡Á®°¡¼­ ¾µ¼öÀÖ°Ô ÇÏ´Â getter
+	public String getName() {//ì´ë¦„ ê°€ì ¸ê°€ì„œ ì“¸ìˆ˜ìˆê²Œ í•˜ëŠ” getter
 		return name;
 	}
 
-	public void setName(String name) {//ÀÌ¸§ °¡Á®¿Í¼­ ¾µ¼öÀÖ°Ô ÇÏ´Â setter
+	public void setName(String name) {//ì´ë¦„ ê°€ì ¸ì™€ì„œ ì“¸ìˆ˜ìˆê²Œ í•˜ëŠ” setter
 		this.name = name;
 	}
 
-	public int getStudentid() {//ÇĞ»ı ÇĞ¹øÀ» °¡Á®¿É´Ï´Ù.
+	public int getStudentid() {//í•™ìƒ í•™ë²ˆì„ ê°€ì ¸ì˜µë‹ˆë‹¤.
 		return studentid;
 	}
 
-	public void setStudentid(int studentid) {//ÇĞ»ı ÇĞ¹øÀ» ¼³Á¤ÇÕ´Ï´Ù.
+	public void setStudentid(int studentid) {//í•™ìƒ í•™ë²ˆì„ ì„¤ì •í•©ë‹ˆë‹¤.
 		this.studentid = studentid;
 	}
 
-	public int getKor() {//±¹¾î Á¡¼ö¸¦ °¡Á®¿É´Ï´Ù.
+	public int getKor() {//êµ­ì–´ ì ìˆ˜ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
 		return kor;
 	}
 
-	public void setKor(int kor) {//±¹¾î Á¡¼ö¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+	public void setKor(int kor) {//êµ­ì–´ ì ìˆ˜ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
 		this.kor = kor;
 	}
 
-	public int getEng() {//¿µ¾î Á¡¼ö¸¦ °¡Á®¿É´Ï´Ù.
+	public int getEng() {//ì˜ì–´ ì ìˆ˜ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
 		return eng;
 	}
 
-	public void setEng(int eng) {//¿µ¾î Á¡¼ö¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+	public void setEng(int eng) {//ì˜ì–´ ì ìˆ˜ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
 		this.eng = eng;
 	}
 
-	public int getMat() {//¼öÇĞ Á¡¼ö¸¦ °¡Á®¿É´Ï´Ù.
+	public int getMat() {//ìˆ˜í•™ ì ìˆ˜ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
 		return mat;
 	}
 
-	public void setMat(int mat) {//¼öÇĞ Á¡¼ö¸¦ ¼³Á¤ÇÕ´Ï´Ù.
+	public void setMat(int mat) {//ìˆ˜í•™ ì ìˆ˜ë¥¼ ì„¤ì •í•©ë‹ˆë‹¤.
 		this.mat = mat;
 	}
 
-	public int getSum() {//ÃÑÁ¡À» °¡Á®¿É´Ï´Ù.
+	public int getSum() {//ì´ì ì„ ê°€ì ¸ì˜µë‹ˆë‹¤.
 		return sum;
 	}
 
-	public void setSum(int sum) {//ÃÑÁ¡À» ¼³Á¤ÇÕ´Ï´Ù.
+	public void setSum(int sum) {//ì´ì ì„ ì„¤ì •í•©ë‹ˆë‹¤.
 		this.sum = sum;
 	}
 
-	public float getAve() {//Æò±ÕÀ» °¡Á®¿É´Ï´Ù.
+	public float getAve() {//í‰ê· ì„ ê°€ì ¸ì˜µë‹ˆë‹¤.
 		return ave;
 	}
 
-	public void setAve(int ave) {//Æò±ÕÀ» ¼³Á¤ÇÕ´Ï´Ù.
+	public void setAve(int ave) {//í‰ê· ì„ ì„¤ì •í•©ë‹ˆë‹¤.
 		this.ave = ave;
 	}
 
-	public int getRanking() {//·©Å·À» °¡Á®¿É´Ï´Ù.
+	public int getRanking() {//ë­í‚¹ì„ ê°€ì ¸ì˜µë‹ˆë‹¤.
 		return ranking;
 	}
 
-	public void setRanking(int ranking) {//·©Å·À» ¼³Á¤ÇÕ´Ï´Ù.
+	public void setRanking(int ranking) {//ë­í‚¹ì„ ì„¤ì •í•©ë‹ˆë‹¤.
 		this.ranking = ranking;
 	}
 
