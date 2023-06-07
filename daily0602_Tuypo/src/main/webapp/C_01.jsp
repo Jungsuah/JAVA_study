@@ -103,9 +103,12 @@ if (votingResult != null) {//만약 값이 있다면 출력
     <tr><!--result객체에서 이름과 id 출력 -->
         <td width=75><a href="C_02.jsp?name=<%= result.getName() %>&id=<%= result.getId()%>"><%= result.getName()%></p></a></td>
         <td width=500>
-            <p align=left><!--result객체에서 득표수와 득표율 출력 -->
-                <img src='막대기.jpg' width=<%= result.getVotePercentage() * 15%> height=20>
-                &nbsp<%= result.getVoteCount()%>&nbsp(<%= result.getVotePercentage()%>%)
+         <% int barLength = (int) (result.getVotePercentage() * 5.7);%>
+			<p align="left"><!-- result 객체에서 득표수와 득표율 출력 -->
+			<div>
+			    <span><img src="막대기.jpg" style="width: <%= barLength %>px; height: 20px; display: inline-block;"></span>
+                <span><%= result.getVoteCount()%>(<%= result.getVotePercentage()%>%)</span>
+                </div>
             </p>
         </td>
     </tr>
