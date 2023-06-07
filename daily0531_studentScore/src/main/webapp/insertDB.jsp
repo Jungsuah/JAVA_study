@@ -58,6 +58,7 @@ JSP 페이지에서 JDBC(Database Connectivity)를 사용하여 데이터베이�
         kor = result.getKor(); // 조회 결과의 국어 점수 가져오기
         eng = result.getEng(); // 조회 결과의 영어 점수 가져오기
         mat = result.getMat(); // 조회 결과의 수학 점수 가져오기
+        insertID = result.getStudentid();
     } catch (Exception e) {
     }
 %>
@@ -79,7 +80,7 @@ JSP 페이지에서 JDBC(Database Connectivity)를 사용하여 데이터베이�
     </tr>
     <tr>
         <td width=100><p align=center>학번</p></td> <!-- 학번 출력 -->
-        <td width=300><p align=center><%=kor%></p></td> <!-- 학번 값 출력 -->
+        <td width=300><p align=center><%=insertID%></p></td> <!-- 학번 값 출력 -->
     </tr>
     <tr>
         <td width=100><p align=center>국어</p></td> <!-- 국어 출력 -->
