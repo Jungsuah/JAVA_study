@@ -144,13 +144,40 @@ if (votingResult != null) {//값이 있으면 출력
 		<td width=75><p align=center>연령대</p></td>
 		<td width=500><p align=center>인기도</p></td>
 	</tr>
-	 <% for (VotingResult result : votingResult) { %><!-- votingResult리스트에서 result 객체 하나씩 출력하기-->
-	<tr><!-- result 객체의 연령대 출력하기-->
-		<td width=75><p align=center><%=result.getAgeGroup()%>대</p></td>
-		<!-- result 객체의 득표율, 득표수 출력하기-->
-		<td width=500><p align=left><img src='막대기.jpg' width=<%=result.getVotePercentage() * 15%> height=20 >&nbsp<%=result.getVoteCount()%>&nbsp&nbsp(<%=result.getVotePercentage()%>%)</p></td>
-	</tr>
-	<%}%>
+	
+	
+	   <%
+	   int ageCount = 0;
+	   double rate = 0;
+   for (int age = 1; age <= 9; age++) {
+      	ageCount = 0;
+      for (int i = 0; i < votingResult.size(); i++) {
+    	  VotingResult result = votingResult.get(i);
+         if (result.getAgeGroup() == age * 10) {
+            ageCount = result.getVoteCount();
+            rate = result.getVotePercentage();
+            break;
+         }
+      }
+
+      int voteRate = ageCount > 0 ? (int) rate : 0;
+
+      int barLength = (int) (voteRate * 6);
+
+      out.println("<tr>");
+      out.println("<td width=75><p align=center>" + (age * 10) + "대" + "</p></td>");
+      out.println("<td width=500><p align=center>");
+      out.println("<div>");
+      out.println("<span><img src='막대기.jpg' style='width: " + barLength
+      + "px; height: 20px; display: inline-block;'></span>");
+      out.println("<span>" + ageCount + "(" + voteRate + "%)</span>");
+      out.println("</div>");
+      out.println("</td>");
+      out.println("</tr>");
+   }
+   %>
+	
+	
 </table>
 	<%}%>
 </div>
