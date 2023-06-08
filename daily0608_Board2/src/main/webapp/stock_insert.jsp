@@ -17,7 +17,7 @@
     .tablestyle {
         border-collapse: collapse;
         width: 700px;
-        height:500px;
+        height: 500px;
         background: linear-gradient(to bottom, #e2e2e2, #f1f1f1);
     }
     
@@ -59,52 +59,54 @@
 </style>
 
 <script>
-    function validateForm() {
-        var stockIdInput = document.getElementsByName("stockId")[0];
-        var stockNameInput = document.getElementsByName("stockName")[0];
-        var stockInventoryInput = document.getElementsByName("stockInventory")[0];
+function validateForm() {
+	  var stockIdInput = document.getElementsByName("stockId")[0];
+	  var stockNameInput = document.getElementsByName("stockName")[0];
+	  var stockInventoryInput = document.getElementsByName("stockInventory")[0];
+	  var stockContentInput = document.getElementsByName("stockContent")[0];
 
-        var stockId = stockIdInput.value;
-        var stockName = stockNameInput.value.trim();
-        var stockInventory = stockInventoryInput.value;
-        
-        if (stockId === "" ) {
-            alert("상품번호를 입력하세요.");
-            stockIdInput.value = "";
-            stockIdInput.focus();
-            return false;
-        }
+	  var stockId = stockIdInput.value;
+	  var stockName = stockNameInput.value.trim();
+	  var stockInventory = stockInventoryInput.value;
+	  var stockContent = stockContentInput.value.trim();
 
-        if (!/^\d+$/.test(stockId)) {
-            alert("상품번호는 숫자만 입력할 수 있습니다.");
-            stockIdInput.value = "";
-            stockIdInput.focus();
-            return false;
-        }
+	  if (stockId === "") {
+	    alert("상품번호를 입력하세요.");
+	    stockIdInput.value = "";
+	    stockIdInput.focus();
+	    return false;
+	  }
 
-        if (stockName === "" ) {
-            alert("상품명을 입력하세요.");
-            stockNameInput.value = "";
-            stockNameInput.focus();
-            return false;
-        }
+	  if (!/^\d+$/.test(stockId)) {
+	    alert("상품번호는 숫자만 입력할 수 있습니다.");
+	    stockIdInput.value = "";
+	    stockIdInput.focus();
+	    return false;
+	  }
 
-        if (/^(?=.*[\da-zA-Z])(?=.*[\W]).+$/.test(stockName)) {
-            alert("상품명은 문자, 영어, 문자+숫자, 문자+특수문자인 경우에만 입력이 가능합니다.");
-            stockNameInput.value = "";
-            stockNameInput.focus();
-            return false;
-        }
+	  if (stockName === "") {
+	    alert("상품명을 입력은 필수입니다.");
+	    stockNameInput.value = "";
+	    stockNameInput.focus();
+	    return false;
+	  }
 
-        if (!/^\d+$/.test(stockInventory)) {
-            alert("재고현황은 숫자만 입력할 수 있습니다.");
-            stockInventoryInput.value = "";
-            stockInventoryInput.focus();
-            return false;
-        }
+	  if (!/^\d+$/.test(stockInventory)) {
+	    alert("재고현황은 숫자만 입력할 수 있습니다.");
+	    stockInventoryInput.value = "";
+	    stockInventoryInput.focus();
+	    return false;
+	  }
 
-        return true;
-    }
+	  if (stockContent === "") {
+	    alert("상품설명을 입력하세요.");
+	    stockContentInput.value = "";
+	    stockContentInput.focus();
+	    return false;
+	  }
+	  return true;
+	}
+
 </script>
 
 </head>
@@ -129,7 +131,7 @@ try{
 
 int pageNumber = 0;
 try{
-	pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+    pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 }catch(Exception e){
 }
 
@@ -141,15 +143,15 @@ try{
         <table class="tablestyle" border="1" cellspacing="0" cellpadding="5">
             <tr>
                 <td width="200"><b>상품번호</b></td>
-                <td><input type="text" name="stockId" ></td>
+                <td><input type="text" name="stockId"></td>
             </tr>
             <tr>
                 <td><b>상품명</b></td>
-                <td><input type="text" name="stockName" ></td>
+                <td><input type="text" name="stockName"></td>
             </tr>
             <tr>
                 <td><b>재고현황</b></td>
-                <td><input type="text" name="stockInventory" ></td>
+                <td><input type="text" name="stockInventory"></td>
             </tr>
             <tr>
                 <td><b>상표등록일</b></td>
@@ -161,7 +163,7 @@ try{
             </tr>
             <tr>
                 <td><b>상품설명</b></td>
-                <td><input type="text" name="stockContent" ></td>
+                <td><input type="text" name="stockContent"></td>
             </tr>
             <tr width="400" height="400">
                 <td><b>상품사진</b></td>

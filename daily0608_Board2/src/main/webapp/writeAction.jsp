@@ -23,6 +23,13 @@ MultipartRequest multi = new MultipartRequest(request, realPath, maxSize, "UTF-8
 
 // form으로 전달받은 데이터 가져오기
 String id = multi.getParameter("stockId");
+
+int id1 = 0;
+try{
+	id1 = Integer.parseInt(id);
+} catch (Exception e) {
+}
+
 String name = multi.getParameter("stockName");
 String inventory = multi.getParameter("stockInventory");
 String content = multi.getParameter("stockContent");
@@ -31,7 +38,7 @@ String urlPath = "./image/" + url;
 
 Stock stock = new Stock();
 try {
-    stock.setId(Integer.parseInt(id));
+	stock.setId(Integer.parseInt(id));
     stock.setName(name);
     stock.setInventory(Integer.parseInt(inventory));
     stock.setContent(content);
@@ -44,7 +51,7 @@ StockDao stockDao = new StockDaoImpl();
 int result = stockDao.insertStock(stock);
 %>
 <% if (result > 0) { %>
-    <form method="get" name="fm">
+    <form method="get" name="fm" action="stock_view.jsp">
         <table width="850" border="1" cellspacing="0" cellpadding="5">
             <tr>
                 <td colspan="3" align="center">
@@ -54,7 +61,7 @@ int result = stockDao.insertStock(stock);
                     <input type="button" value="목록보기" onclick="location.href='stock_list.jsp?'">
                 </td>
                 <td align="center">
-                    <input type="button" value="등록된 재고 보러가기" onclick="location.href='stock_view.jsp?id=<%=id%>'">
+                    <input type="button" value="등록된 재고 보러가기" onclick="location.href='stock_view.jsp?id=<%=id1%>'">
                 </td>
             </tr>
         </table>
