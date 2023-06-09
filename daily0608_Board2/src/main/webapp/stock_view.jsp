@@ -16,9 +16,9 @@
 <style>
     .tablestyle {
         border-collapse: collapse;
-        width: 700px;
-        height:500px;
-        background: linear-gradient(to bottom, #e2e2e2, #f1f1f1);
+        width: 600px;
+        height: 500px;
+        background: linear-gradient(to bottom, #E1F0FF, #B3E5FC);
     }
     
     th, td {
@@ -27,7 +27,8 @@
     }
     
     th {
-        background-color: #f2f2f2;
+        background-color: #85C1E9;
+        color: #ffffff;
     }
     
     tr:nth-child(even) {
@@ -36,6 +37,7 @@
     
     h2 {
         margin-top: 20px;
+        color: #3498DB;
     }
     
     input[type=button] {
@@ -120,7 +122,7 @@ try{
 
 %>
 <body>
-<h2 style='margin-left:200px'>(주)트와이스 재고 현황-전체현황</h2>
+<h2 style='margin-left:150px'>(주)트와이스 재고 현황-전체현황</h2>
 <form method="get" name="fm" enctype="multipart/form-data">
   <table class="tablestyle" border="1" cellspacing="0" cellpadding="5">
     <tr>
@@ -143,20 +145,20 @@ try{
       <td><b>재고등록일</b></td>
       <td><%=stockDate%></td>
     </tr>
-    <tr>
+    <tr >
       <td><b>상품설명</b></td>
-      <td><%=stockContent%></td>
+      <td><textarea name="stockContent" cols="50" rows="5" readonly><%=stockContent%></textarea></td>
     </tr>
-    <tr width="400" height="400">
+    <tr>
 	  <td><b>상품사진</b></td>
 	  <td>
-	    <img src="<%=stockUrl%>" style="width: 100%; height: 100%;">
+	    <img src="<%=stockUrl%>" width="350px" height="300px">
 	  </td>
 	</tr>
   </table>
-<table width=700>
+<table width=600px>
     <tr>
-      <td width=700></td>
+      <td width=600px></td>
       <td align="center">
         <input type="button" value="목록보기" onclick="location.href='stock_list.jsp?&pageNumber=<%=pageNumber%>'">
       </td>

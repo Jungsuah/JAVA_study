@@ -16,9 +16,9 @@
 <style>
     .tablestyle {
         border-collapse: collapse;
-        width: 700px;
+        width: 600px;
         height: 500px;
-        background: linear-gradient(to bottom, #e2e2e2, #f1f1f1);
+        background: linear-gradient(to bottom, #E1F0FF, #B3E5FC);
     }
     
     th, td {
@@ -27,7 +27,8 @@
     }
     
     th {
-        background-color: #f2f2f2;
+        background-color: #85C1E9;
+        color: #ffffff;
     }
     
     tr:nth-child(even) {
@@ -36,6 +37,7 @@
     
     h2 {
         margin-top: 20px;
+        color: #3498DB;
     }
     
     input[type=button] {
@@ -60,53 +62,58 @@
 
 <script>
 function validateForm() {
-	  var stockIdInput = document.getElementsByName("stockId")[0];
-	  var stockNameInput = document.getElementsByName("stockName")[0];
-	  var stockInventoryInput = document.getElementsByName("stockInventory")[0];
-	  var stockContentInput = document.getElementsByName("stockContent")[0];
+    var stockIdInput = document.getElementsByName("stockId")[0];
+    var stockNameInput = document.getElementsByName("stockName")[0];
+    var stockInventoryInput = document.getElementsByName("stockInventory")[0];
+    var stockContentInput = document.getElementsByName("stockContent")[0];
 
-	  var stockId = stockIdInput.value;
-	  var stockName = stockNameInput.value.trim();
-	  var stockInventory = stockInventoryInput.value;
-	  var stockContent = stockContentInput.value.trim();
+    var stockId = stockIdInput.value.trim();
+    var stockName = stockNameInput.value.trim();
+    var stockInventory = stockInventoryInput.value.trim();
+    var stockContent = stockContentInput.value.trim();
 
-	  if (stockId === "") {
-	    alert("상품번호를 입력하세요.");
-	    stockIdInput.value = "";
-	    stockIdInput.focus();
-	    return false;
-	  }
+    if (stockId === "") {
+        alert("상품번호를 입력하세요.");
+        stockIdInput.value = "";
+        stockIdInput.focus();
+        return false;
+    }
 
-	  if (!/^\d+$/.test(stockId)) {
-	    alert("상품번호는 숫자만 입력할 수 있습니다.");
-	    stockIdInput.value = "";
-	    stockIdInput.focus();
-	    return false;
-	  }
+    if (!/^\d{1,6}$/.test(stockId)) {
+        alert("상품번호는 1자리에서 6자리까지의 숫자로 입력해야 합니다.");
+        stockIdInput.value = "";
+        stockIdInput.focus();
+        return false;
+    }
 
-	  if (stockName === "") {
-	    alert("상품명을 입력은 필수입니다.");
-	    stockNameInput.value = "";
-	    stockNameInput.focus();
-	    return false;
-	  }
+    if (stockName === "") {
+        alert("상품명을 입력은 필수입니다.");
+        stockNameInput.value = "";
+        stockNameInput.focus();
+        return false;
+    }
 
-	  if (!/^\d+$/.test(stockInventory)) {
-	    alert("재고현황은 숫자만 입력할 수 있습니다.");
-	    stockInventoryInput.value = "";
-	    stockInventoryInput.focus();
-	    return false;
-	  }
+    if (!/^\d+$/.test(stockInventory)) {
+        alert("재고현황은 숫자만 입력할 수 있습니다.");
+        stockInventoryInput.value = "";
+        stockInventoryInput.focus();
+        return false;
+    }
 
-	  if (stockContent === "") {
-	    alert("상품설명을 입력하세요.");
-	    stockContentInput.value = "";
-	    stockContentInput.focus();
-	    return false;
-	  }
-	  return true;
-	}
+    if (stockContent === "") {
+        alert("상품설명을 입력하세요.");
+        stockContentInput.value = "";
+        stockContentInput.focus();
+        return false;
+    }
 
+    var fileInput = document.getElementById('url');
+    if (fileInput.files.length === 0) {
+        document.fm.url.value = "./image/no_image.png";
+    }
+
+    return true;
+}
 </script>
 
 </head>
@@ -139,45 +146,69 @@ try{
 
 <body>
     <h2 style='margin-left:200px'>(주)트와이스 재고 현황-전체현황</h2>
-    <form method="post" name="fm" enctype="multipart/form-data" action="writeAction.jsp" onsubmit="return validateForm()">
-        <table class="tablestyle" border="1" cellspacing="0" cellpadding="5">
-            <tr>
-                <td width="200"><b>상품번호</b></td>
-                <td><input type="text" name="stockId"></td>
-            </tr>
-            <tr>
-                <td><b>상품명</b></td>
-                <td><input type="text" name="stockName"></td>
-            </tr>
-            <tr>
-                <td><b>재고현황</b></td>
-                <td><input type="text" name="stockInventory"></td>
-            </tr>
-            <tr>
-                <td><b>상표등록일</b></td>
-                <td><%=currentdate%></td>
-            </tr>
-            <tr>
-                <td><b>재고등록일</b></td>
-                <td><%=currentdate%></td>
-            </tr>
-            <tr>
-                <td><b>상품설명</b></td>
-                <td><input type="text" name="stockContent"></td>
-            </tr>
-            <tr width="400" height="400">
-                <td><b>상품사진</b></td>
-                <td>
-                    <input type="file" name="url">
-                </td>
-            </tr>
-        </table>
-        <table width=700>
-            <tr>
-                <td width=700></td>
-                <td><input type="submit" value="완료"></td>
-            </tr>
-        </table>
-    </form>
+<form method="post" name="fm" enctype="multipart/form-data" action="writeAction.jsp" onsubmit="return validateForm()">
+    <table class="tablestyle" border="1" cellspacing="0" cellpadding="5">
+        <tr>
+            <td width="200"><b>상품번호</b></td>
+            <td><input type="text" name="stockId"></td>
+        </tr>
+        <tr>
+            <td><b>상품명</b></td>
+            <td><input type="text" name="stockName"></td>
+        </tr>
+        <tr>
+            <td><b>재고현황</b></td>
+            <td><input type="text" name="stockInventory"></td>
+        </tr>
+        <tr>
+            <td><b>상표등록일</b></td>
+            <td><%=currentdate%></td>
+        </tr>
+        <tr>
+            <td><b>재고등록일</b></td>
+            <td><%=currentdate%></td>
+        </tr>
+        <tr width="100" height="100">
+            <td><b>상품설명</b></td>
+            <td><textarea name="stockContent" cols="50" rows="5" ></textarea></td>
+        </tr>
+        <tr>
+            <td><b>상품사진</b></td>
+            <td>
+                <img id="preview" src="#" style="display: none; max-width: 100%; max-height: 100%;">
+                <br>
+                <input type="file" name="url" id="url" onchange="previewImage(event)">
+            </td>
+        </tr>
+    </table>
+    <table width=600>
+        <tr>
+            <td width=600></td>
+            <td><input type="submit" value="완료"></td>
+        </tr>
+    </table>
+</form>
+
+<script>
+    function previewImage(event) {
+        var input = event.target;
+        var preview = document.getElementById('preview');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                preview.style.width = '300px'; // Set width to 200 pixels
+                preview.style.height = '250px'; // Set height to 200 pixels
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = '#';
+            preview.style.display = 'none';
+        }
+    }
+</script>
+
+
 </body>
 </html>

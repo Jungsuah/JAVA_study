@@ -31,7 +31,7 @@ public class StockDaoImpl implements StockDao {
 
 			// Statement 객체를 생성합니다.
 			Statement stmt = conn.createStatement();
-			// examtable이라는 테이블을 생성하는 SQL문을 실행합니다.
+			// Stock이라는 테이블을 생성하는 SQL문을 실행합니다.
 			stmt.execute("CREATE TABLE Stock (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 				    "name VARCHAR(70), " +
 				    "inventory INT, " +

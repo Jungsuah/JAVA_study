@@ -14,7 +14,8 @@ JSP 페이지에서 JDBC(Database Connectivity)를 사용하여 데이터베이�
     <meta charset="UTF-8"> <!-- 문서의 문자 인코딩 방식을 설정 -->
     <title>테이블 생성 예제</title><!-- 문서의 제목을 설정 -->
 </head>
-<body>
+<body>                               
+     
 <%
 Class.forName("com.mysql.cj.jdbc.Driver");
 
