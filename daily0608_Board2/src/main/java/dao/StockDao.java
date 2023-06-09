@@ -10,9 +10,7 @@ public interface StockDao {
 
 	List<Stock> selectAllStock();
 
-	Stock selectOneStock(int id);
-
-	int deleteOneStock(int id);
+	Stock selectOneStock(String id);
 
 	int updateStock(Stock stock);
 
@@ -23,4 +21,8 @@ public interface StockDao {
 	int insertStock(Stock stock);
 
 	Stock newStock();//가장 최신 게시글 찾아오기
+
+	int deleteOneStock(String id);
+
+	int getCurrentPage(String id, int countPerPage);//id기준으로 현재 페이지 계산
 }

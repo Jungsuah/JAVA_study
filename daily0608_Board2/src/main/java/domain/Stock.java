@@ -1,7 +1,8 @@
 package domain;
 
 public class Stock {
-	private int id;// 상품번호
+	private String id;// 상품번호
+	private int rownum;// 상품번호
 	private String name;// 상품명
 	private int inventory;// 현재 재고수
 	private String checkdate;// 상품등록일
@@ -9,11 +10,19 @@ public class Stock {
 	private String Content;// 상품설명
 	private String url;// 상품사진
 
-	public int getId() {
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -67,7 +76,7 @@ public class Stock {
 
 	@Override
 	public String toString() {
-		return "Stock [id=" + id + ", name=" + name + ", inventory=" + inventory + ", checkdate=" + checkdate
-				+ ", date=" + date + ", Content=" + Content + ", url=" + url + "]";
+		return "Stock [id=" + id + ", rownum=" + rownum + ", name=" + name + ", inventory=" + inventory + ", checkdate="
+				+ checkdate + ", date=" + date + ", Content=" + Content + ", url=" + url + "]";
 	}
 }

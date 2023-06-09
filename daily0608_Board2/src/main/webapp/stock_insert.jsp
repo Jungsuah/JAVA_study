@@ -14,15 +14,34 @@
 <html>
 <head>
 <style>
-    .tablestyle {
+    body {
+        font-family: Arial, sans-serif;
+    }
+    
+    .container {
+        width: 650px;
+        margin: 20px auto;
+        background: #E1F0FF;
+        padding: 20px;
+        border: 1px solid #85C1E9;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #3498DB;
+    }
+    
+    table {
+        width: 100%;
         border-collapse: collapse;
-        width: 600px;
-        height: 500px;
-        background: linear-gradient(to bottom, #E1F0FF, #B3E5FC);
+        background-color: #FFFFFF;
     }
     
     th, td {
-        text-align: start;
+        border: 1px solid #D6EAF8;
         padding: 8px;
     }
     
@@ -32,18 +51,44 @@
     }
     
     tr:nth-child(even) {
-        background-color: #ffffff;
+        background-color: #EBF5FB;
     }
     
-    h2 {
+    .pagination {
         margin-top: 20px;
-        color: #3498DB;
+        text-align: center;
     }
     
-    input[type=button] {
-        background-color: #4CAF50;
+    .pagination a {
+        display: inline-block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #3498DB;
+        border: 1px solid #3498DB;
+        margin: 2px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+    
+    .pagination a.active {
+        background-color: #2980B9;
+        border-color: #2980B9;
+    }
+    
+    .pagination a:hover {
+        background-color: #2980B9;
+    }
+    
+    .new-button {
+        text-align: center;
+        margin-top: 20px;
+    }
+    
+    .new-button input[type="button"] {
+        background-color: #3498DB;
         border: none;
-        color: white;
+        color: #ffffff;
         padding: 8px 16px;
         text-align: center;
         text-decoration: none;
@@ -52,14 +97,32 @@
         margin: 4px 2px;
         cursor: pointer;
         border-radius: 4px;
+        transition: background-color 0.3s;
     }
     
-    input[type=button]:hover {
-        background-color: #45a049;
+    .new-button input[type="button"]:hover {
+        background-color: #2980B9;
     }
     
+    .new-button input[type="submit"] {
+        background-color: #3498DB;
+        border: none;
+        color: #ffffff;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+    
+    .new-button input[type="submit"]:hover {
+        background-color: #2980B9;
+    }
 </style>
-
 <script>
 function validateForm() {
     var stockIdInput = document.getElementsByName("stockId")[0];
@@ -79,8 +142,8 @@ function validateForm() {
         return false;
     }
 
-    if (!/^\d{1,6}$/.test(stockId)) {
-        alert("상품번호는 1자리에서 6자리까지의 숫자로 입력해야 합니다.");
+    if (!/^\w{1,15}$/.test(stockId)) {
+        alert("상품번호는 1자리에서 15자리까지의 문자로 입력해야 합니다.");
         stockIdInput.value = "";
         stockIdInput.focus();
         return false;
@@ -130,9 +193,9 @@ String desiredFormat = "yyyy-MM-dd";
 java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern(desiredFormat);
 String currentdate = currentDate.format(formatter);
 
-int id = 0;
+String id = "";
 try{
-    id = Integer.parseInt(request.getParameter("id"));
+    id = request.getParameter("id");
 }catch(Exception e){
 }
 
@@ -145,7 +208,8 @@ try{
 %>
 
 <body>
-    <h2 style='margin-left:200px'>(주)트와이스 재고 현황-전체현황</h2>
+<div class="container">
+    <h2 style='margin-left:50px'>(주)트와이스 재고 현황-전체현황</h2>
 <form method="post" name="fm" enctype="multipart/form-data" action="writeAction.jsp" onsubmit="return validateForm()">
     <table class="tablestyle" border="1" cellspacing="0" cellpadding="5">
         <tr>
@@ -181,13 +245,16 @@ try{
             </td>
         </tr>
     </table>
+    <div class="new-button">
     <table width=600>
         <tr>
-            <td width=600></td>
+        	<td width=700></td>
             <td><input type="submit" value="완료"></td>
         </tr>
     </table>
+    </div>
 </form>
+</div>
 
 <script>
     function previewImage(event) {
@@ -198,7 +265,7 @@ try{
             reader.onload = function (e) {
                 preview.src = e.target.result;
                 preview.style.display = 'block';
-                preview.style.width = '300px'; // Set width to 200 pixels
+                preview.style.width = '350px'; // Set width to 200 pixels
                 preview.style.height = '250px'; // Set height to 200 pixels
             }
             reader.readAsDataURL(input.files[0]);
@@ -208,7 +275,6 @@ try{
         }
     }
 </script>
-
 
 </body>
 </html>

@@ -12,36 +12,82 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <html>
-<head>
 <style>
-    .tablestyle {
+    body {
+        font-family: Arial, sans-serif;
+    }
+    
+    .container {
+        width: 600px;
+        margin: 20px auto;
+        background: #E1F0FF;
+        padding: 20px;
+        border: 1px solid #85C1E9;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #3498DB;
+    }
+    
+    table {
+        width: 100%;
         border-collapse: collapse;
-        width: 700px;
-        height:500px;
-        background: linear-gradient(to bottom, #e2e2e2, #f1f1f1);
+        background-color: #FFFFFF;
     }
     
     th, td {
-        text-align: start;
+        border: 1px solid #D6EAF8;
         padding: 8px;
     }
     
     th {
-        background-color: #f2f2f2;
+        background-color: #85C1E9;
+        color: #ffffff;
     }
     
     tr:nth-child(even) {
-        background-color: #ffffff;
+        background-color: #EBF5FB;
     }
     
-    h2 {
+    .pagination {
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    .pagination a {
+        display: inline-block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #3498DB;
+        border: 1px solid #3498DB;
+        margin: 2px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+    
+    .pagination a.active {
+        background-color: #2980B9;
+        border-color: #2980B9;
+    }
+    
+    .pagination a:hover {
+        background-color: #2980B9;
+    }
+    
+    .new-button {
+        text-align: center;
         margin-top: 20px;
     }
     
-    input[type=button] {
-        background-color: #4CAF50;
+    .new-button input[type="button"] {
+        background-color: #3498DB;
         border: none;
-        color: white;
+        color: #ffffff;
         padding: 8px 16px;
         text-align: center;
         text-decoration: none;
@@ -50,12 +96,34 @@
         margin: 4px 2px;
         cursor: pointer;
         border-radius: 4px;
+        transition: background-color 0.3s;
     }
     
-    input[type=button]:hover {
-        background-color: #45a049;
+    .new-button input[type="button"]:hover {
+        background-color: #2980B9;
+    }
+    
+    .new-button input[type="submit"] {
+        background-color: #3498DB;
+        border: none;
+        color: #ffffff;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+    
+    .new-button input[type="submit"]:hover {
+        background-color: #2980B9;
     }
 </style>
+<head>
+
 <script language="JavaScript">
 
 function submitForm() {
@@ -66,10 +134,9 @@ function submitForm() {
         return;
     }
 
-    fm.action = "stock_updateResult.jsp";
+    fm.action = "stock_updateResult.jsp?stockInventory=" + stockInventory;
     fm.submit();
 }
-
 </script>
 </head>
 
@@ -77,9 +144,9 @@ function submitForm() {
 request.setCharacterEncoding("UTF-8");
 response.setCharacterEncoding("UTF-8");
 
-int id = 0;
+String id = "";
 try{
-    id = Integer.parseInt(request.getParameter("id"));
+    id = request.getParameter("id");
 }catch(Exception e){
 }
 
@@ -94,7 +161,7 @@ Stock stock = stockDao.selectOneStock(id); // 테이블 생성 메서드 호출�
 
 if(stock != null){
 %>
-
+<div class="container">
 <body>
     <h2 style='margin-left:200px'>(주)트와이스 재고 현황-전체현황</h2>
     <form method="get" name="fm" enctype="multipart/form-data">
@@ -123,20 +190,23 @@ if(stock != null){
                 <td><b>상품설명</b></td>
                 <td><%=stock.getContent()%></td>
             </tr>
-            <tr width="400" height="400">
+            <tr width="100%" height="300">
 			  <td><b>상품사진</b></td>
 			  <td>
 			    <img src="<%=stock.getUrl()%>" style="width: 100%; height: 100%;">
 			  </td>
 			</tr>
         </table>
-        <table width=700>
-            <tr width=700>
-                <td width=700></td>
+        <div class="new-button">
+        <table width=600>
+            <tr width=600>
+                <td width=600></td>
                 <td><input type="button" value="완료" OnClick="submitForm()"></td>
             </tr>
         </table>
+        </div>
     </form>
+    </div>
 </body>
 <% } else{%>
 <h1>해당 상품이 없습니다!</h1>

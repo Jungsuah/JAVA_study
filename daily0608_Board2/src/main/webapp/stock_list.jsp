@@ -102,8 +102,41 @@
     .new-button input[type="button"]:hover {
         background-color: #2980B9;
     }
+    
+    .new-button input[type="submit"] {
+        background-color: #3498DB;
+        border: none;
+        color: #ffffff;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+    
+    .new-button input[type="submit"]:hover {
+        background-color: #2980B9;
+    }
 </style>
 </head>
+<script type="text/javascript">
+function validateForm() {
+    var searchIdInput = document.getElementsByName("id")[0];
+    var searchId = searchIdInput.value.trim();
+
+    if (searchId === "") {
+        alert("검색하고 싶은 상품번호를 입력하세요");
+        searchIdInput.value = "";
+        searchIdInput.focus();
+        return false;
+    }
+}
+</script>
+
 <body>
 <%
 request.setCharacterEncoding("UTF-8");
@@ -114,12 +147,12 @@ StockService gongjiService = new StockServiceImpl();
 int total = gongjiDao.count();
 int pageNumber = 0;
 int cntPT = 0;
-
-int id = 0;
 int fromPT = 0;
-try {
-    id = Integer.parseInt(request.getParameter("id"));
-} catch (Exception e) {
+
+String id = "";
+try{
+    id = request.getParameter("id");
+}catch(Exception e){
 }
 
 try {
@@ -134,15 +167,15 @@ try {
     cntPT = 20;
 }
 
-Pagination pagination = gongjiService.getPagination(pageNumber, cntPT);
+Pagination kk = gongjiService.getPagination(pageNumber, cntPT);
 
-int c = pagination.getC();
-int s = pagination.getS();
-int e = pagination.getE();
-int p = pagination.getP();
-int pp = pagination.getPp();
-int n = pagination.getN();
-int nn = pagination.getNn();
+int c = kk.getC();
+int s = kk.getS();
+int e = kk.getE();
+int p = kk.getP();
+int pp = kk.getPp();
+int n = kk.getN();
+int nn = kk.getNn();
 
 List<Stock> stockList = gongjiDao.selectAll(c, cntPT);
 %>
@@ -153,8 +186,20 @@ List<Stock> stockList = gongjiDao.selectAll(c, cntPT);
             <input type="button" value="재고 넣기" onclick="location.href='makedata.jsp'">
         </div>
     <% } else { %>
+    <form method="post" name="fm"  action="stock_view.jsp" onsubmit="return validateForm()">
         <h2>(주)트와이스 재고 현황 - 전체현황</h2>
         <table>
+        <tr>
+            	<td colspan=5>
+            		 <div class="new-button">
+			        	<span>
+				        	<input type="text" name="id" style="width: 300px; height: 28px;">
+				        	<input type="submit" value="검색" >
+			        	</span>
+			            <input type="button" value="신규등록" OnClick="window.location='stock_insert.jsp'">
+			        </div>
+            	</td>
+            </tr>
             <tr>
                 <th width="50">상품번호</th>
                 <th width="100">상품명</th>
@@ -162,7 +207,6 @@ List<Stock> stockList = gongjiDao.selectAll(c, cntPT);
                 <th width="100">재고파악일</th>
                 <th width="100">상품등록일</th>
             </tr>
-            
             <% for (Stock stock : stockList) { %>
                 <tr>
                     <td><a href='stock_view.jsp?id=<%=stock.getId()%>&pageNumber=<%=c%>'><%=stock.getId()%></a></td>
@@ -173,31 +217,27 @@ List<Stock> stockList = gongjiDao.selectAll(c, cntPT);
                 </tr>
             <% } %>
         </table>
-        
-        <div class="pagination">
-            <% if (pp != -1) { %>
-                <a href="stock_list.jsp?pageNumber=<%= pp %>&cntPT=<%= cntPT %>"><<</a>
-                <a href="stock_list.jsp?pageNumber=<%= p %>&cntPT=<%= cntPT %>"><</a>
-            <% } %>
-            
-            <% for (int index = s; index < e + 1; index++) { %>
-                <% if (index == c) { %>
-                    <a href="stock_list.jsp?pageNumber=<%= index %>&cntPT=<%= cntPT %>" class="active"><%= index %></a>
-                <% } else { %>
-                    <a href="stock_list.jsp?pageNumber=<%= index %>&cntPT=<%= cntPT %>"><%= index %></a>
-                <% } %>
-            <% } %>
-            
-            <% if (nn != -1) { %>
-                <a href="stock_list.jsp?pageNumber=<%= n %>&cntPT=<%= cntPT %>">></a>
-                <a href="stock_list.jsp?pageNumber=<%= nn %>&cntPT=<%= cntPT %>">>></a>
-            <% } %>
-        </div>
-        
-        <div class="new-button">
-            <input type="button" value="신규등록" OnClick="window.location='stock_insert.jsp'">
-        </div>
+        </form>
+			        <div class="pagination">
+			            <% if (pp != -1) { %>
+			                <a href="stock_list.jsp?pageNumber=<%= pp %>&cntPT=<%= cntPT %>"><<</a>
+			                <a href="stock_list.jsp?pageNumber=<%= p %>&cntPT=<%= cntPT %>"><</a>
+			            <% } %>
+			            
+			            <% for (int index = s; index < e + 1; index++) { %>
+			                <% if (index == c) { %>
+			                    <a href="stock_list.jsp?pageNumber=<%= index %>&cntPT=<%= cntPT %>" class="active"><%= index %></a>
+			                <% } else { %>
+			                    <a href="stock_list.jsp?pageNumber=<%= index %>&cntPT=<%= cntPT %>"><%= index %></a>
+			                <% } %>
+			            <% } %>
+			            
+			            <% if (nn != -1) { %>
+			                <a href="stock_list.jsp?pageNumber=<%= n %>&cntPT=<%= cntPT %>">></a>
+			                <a href="stock_list.jsp?pageNumber=<%= nn %>&cntPT=<%= cntPT %>">>></a>
+			            <% } %>
+			        </div>
+		</div>	
     <% } %>
-</div>
 </body>
 </html>
