@@ -1,4 +1,3 @@
-2. gongji_insert.jsp
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="domain.Gongji"%>
@@ -10,91 +9,115 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <html>
-
 <head>
 <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f1f8ff;
+    }
+
     table {
+        width: 650px;
         border-collapse: collapse;
-        width: 600px;
-        background: linear-gradient(to bottom, #e2e2e2, #f1f1f1);
-    }
-    
-    th, td {
-        text-align: center;
-        padding: 8px;
-    }
-    
-    th {
-        background-color: #f2f2f2;
-    }
-    
-    tr:nth-child(even) {
-        background-color: #ffffff;
-    }
-    
-    h2 {
         margin-top: 20px;
+        background-color: white;
     }
-    
-    input[type=button] {
-        background-color: #4CAF50;
-        border: none;
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #8ec5e3;
         color: white;
-        padding: 8px 16px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        margin: 4px 2px;
+    }
+
+    input[type="text"], textarea {
+        width: 500px;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    input[type="button"] {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
         cursor: pointer;
         border-radius: 4px;
+        margin-right: 10px;
+    }
+
+    input[type="button"]:hover {
+        background-color: #0056b3;
+    }
+
+    .cancel-button {
+        background-color: #dc3545;
+    }
+
+    .cancel-button:hover {
+        background-color: #a71d2a;
+    }
+
+    .container {
+        display: flex;
+        height: 100vh;
     }
     
-    input[type=button]:hover {
-        background-color: #45a049;
+     .button-group {
+        text-align: right;
+        width: 650px;
+        margin-top:5px;
     }
 </style>
 
 <script language="JavaScript">
    function submitForm(mode) {
-      fm.action = "gongji_insertWrite.jsp?key=INSERT";
+      fm.action = "gongji_insertWrite.jsp?";
       fm.submit();
    }
 </script>
 
 </head>
 <body>
+<div class="container">
 <%
   Date currentDate = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = sdf.format(currentDate);
 %>
-<form method=post name='fm'>
-<table width=650 border=1 cellspacing=0 cellpadding=5>
+<form method="post" name="fm">
+<table>
 <tr>
-<td><b>번호</b></td>
-<td>신규(insert)<input type=hidden name=id value='INSERT'></td>
+<th>번호</th>
+<td>신규(insert)<input type="hidden" name="id" value="INSERT"></td>
 </tr>
 <tr>
-<td><b>제목</b></td>
-<td><input type=text name=title size=70 maxlength=70></td>
+<th>제목</th>
+<td><input type="text" name="title" size="70" maxlength="70"></td>
 </tr>
 <tr>
-  <td><b>일자</b></td>
-  <td><%=formattedDate%></td>
+<th>일자</th>
+<td><%=formattedDate%></td>
 </tr>
 <tr>
-<td><b>내용</b></td>
-<td><textarea style='width:500px; height:250px;' name=content cols=70 row=600></textarea></td>
+<th>내용</th>
+<td><textarea name="content" cols="70" rows="10"></textarea></td>
 </tr>
 </table>
-<table width=650>
-<tr>
-<td width=600></td>
-<td><input type=button value="취소" OnClick="location.href='gongji_list.jsp'"></td>
-<td><input type=button value="쓰기" OnClick="submitForm('write')"></td>
-</tr>
-</table></form>
+
+<div class="button-group">
+<input type="button" value="취소" onclick="location.href='gongji_list.jsp'" class="cancel-button">
+<input type="button" value="쓰기" onclick="submitForm('write')">
+</div>
+</form>
+
+</div>
 </body>
 
 </html>

@@ -32,7 +32,7 @@ public class GongjiDaoImpl implements GongjiDao {
 			// Statement 객체를 생성합니다.
 			Statement stmt = conn.createStatement();
 
-			// examtable이라는 테이블을 생성하는 SQL문을 실행합니다.
+			// gongji이라는 테이블을 생성하는 SQL문을 실행합니다.
 			stmt.execute("create table gongji ( id INT not null AUTO_INCREMENT PRIMARY KEY," + "title varchar(70),"
 					+ "date date," + "content text)" + "DEFAULT CHARSET=utf8;");
 
@@ -77,11 +77,11 @@ public class GongjiDaoImpl implements GongjiDao {
 			stmt = conn.createStatement();
 
 			// 쿼리 결과값을 담을 ResultSet 객체를 생성합니다.
-			// examtable에서 페이지의 첫번째 시작 인덱스부터 한페이지에 출력할 갯수 만큼 쿼리로 범위를 설정해서 가져오기
+			// gongji에서 페이지의 첫번째 시작 인덱스부터 한페이지에 출력할 갯수 만큼 쿼리로 범위를 설정해서 가져오기
 			rset = stmt.executeQuery("SELECT * FROM gongji ORDER BY id DESC;");
 
 			while (rset.next()) {
-				// 새로운 StudentScore 객체를 생성합니다.
+				// 새로운 gongji 객체를 생성합니다.
 				Gongji gongji = new Gongji();
 
 				// ResultSet에서 각 컬럼의 값을 가져와서 gongji 객체에 설정합니다.
@@ -106,7 +106,7 @@ public class GongjiDaoImpl implements GongjiDao {
 
 	@Override
 	public Gongji selectOneGongji(int id) {
-		Gongji gongji = null;// studentScore 객체 선언 및 초기화
+		Gongji gongji = null;// gongji 객체 선언 및 초기화
 		try {
 			// "com.mysql.cj.jdbc.Driver" 클래스를 동적으로 로드하기 위해 Java의 Class.forName 메서드를 호출하여
 			// MySQL 데이터베이스와의 연결
@@ -137,7 +137,7 @@ public class GongjiDaoImpl implements GongjiDao {
 		} catch (Exception e) {// 오류가 발생하면
 			e.printStackTrace();// 오류를 출력
 		}
-		return gongji;// id값으로 조회한 학생 점수 데이터 반환
+		return gongji;// id값으로 조회한 gongji 데이터 반환
 	}
 
 	@Override
@@ -158,6 +158,7 @@ public class GongjiDaoImpl implements GongjiDao {
 			stmt.executeUpdate(sql);
 
 			System.out.println("delete id로 성공");
+			result = 1;
 
 			stmt.close();// 사용한 Statement 객체 닫기
 			conn.close();// 사용한 Connection 객체 닫기
@@ -170,7 +171,7 @@ public class GongjiDaoImpl implements GongjiDao {
 
 	@Override
 	public int updateGongji(Gongji gongji) {
-		int result = -1;// 업데이트된 객체를 반환하기위해 StudentScore 객체 선언
+		int result = -1;// 업데이트된 객체를 반환하기위해 gongji 객체 선언
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -190,7 +191,6 @@ public class GongjiDaoImpl implements GongjiDao {
 			System.out.println("update 성공");
 			result = 1;
 
-			rset.close();// 사용한 ResultSet 객체 닫기
 			stmt.close();// 사용한 Statement 객체 닫기
 			conn.close();// 사용한 Connection 객체 닫기
 
@@ -214,7 +214,7 @@ public class GongjiDaoImpl implements GongjiDao {
 			// Statement 객체를 생성합니다.
 			stmt = conn.createStatement();
 
-			// INSERT 쿼리를 사용하여 비어있는 학번자리에 객체 추가
+			// INSERT 쿼리를 사용하여 새로운 내용 추가
 			String sql = "INSERT INTO gongji (title, date, content) VALUES ('" + title + "', NOW(), '" + content + "')";
 
 			stmt.execute(sql);// sql문을 실행한다.
@@ -244,7 +244,7 @@ public class GongjiDaoImpl implements GongjiDao {
 			// Statement 객체를 생성합니다.
 			stmt = conn.createStatement();
 			
-			// INSERT 쿼리를 사용하여 비어있는 학번자리에 객체 추가
+			// 가장 최신 공지 객체를 찾아오는 쿼리 생성
 			rset = stmt.executeQuery("SELECT * FROM gongji ORDER BY id DESC LIMIT 1;");
 			
 			while (rset.next()) {
@@ -307,7 +307,7 @@ public class GongjiDaoImpl implements GongjiDao {
 
 		int rstart = (pageNum - 1) * countPerPage;// 출력하고 싶은 페이지의 첫번째 데이터 인덱스 구하기
 
-		// StudentScore 객체들의 리스트를 담기위한 리스트 선언 및 초기화
+		// gongji 객체들의 리스트를 담기위한 리스트 선언 및 초기화
 		List<Gongji> GongjiList = new ArrayList<Gongji>();
 		try {
 			// "com.mysql.cj.jdbc.Driver" 클래스를 동적으로 로드하기 위해 Java의 Class.forName 메서드를 호출하여
@@ -347,5 +347,34 @@ public class GongjiDaoImpl implements GongjiDao {
 			e.printStackTrace();// 오류를 출력
 		}
 		return GongjiList;// GongjiList 객체들의 리스트를 반환
+	}
+	
+	
+	@Override
+	public int updatePeopleCount(int viewcnt, int id) {
+		int result = -1;
+		try {
+			// "com.mysql.cj.jdbc.Driver" 클래스를 동적으로 로드하기 위해 Java의 Class.forName 메서드를 호출하여
+			// MySQL 데이터베이스와의 연결
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			// MySQL 데이터베이스에 연결하기 위한 Connection 객체를 생성합니다.
+			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
+			// Statement 객체를 생성합니다.
+			stmt = conn.createStatement();
+
+			//방문자 수를 업데이트 하는 쿼리를 실행
+			String query = "UPDATE gongji SET viewcnt = " + viewcnt + " WHERE id = " + id;
+	        int rowsAffected = stmt.executeUpdate(query);//쿼리를 실행하고 결과를 숫자형 변수에 담기
+
+			System.out.println("방문자수 업데이트 성공");//방문자수 업데이트 성공시 출력
+			result = 1;
+			stmt.close();// 사용한 Statement 객체 닫기
+			conn.close();// 사용한 Connection 객체 닫기
+
+		} catch (Exception e) {//오류가 발생하면
+			e.printStackTrace();//오류를 출력
+		}
+
+		return result;//업데이트된 방문자 수를 업데이트
 	}
 }

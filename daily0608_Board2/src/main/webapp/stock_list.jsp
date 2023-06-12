@@ -134,6 +134,18 @@ function validateForm() {
         searchIdInput.focus();
         return false;
     }
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var stock = JSON.parse(xhr.responseText);
+            if (Object.keys(stock).length === 0) {
+                alert("찾고 싶은 상품이 없습니다.");
+            }
+        }
+    };
+    xhr.open("GET", "stock_search.jsp?id=" + searchId, true);
+    xhr.send();
 }
 </script>
 
@@ -181,12 +193,12 @@ List<Stock> stockList = gongjiDao.selectAll(c, cntPT);
 %>
 <div class="container">
     <% if (stockList.isEmpty()) { %>
-        <h2>등록된 재고가 없습니다.</h2>
+        <h2>검색한 재고가 없습니다.</h2>
         <div class="new-button">
             <input type="button" value="재고 넣기" onclick="location.href='makedata.jsp'">
         </div>
     <% } else { %>
-    <form method="post" name="fm"  action="stock_view.jsp" onsubmit="return validateForm()">
+    <form method="post" name="fm"  action="getStock.jsp" onsubmit="return validateForm()">
         <h2>(주)트와이스 재고 현황 - 전체현황</h2>
         <table>
         <tr>
@@ -239,5 +251,7 @@ List<Stock> stockList = gongjiDao.selectAll(c, cntPT);
 			        </div>
 		</div>	
     <% } %>
+    
+    
 </body>
 </html>
