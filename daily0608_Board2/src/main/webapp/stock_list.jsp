@@ -134,18 +134,6 @@ function validateForm() {
         searchIdInput.focus();
         return false;
     }
-
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var stock = JSON.parse(xhr.responseText);
-            if (Object.keys(stock).length === 0) {
-                alert("찾고 싶은 상품이 없습니다.");
-            }
-        }
-    };
-    xhr.open("GET", "stock_search.jsp?id=" + searchId, true);
-    xhr.send();
 }
 </script>
 

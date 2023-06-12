@@ -23,7 +23,6 @@ MultipartRequest multi = new MultipartRequest(request, realPath, maxSize, "UTF-8
 
 // form으로 전달받은 데이터 가져오기
 String id = multi.getParameter("stockId");
-
 String name = multi.getParameter("stockName");
 String inventory = multi.getParameter("stockInventory");
 String content = multi.getParameter("stockContent");
@@ -53,10 +52,11 @@ stock.getRownum();
 if (result == 1) {
     int c = stockDao.getCurrentPage(id, 20);
     response.sendRedirect("stock_list.jsp?page="+c);
- } else {
-    out.println("Failed to update the record.");
- }
+ } 
 %>
-
+<script>
+        alert("등록되어있는 상품 번호 입니다!");
+        location.href = "stock_insert.jsp";
+    </script>
 </body>
 </html>
