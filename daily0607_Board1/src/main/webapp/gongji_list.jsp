@@ -1,7 +1,7 @@
-<%@page import="service.GongjiServiceImpl"%>
-<%@page import="dto.Pagination"%>
-<%@page import="service.GongjiService"%>
 <%@page import="domain.Gongji"%>
+<%@page import="service.GongjiServiceImpl"%>
+<%@page import="service.GongjiService"%>
+<%@page import="dto.Pagination"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@page import="dao.GongjiDaoImpl"%>
@@ -100,6 +100,7 @@
   align-items: center;
   width: 1000px;
 }
+
 </style>
 </head>
 <body>
@@ -155,12 +156,15 @@ List<Gongji> gongjiList = gongjiDao.selectAll(c, cntPT);
         </tr>
 
         <% for(Gongji gongji : gongjiList) { %>
-            <tr>
-                <td><%=gongji.getId()%></td>
-                <td><a href='gongji_view.jsp?id=<%=gongji.getId()%>&pageNumber=<%=c%>'><%=gongji.getTitle()%></a></td>
-                <td><%=gongji.getDate()%></td>
-            </tr>
-        <% } %>
+	    <tr>
+	        <td><%=gongji.getId()%></td>
+	        <td>
+	            <a href='gongji_view.jsp?id=<%=gongji.getId()%>&pageNumber=<%=c%>'><%= gongji.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;") %></a>
+	        </td>
+	        <td><%=gongji.getDate()%></td>
+	    </tr>
+	<% } %>
+
     </table>
 
     <div class="pagination-and-new-button">

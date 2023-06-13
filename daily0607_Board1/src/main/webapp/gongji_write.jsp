@@ -1,4 +1,4 @@
-5. gongji_write.jsp
+
 <%@page import="domain.Gongji"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=utf-8"%>
@@ -32,12 +32,6 @@ try{
 }catch(Exception e){
 }
 
-int pageNumber = 0;
-try{
-	pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-}catch(Exception e){
-}
-
 GongjiDao gongjiDao = new GongjiDaoImpl();
 Gongji gongji = new Gongji();
 gongji.setId(id);
@@ -45,9 +39,10 @@ gongji.setTitle(title);
 gongji.setContent(content);
 
 int result = gongjiDao.updateGongji(gongji);
+int id1 = gongji.getId();
 
 if (result == 1) {
-    response.sendRedirect("gongji_view.jsp?id="+id);
+    response.sendRedirect("gongji_view.jsp?id="+id1);
  } else {
     out.println("Failed to update the record.");
  }

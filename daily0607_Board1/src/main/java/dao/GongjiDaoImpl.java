@@ -34,7 +34,7 @@ public class GongjiDaoImpl implements GongjiDao {
 
 			// gongji이라는 테이블을 생성하는 SQL문을 실행합니다.
 			stmt.execute("create table gongji ( id INT not null AUTO_INCREMENT PRIMARY KEY," + "title varchar(70),"
-					+ "date date," + "content text)" + "DEFAULT CHARSET=utf8;");
+					+ "date date," + "content LONGTEXT)" + "DEFAULT CHARSET=utf8;");
 
 			for (int i = 1; i <= 150; i++) {
 				String title = "공지사항 " + i;

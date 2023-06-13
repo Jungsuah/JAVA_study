@@ -1,8 +1,8 @@
+<%@page import="dao.GongjiDaoImpl"%>
+<%@page import="dao.GongjiDao"%>
 <%@page import="domain.Gongji"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=utf-8"%>
-<%@page import="dao.GongjiDaoImpl"%>
-<%@page import="dao.GongjiDao"%>
 <%@ page import="java.sql.*,javax.sql.*,java.io.*"%>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -65,19 +65,31 @@
     .button-group {
         text-align: right;
         width: 650px;
+        margin-top:7px;
     }
 
     .container {
         display: flex;
         height: 100vh;
     }
+    
+     .textarea {
+        width: 500px;
+        height: 100px;
+        padding: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        resize: none;
+    }
 </style>
 
 <script language="JavaScript">
    function submitForm(mode) {
       if (mode == "write") {
-         var title = document.getElementsByName('title')[0].value;
-         var content = document.getElementsByName('content')[0].value;
+    	  var title = document.getElementsByName('title')[0].value;
+    	  var content = document.getElementsByName('content')[0].value;
          
          if (title.trim().length === 0) {
              alert("제목을 입력해주세요.");
@@ -139,7 +151,6 @@ gongji.setTitle(title);
 gongji.setDate(date);
 gongji.setTitle(title);
 
-
 GongjiDao gongjiDao = new GongjiDaoImpl(); // GongjiDaoImpl 객체 생성
 int result = gongjiDao.updateGongji(gongji);
 %>
@@ -162,7 +173,7 @@ int result = gongjiDao.updateGongji(gongji);
 </tr>
 <tr>
 <th>내용</th>
-<td><textarea name="content" cols="70" rows="10"><%=content%></textarea></td>
+<td><textarea name="content" class="textarea" cols="70" rows="10"><%=content%></textarea></td>
 </tr>
 </table>
 <div class="button-group">
