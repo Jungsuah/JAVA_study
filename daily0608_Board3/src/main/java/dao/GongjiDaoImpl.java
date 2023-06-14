@@ -40,17 +40,19 @@ public class GongjiDaoImpl implements GongjiDao {
 			for (int i = 1; i <= 150; i++) {// 데이터 150개 입력
 				String title = "공지사항 " + i;// 몇번째 공지사항인지 알려주기위해 i를 붙여서 만들기
 				// java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
-				java.sql.Date date = java.sql.Date.valueOf("2017-01-01");
-				String content = "공지사항내용 " + i;
-				int rootid = i;
-				int relevel = 0;
-				int recnt = 0;
-				int viewcnt = 0;
+				java.sql.Date date = java.sql.Date.valueOf("2017-01-01");//초기값 세팅
+				String content = "공지사항내용 " + i;//공지사항 내용 넣기
+				int rootid = i;//원글의 rootid는 id와 같아야함
+				int relevel = 0;//댓글레벨은 0
+				int recnt = 0;//댓글내 표시순서는 0
+				int viewcnt = 0;//조회수는 0
 
+				//만든 값을 테이블에 넣어주기
 				String insertQuery = "INSERT INTO gongji (title, date, content, rootid, relevel, recnt, viewcnt) "
 						+ "VALUES ('" + title + "', '" + date + "', '" + content + "', " + rootid + ", " + relevel
 						+ ", " + recnt + ", " + viewcnt + ")";
-
+				
+				//update하기
 				stmt.executeUpdate(insertQuery);
 			}
 
@@ -60,14 +62,14 @@ public class GongjiDaoImpl implements GongjiDao {
 
 			stmt.close(); // Statement 객체를 닫습니다.
 			conn.close(); // Connection 객체를 닫습니다.
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) {//오류가 발생하면
+			e.printStackTrace();//메세지 출력
 		}
 		return result;// 오류메시지를 반환
 	}
 
 	@Override
-	public Gongji selectOneGongji(int id) {
+	public Gongji selectOneGongji(int id) {//id롤 객체 하나 조회하기
 		Gongji gongji = null;// gongji 객체 선언 및 초기화
 		try {
 			// "com.mysql.cj.jdbc.Driver" 클래스를 동적으로 로드하기 위해 Java의 Class.forName 메서드를 호출하여
@@ -107,61 +109,34 @@ public class GongjiDaoImpl implements GongjiDao {
 	}
 
 	@Override
-	public int deleteOneGongji(int id) {
-		int result = -1;
-		try {
-			// JDBC 드라이버 클래스를 동적으로 로드합니다.
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-			// MySQL 데이터베이스에 연결하기 위한 Connection 객체를 생성합니다.
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
-
-			// Statement 객체를 생성합니다.
-			stmt = conn.createStatement();
-
-			// DELETE 문을 실행하여 주어진 id에 해당하는 데이터를 삭제합니다.
-			String sql = "DELETE FROM gongji WHERE id = " + id;
-			stmt.executeUpdate(sql);
-
-			System.out.println("delete id로 성공");
-
-			stmt.close();// 사용한 Statement 객체 닫기
-			conn.close();// 사용한 Connection 객체 닫기
-
-		} catch (Exception e) {// 오류가 발생하면
-			e.printStackTrace();// 오류를 출력
-		}
-		return result;
-	}
-
-	@Override
-	public int updateWongul(Gongji gongji) {
+	public int updateWongul(Gongji gongji) {//원글 수정하기
 		int result = -1;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
 			stmt = conn.createStatement();
-
+			
+			//업데이트 하는 쿼리로 객체에서 값을 받아서 업데이트 해주기
 			String updateQuery = "UPDATE gongji SET " + "title = '" + gongji.getTitle() + "', " + "date = NOW(), "
 					+ "content = '" + gongji.getContent() + "', " + "rootid = " + gongji.getRootid() + ", "
 					+ "relevel = " + gongji.getRelevel() + ", " + "recnt = " + gongji.getRecnt() + " WHERE id = "
 					+ gongji.getId();
 
-			stmt.executeUpdate(updateQuery);
+			stmt.executeUpdate(updateQuery);// 업데이트 실행
 
 			System.out.println("원글 update 성공");
-			result = 1;
+			result = 1;//성공시 반환값 1로 설정
 
-			stmt.close();
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
+			stmt.close();// 사용한 Statement 객체 닫기
+			conn.close();// 사용한 Connection 객체 닫기
+		} catch (Exception e) {//오류발생시
+			e.printStackTrace();//오류출력
 		}
-		return result;
+		return result;//반환값 반환
 	}
 
 	@Override
-	public int count() {
+	public int count() {//전체 행수를 조회하는 쿼리 
 		int count = 0;
 		try {
 			// "com.mysql.cj.jdbc.Driver" 클래스를 동적으로 로드하기 위해 Java의 Class.forName 메서드를 호출하여
@@ -194,7 +169,7 @@ public class GongjiDaoImpl implements GongjiDao {
 	}
 
 	@Override
-	public List<Gongji> selectAll(int pageNum, int countPerPage) {
+	public List<Gongji> selectAll(int pageNum, int countPerPage) {//전체 공지리스트를 가져오는 쿼리
 		System.out.println("===> gongji과 연결 시작!");// 확인용 출력구문
 
 		int rstart = (pageNum - 1) * countPerPage;// 출력하고 싶은 페이지의 첫번째 데이터 인덱스 구하기
@@ -226,10 +201,10 @@ public class GongjiDaoImpl implements GongjiDao {
 				gongji.setTitle(rset.getString("title")); // title 컬럼 값 설정
 				gongji.setDate(rset.getString("date")); // date 컬럼 값 설정
 				gongji.setContent(rset.getString("content")); // content 컬럼 값 설정
-				gongji.setRootid(rset.getInt("rootid")); // content 컬럼 값 설정
-				gongji.setRelevel(rset.getInt("relevel"));// content 컬럼 값 설정
-				gongji.setRecnt(rset.getInt("recnt")); // content 컬럼 값 설정
-				gongji.setViewcnt(rset.getInt("viewcnt")); // content 컬럼 값 설정
+				gongji.setRootid(rset.getInt("rootid")); // rootid 컬럼 값 설정
+				gongji.setRelevel(rset.getInt("relevel"));// relevel 컬럼 값 설정
+				gongji.setRecnt(rset.getInt("recnt")); // recnt 컬럼 값 설정
+				gongji.setViewcnt(rset.getInt("viewcnt")); // viewcnt 컬럼 값 설정
 
 				// gongji 객체를 GongjiList에 추가합니다.
 				GongjiList.add(gongji);
@@ -275,81 +250,86 @@ public class GongjiDaoImpl implements GongjiDao {
 
 	@Override
 	public int insertGongji(Gongji gongji) {// 원글 등록
-		int result = -1;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
-			stmt = conn.createStatement();
+	    int result = -1;
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver"); // MySQL 드라이버 클래스를 로드합니다.
+	     // 데이터베이스에 연결합니다. JDBC URL, 사용자 이름, 비밀번호를 입력합니다.
+	        conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc"); 
+	        stmt = conn.createStatement(); // Statement 객체를 생성합니다.
 
-			String sql = "INSERT INTO gongji (title, date, content, rootid, relevel, recnt) " + "VALUES ('"
-					+ gongji.getTitle() + "', NOW(), '" + gongji.getContent() + "', " + gongji.getRootid() + ", "
-					+ gongji.getRelevel() + ", " + gongji.getRecnt() + ")";
+	        String sql = "INSERT INTO gongji (title, date, content, rootid, relevel, recnt) " + "VALUES ('"
+	                + gongji.getTitle() + "', NOW(), '" + gongji.getContent() + "', " + gongji.getRootid() + ", "
+	                + gongji.getRelevel() + ", " + gongji.getRecnt() + ")"; // SQL 쿼리를 생성합니다. 'gongji' 테이블에 데이터를 삽입합니다.
 
-			stmt.execute(sql);
+	        stmt.execute(sql); // SQL 쿼리를 실행합니다.
 
-			result = 1;
-			System.out.println("원글 등록 성공");
+	        result = 1; // 결과를 1로 설정하여 원글 등록이 성공했음을 나타냅니다.
+	        System.out.println("원글 등록 성공"); // 성공 메시지를 출력합니다.
 
-			stmt.close();
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
+	        stmt.close(); // Statement 객체를 닫습니다.
+	        conn.close(); // 연결을 닫습니다.
+	    } catch (Exception e) {
+	        e.printStackTrace(); // 예외 발생 시 스택 트레이스를 출력합니다.
+	    }
+	    return result; // 결과를 반환합니다.
 	}
+
 
 	@Override
 	public int insertReply(Gongji gongji) {// 댓글 등록
-		int result = -1;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
-			stmt = conn.createStatement();
+	    int result = -1;
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver"); // MySQL 드라이버 클래스를 로드합니다.
+	     // 데이터베이스에 연결합니다. JDBC URL, 사용자 이름, 비밀번호를 입력합니다.
+	        conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc"); 
+	        stmt = conn.createStatement(); // Statement 객체를 생성합니다.
 
-			stmt.executeUpdate("update gongji set recnt = recnt+1 where recnt >= " + gongji.getRecnt()
-					+ " and rootid = " + gongji.getRootid() + ";");
-			// 해당 순서로 내가 들어가기 위해 원래 있던 자료부터 다음 차례의 자료들의 순서를 모두 +1해줌
+	        stmt.executeUpdate("update gongji set recnt = recnt+1 where recnt >= " + gongji.getRecnt()
+	                + " and rootid = " + gongji.getRootid() + ";");
+	        // 해당 순서로 내가 들어가기 위해 원래 있던 자료부터 다음 차례의 자료들의 순서를 모두 +1해줌
 
-			String sql = "INSERT INTO gongji (title, date, content, rootid, relevel, recnt) " + "VALUES ('"
-					+ gongji.getTitle() + "', NOW(), '" + gongji.getContent() + "', " + gongji.getRootid() + ", "
-					+ gongji.getRelevel() + ", " + gongji.getRecnt() + ")";
+	        String sql = "INSERT INTO gongji (title, date, content, rootid, relevel, recnt) " + "VALUES ('"
+	                + gongji.getTitle() + "', NOW(), '" + gongji.getContent() + "', " + gongji.getRootid() + ", "
+	                + gongji.getRelevel() + ", " + gongji.getRecnt() + ")"; // SQL 쿼리를 생성합니다. 'gongji' 테이블에 데이터를 삽입합니다.
 
-			stmt.execute(sql);
+	        stmt.execute(sql); // SQL 쿼리를 실행합니다.
 
-			result = 1;
-			System.out.println("댓글 등록 성공");
+	        result = 1; // 결과를 1로 설정하여 댓글 등록이 성공했음을 나타냅니다.
+	        System.out.println("댓글 등록 성공"); // 성공 메시지를 출력합니다.
 
-			stmt.close();
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
+	        stmt.close(); // Statement 객체를 닫습니다.
+	        conn.close(); // 연결을 닫습니다.
+	    } catch (Exception e) {
+	        e.printStackTrace(); // 예외 발생 시 스택 트레이스를 출력합니다.
+	    }
+	    return result; // 결과를 반환합니다.
 	}
 
 	@Override
 	public int insertNewGongji(String title, String content, int rootid) {// 원글 등록
-		int result = -1;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
-			stmt = conn.createStatement();
+	    int result = -1;
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver"); // MySQL 드라이버 클래스를 로드합니다.
+	        // 데이터베이스에 연결합니다. JDBC URL, 사용자 이름, 비밀번호를 입력합니다.
+	        conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc"); 
+	        stmt = conn.createStatement(); // Statement 객체를 생성합니다.
 
-			String sql = "INSERT INTO gongji (title, date, content, rootid, relevel, recnt) " + "VALUES ('" + title
-					+ "', NOW(), '" + content + "', " + (rootid + 1) + ", " + 0 + ", " + 0 + ")";
+	        String sql = "INSERT INTO gongji (title, date, content, rootid, relevel, recnt) " + "VALUES ('" + title
+	                + "', NOW(), '" + content + "', " + (rootid + 1) + ", " + 0 + ", " + 0 + ")"; // SQL 쿼리를 생성합니다. 'gongji' 테이블에 데이터를 삽입합니다.
 
-			stmt.execute(sql);
+	        stmt.execute(sql); // SQL 쿼리를 실행합니다.
 
-			result = 1;
-			System.out.println("원글 등록 성공");
+	        result = 1; // 결과를 1로 설정하여 원글 등록이 성공했음을 나타냅니다.
+	        System.out.println("원글 등록 성공"); // 성공 메시지를 출력합니다.
 
-			stmt.close();
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
+	        stmt.close(); // Statement 객체를 닫습니다.
+	        conn.close(); // 연결을 닫습니다.
+	    } catch (Exception e) {
+	        e.printStackTrace(); // 예외 발생 시 스택 트레이스를 출력합니다.
+	    }
+	    return result; // 결과를 반환합니다.
 	}
+
 
 	@Override
 	public int getMiddleRecnt(int rootid, int relevel, int recnt) { // 해당 원글번호에서 댓글이 중간에 들어갈 순서를 찾는 함수
@@ -402,42 +382,42 @@ public class GongjiDaoImpl implements GongjiDao {
 
 	@Override
 	public int updateReply(Gongji gongji) {
-		int result = -1;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc");
-			stmt = conn.createStatement();
+	    int result = -1;
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver"); // MySQL 드라이버 클래스를 로드합니다.
+	        conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root", "kopoctc"); // 데이터베이스에 연결합니다. JDBC URL, 사용자 이름, 비밀번호를 입력합니다.
+	        stmt = conn.createStatement(); // Statement 객체를 생성합니다.
 
-			String updateQuery = "UPDATE gongji SET " + "title = '" + gongji.getTitle() + "', " + "content = '"
-					+ gongji.getContent() + "', " + "date = NOW() " + "WHERE id = " + gongji.getId();
+	        String updateQuery = "UPDATE gongji SET " + "title = '" + gongji.getTitle() + "', " + "content = '"
+	                + gongji.getContent() + "', " + "date = NOW() " + "WHERE id = " + gongji.getId(); // UPDATE 쿼리를 생성하여 댓글을 수정합니다.
 
-			stmt.executeUpdate(updateQuery);
+	        stmt.executeUpdate(updateQuery); // UPDATE 쿼리를 실행합니다.
 
-			System.out.println("댓글 update 성공");
-			result = 1;
+	        System.out.println("댓글 update 성공"); // 성공 메시지를 출력합니다.
+	        result = 1; // 결과를 1로 설정하여 댓글 수정이 성공했음을 나타냅니다.
 
-			stmt.close();
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
+	        stmt.close(); // Statement 객체를 닫습니다.
+	        conn.close(); // 연결을 닫습니다.
+	    } catch (Exception e) {
+	        e.printStackTrace(); // 예외 발생 시 스택 트레이스를 출력합니다.
+	    }
+	    return result; // 결과를 반환합니다.
 	}
 
 	@Override
 	public int delete(int rootid, int relevel, int recnt) {//삭제하는 쿼리
-		String sql = "CALL deletePost(?,?,?)";
-		try (Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root",
-				"kopoctc"); PreparedStatement pstmt = conn.prepareStatement(sql);) {
-			pstmt.setInt(1, rootid);
-			pstmt.setInt(2, relevel);
-			pstmt.setInt(3, recnt);
+	    String sql = "CALL deletePost(?,?,?)"; // deletePost 프로시저를 호출하는 SQL 쿼리입니다.
+	    try (Connection conn = DriverManager.getConnection("jdbc:mysql://192.168.23.214:33060/kopo27", "root",
+	            "kopoctc"); // 데이터베이스에 연결합니다. JDBC URL, 사용자 이름, 비밀번호를 입력합니다.
+	        PreparedStatement pstmt = conn.prepareStatement(sql);) {
+	        pstmt.setInt(1, rootid); // 첫 번째 매개변수에 rootid 값을 설정합니다.
+	        pstmt.setInt(2, relevel); // 두 번째 매개변수에 relevel 값을 설정합니다.
+	        pstmt.setInt(3, recnt); // 세 번째 매개변수에 recnt 값을 설정합니다.
 
-			return pstmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return -1;
+	        return pstmt.executeUpdate(); // SQL 쿼리를 실행하고 결과를 반환합니다.
+	    } catch (Exception e) {
+	        e.printStackTrace(); // 예외 발생 시 스택 트레이스를 출력합니다.
+	    }
+	    return -1; // 실패한 경우 -1을 반환합니다.
 	}
-
 }

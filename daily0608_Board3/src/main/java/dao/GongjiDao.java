@@ -9,8 +9,6 @@ public interface GongjiDao {
 
 	Gongji selectOneGongji(int id);// id로 객체 찾아오기
 
-	int deleteOneGongji(int id);//아이디로 객체 지우기
-
 	int insertGongji(Gongji gongji);// 원글 등록
 
 	int updateWongul(Gongji gongji);//원글 수정 
@@ -27,12 +25,11 @@ public interface GongjiDao {
 	
 	int insertNewGongji(String title, String content, int rootid);// 원글 등록
 	
-	int getMiddleRecnt(int rootid, int relevel, int recnt);
+	int getMiddleRecnt(int rootid, int relevel, int recnt);//댓글의 중간 recnt 구하기
 	
-	int getMaxRecnt(int rootid);
+	int getMaxRecnt(int rootid);//댓글의 마지막 recnt 구하기
 
-	int delete(int rootid, int relevel, int recnt);
-	
+	int delete(int rootid, int relevel, int recnt);//원글과 댓글 삭제하기
 }
 
 
