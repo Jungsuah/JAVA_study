@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/apache-tomcat-9.0.71">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/Users/a/dev_resources/commons-lang3-3.12.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a/dev_resources/opencsv-5.7.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a/dev_resources/poi-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a/dev_resources/poi-ooxml-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a/dev_resources/poi-ooxml-schemas-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a/dev_resources/selenium-server-4.10.0 (1).jar"/>
+	<classpathentry kind="lib" path="C:/Users/a/dev_resources/mysql-connector-java-8.0.16.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a/dev_resources/json-20230618.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
