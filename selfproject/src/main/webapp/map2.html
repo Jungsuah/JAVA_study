@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <title>주소로 장소 표시하기</title>
-
 </head>
 <body>
 	<p style="margin-top: -12px">
@@ -16,11 +15,11 @@
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fa6166e65f0014461bc6abfc1d3cad77"></script>
 	<script>
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
+var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
+var mapOption = {
+    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+};  
 
 // 지도를 생성합니다    
 var map = new kakao.maps.Map(mapContainer, mapOption); 
@@ -28,20 +27,21 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
 
-// 주소로 좌표를 검색합니다
-// MySQL 연결 설정 및 필요한 라이브러리 import 등이 필요하며 생략되어 있습니다.
+// MySQL 연결 설정 및 필요한 라이브러리 임포트
+const mysql = require('mysql');
 
 // MySQL 연결 설정
 const connection = mysql.createConnection({
-  user: 'root',
-  password: 'kopoctc',
-  database: 'kopo27'
+  host: 'YOUR_HOST',
+  user: 'YOUR_USERNAME',
+  password: 'YOUR_PASSWORD',
+  database: 'YOUR_DATABASE'
 });
 
 // 주소 검색 및 결과 처리
 function searchAddresses() {
   // MySQL 쿼리로 모든 주소 가져오기
-  const query = 'SELECT latitude , longitude FROM parking';
+  const query = 'SELECT addr FROM parking';
 
   connection.query(query, function(error, results, fields) {
     if (error) throw error;
