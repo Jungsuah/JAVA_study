@@ -95,13 +95,6 @@
         // 카테고리에 따라 마커를 표시하거나 삭제합니다
         for (var i = 0; i < parkingList.length; i++) {
             var marker = parkingList[i].marker;
-
-            // 주차장 카테고리가 선택된 경우 마커를 표시합니다
-            if (category === 'carpark') {
-                marker.setMap(map);
-            } else { // 그렇지 않은 경우 마커를 삭제합니다
-                marker.setMap(null);
-            }
         }
     }
 
@@ -123,11 +116,11 @@
                 '        </div>' +
                 '        <div class="body">' +
                 '            <div class="img">' +
-                '                <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
+                '                <img src="https://media.istockphoto.com/id/1268257891/ko/%EB%B2%A1%ED%84%B0/%ED%9D%B0%EC%83%89-%EB%8C%80%EB%AC%B8%EC%9E%90-p%EC%99%80-%ED%8C%8C%EB%9E%80%EC%83%89-%EC%82%AC%EA%B0%81%ED%98%95-%EC%A3%BC%EC%B0%A8-%ED%91%9C%EC%A7%80%ED%8C%90.jpg?s=612x612&w=0&k=20&c=COylsmqtONwhOD_Hy8WKgkNbg3H3tQ5XErQWZiHzXg0=" width="73" height="70">' +
                 '           </div>' +
                 '            <div class="desc">' +
                 '                <div class="ellipsis">' + parking.address + '</div>' +
-                '                <div><a href="http://map.daum.net/link/search/' + parking.name + '" target="_blank" class="link">길찾기</a></div>' +
+                '                <div><a href="http://map.daum.net/link/search/' + parking.address + '" target="_blank" class="link">길찾기</a></div>' +
                 '            </div>' +
                 '        </div>' +
                 '    </div>' +
